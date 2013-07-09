@@ -436,7 +436,7 @@ namespace WindowsFormsApplication1
 
         private void sharpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            source = ImageProcessor.Sharpen(source, 2);
+            source = ImageProcessor.Reinterpolate(source, 4, 4);
             Invalidate();
         }
 

@@ -6,7 +6,6 @@ namespace WindowsFormsApplication1
 {
     class ImageProcessor
     {
-
         public static Bitmap FlattenLight(Bitmap source, List<Point> light_points) {
             List<Point> light_hr = new List<Point>();
             List<Point> light_hg = new List<Point>();
@@ -75,26 +74,27 @@ namespace WindowsFormsApplication1
             return light;
         }
 
-        public static Bitmap Sharpen(Bitmap source, int magnitude) {
+        public static Bitmap Reinterpolate(Bitmap source, double magnitude1, double magnitude2) {
             Bitmap sharp = new Bitmap(source.Width, source.Height);
             int max_r = 0;
             int max_g = 0;
             int max_b = 0;
+            int min_r = 255;
+            int min_g = 255;
+            int min_b = 255;
 
             for (int i = 0; i < source.Height; i++)
             {
                 for (int j = 0; j < source.Width; j++)
                 {
                     Color col = source.GetPixel(j, i);
-                    if(col.R > max_r){
-                        max_r = col.R;
-                    }
-                    if(col.G > max_g){
-                        max_g = col.G;
-                    }
-                    if(col.B > max_b){
-                        max_b = col.B;
-                    }
+                    if(col.R > max_r) max_r = col.R;
+                    if(col.G > max_g) max_g = col.G;
+                    if(col.B > max_b) max_b = col.B;
+
+                    if (col.R < min_r) min_r = col.R;
+                    if (col.G < min_g) min_g = col.G;
+                    if (col.B < min_b) min_b = col.B;
                 }
             }
             for (int i = 0; i < source.Height; i++)
@@ -113,16 +113,23 @@ namespace WindowsFormsApplication1
                     if (nB >= max_b) nB = max_b - 1;
 
                     // sharp
-                    double tr = Math.Pow(1.0 / ((double)nR / max_r), magnitude);
-                    double fr = Math.Pow(1.0 / (1.0 - tr), magnitude);
-                    double tg = Math.Pow(1.0 / ((double)nG / max_g), magnitude);
-                    double fg = Math.Pow(1.0 / (1.0 - tg), magnitude);
-                    double tb = Math.Pow(1.0 / ((double)nB / max_b), magnitude);
-                    double fb = Math.Pow(1.0 / (1.0 - tb), magnitude);
+                    double tr = ((double)(nR - min_r) / (max_r - min_r));
+                    double fr = (1.0 - tr);
+                    double tg = ((double)(nG - min_g) / (max_g - min_g));
+                    double fg = (1.0 - tg);
+                    double tb = ((double)(nB - min_b) / (max_b - min_b));
+                    double fb = (1.0 - tb);
 
-                    int nnR = (int)(255 * fr / (tr + fr));
-                    int nnG = (int)(255 * fg / (tg + fg));
-                    int nnB = (int)(255 * fb / (tb + fb));
+                    double itr = Math.Pow(1.0 / tr, magnitude1);
+                    double itg = Math.Pow(1.0 / tg, magnitude2);
+                    double itb = Math.Pow(1.0 / tb, magnitude1);
+                    double ifr = Math.Pow(1.0 / fr, magnitude2);
+                    double ifg = Math.Pow(1.0 / fg, magnitude1);
+                    double ifb = Math.Pow(1.0 / fb, magnitude2);
+
+                    int nnR = min_r + (int)((max_r-min_r) * ifr / (itr + ifr));
+                    int nnG = min_g + (int)((max_g-min_g) * ifg / (itg + ifg));
+                    int nnB = min_b + (int)((max_b-min_b) * ifb / (itb + ifb));
 
                     Color ncol = Color.FromArgb(nnR, nnG, nnB);
                     sharp.SetPixel(j, i, ncol);
