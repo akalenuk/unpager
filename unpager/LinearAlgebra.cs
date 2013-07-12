@@ -15,6 +15,9 @@
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+
+// TODO consider introdusing assertions for all algebra invariants
 
 namespace WindowsFormsApplication1 {
     class LinearAlgebra {
@@ -58,6 +61,33 @@ namespace WindowsFormsApplication1 {
             return res;
         }
 
+        static double[,] m_mul(double[,] A, double[,] B){
+            int AH = A.GetLength(0);
+            int AW = A.GetLength(1);
+            int BH = B.GetLength(0);
+            int BW = B.GetLength(1);            
+            Debug.Assert(AH == BW && AW == BH);
+            double[,] C = new double[AH, BW];
+            for (int i = 0; i < AH; i++) {
+                for (int j = 0; j < BW; j++) {
+                    for (int k = 0; k < AW; k++) {
+                        C[i, j] += A[i, k] * B[k, j];
+                    }
+                }
+            }
+            return C;
+        }
 
+        static double[,] m_trans(double[,] A) {
+            int AH = A.GetLength(0);
+            int AW = A.GetLength(1);
+            double[,] C = new double[AW, AH];
+            for (int i = 0; i < AW; i++) {
+                for (int j = 0; j < AH; j++) {
+                    C[i, j] = A[j, i];
+                }
+            }
+            return C;
+        }
     }
 }
