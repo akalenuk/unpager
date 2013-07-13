@@ -51,6 +51,8 @@ namespace WindowsFormsApplication1
         private void Form1_Load(object sender, EventArgs e)
         {
             DoubleBuffered = true;
+            openFileDialog1.Filter = "Pictures (*.png, *.jpg, ...)|*.jpg;*.jpeg;*.png;*.bmp|All Files (*.*)|*.*";
+            saveFileDialog1.Filter = "PNG (*.png)|*.png|Everything (*.*)|*.*";
             SetMenuChecks();
         }
 

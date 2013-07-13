@@ -23,7 +23,7 @@ using System.Diagnostics;
 
 namespace WindowsFormsApplication1 {
     class LinearAlgebra {
-        static double[] v_add(double[] a, double[] b) {
+        static public double[] v_add(double[] a, double[] b) {
             double[] res = new double[a.Length];
             for (int i = 0; i < a.Length; i++) {
                 res[i] = a[i] + b[i];
@@ -31,7 +31,7 @@ namespace WindowsFormsApplication1 {
             return res;
         }
 
-        static double[] v_sub(double[] a, double[] b) {
+        static public double[] v_sub(double[] a, double[] b) {
             double[] res = new double[a.Length];
             for (int i = 0; i < a.Length; i++) {
                 res[i] = a[i] - b[i];
@@ -39,7 +39,7 @@ namespace WindowsFormsApplication1 {
             return res;
         }
 
-        static double v_dot(double[] a, double[] b) {
+        static public double v_dot(double[] a, double[] b) {
             double res = 0.0;
             for (int i = 0; i < a.Length; i++) {
                 res += a[i] * b[i];
@@ -47,7 +47,7 @@ namespace WindowsFormsApplication1 {
             return res;
         }
 
-        static double v_len(double[] a) {
+        static public double v_len(double[] a) {
             double res = 0.0;
             for (int i = 0; i < a.Length; i++) {
                 res += a[i] * a[i];
@@ -55,7 +55,7 @@ namespace WindowsFormsApplication1 {
             return Math.Sqrt(res);
         }
 
-        static double[] s_mul(double s, double[] a) {
+        static public double[] s_mul(double s, double[] a) {
             double[] res = new double[a.Length];
             for (int i = 0; i < a.Length; i++) {
                 res[i] = s*a[i];
@@ -63,7 +63,7 @@ namespace WindowsFormsApplication1 {
             return res;
         }
 
-        static double[,] m_mul(double[,] A, double[,] B){
+        static public double[,] m_mul(double[,] A, double[,] B) {
             int AH = A.GetLength(0);
             int AW = A.GetLength(1);
             int BH = B.GetLength(0);
@@ -93,7 +93,7 @@ namespace WindowsFormsApplication1 {
         }
 
         // Levi-Civita symbol. a is a list of indices
-        static int _LC(List<int> a) {  
+        static public int _LC(List<int> a) {  
             int la = a.Count;
             int n = 0;
             List<int> t = new List<int>(a);
@@ -117,7 +117,7 @@ namespace WindowsFormsApplication1 {
             }
         }
 
-        static double s_pow(double A, int n) {
+        static public double s_pow(double A, int n) {
             if (n == 0) return 1;
             return A * s_pow(A, n-1);
         }
@@ -128,7 +128,7 @@ namespace WindowsFormsApplication1 {
         }
 
         // this is multidimentional cross product. A is an array of vectors, not a matrix
-        static double[] v_cross(double[][] A) {
+        static public double[] v_cross(double[][] A) {
             int DIMM = 0;
             int N = A.Length;
             Debug.Assert( N>=2 );
@@ -158,7 +158,7 @@ namespace WindowsFormsApplication1 {
         }
 
         // multidimensional triple product. A is an array of vectors
-        static double v_mixed(double[][] A) {
+        static public double v_nple(double[][] A) {
             int DIMM = 0;
             int N = A.Length;
             Debug.Assert(N >= 3);
@@ -185,7 +185,7 @@ namespace WindowsFormsApplication1 {
             return v_res;
         }
 
-        private double[] SolveSLAE_Gauss(double[,] A, double[] B) { // it's temporary, I don't like this code
+        static public double[] SolveSLAE_Gauss(double[,] A, double[] B) { // it's temporary, I don't like this code
             int N = B.Length;
             double[] X = new double[N];
             for (int k = 0; k < N - 1; k++) {
@@ -214,7 +214,7 @@ namespace WindowsFormsApplication1 {
             return X;
         }
 
-        static bool v_cmp(double[] A, double[] B) {
+        static public bool v_cmp(double[] A, double[] B) {
             int la = A.Length;
             int lb = B.Length;
             if (la != lb) return false;
@@ -226,7 +226,7 @@ namespace WindowsFormsApplication1 {
 
         static public void test() { 
             double[][] A = new double[3][] {new double[] {-2, 3, 1}, new double[] {0, 4, 0}, new double[] {-1, 3, 3}};
-            Debug.Assert(v_mixed(A) == -20);
+            Debug.Assert(v_nple(A) == -20);
             double[][] B = new double[2][] { new double[] { 3, -3, 1 }, new double[] { 4, 9, 2 } };
             double[] cross_calc = v_cross(B);
             double[] cross_test = new double[] { -15, -2, 39 };
