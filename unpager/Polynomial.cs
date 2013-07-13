@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 
+// TODO: fix first solver and put them all to LinearAlgebra only
 
 namespace WindowsFormsApplication1
 {
