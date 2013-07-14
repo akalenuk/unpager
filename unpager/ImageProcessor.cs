@@ -89,7 +89,7 @@ namespace WindowsFormsApplication1
             return light;
         }
 
-        public static Bitmap Reinterpolate(Bitmap source, double magnitude1, double magnitude2) {
+        public static Bitmap Reinterpolate(Bitmap source, int magnitude1, int magnitude2) {
             Bitmap sharp = new Bitmap(source.Width, source.Height);
             int max_r = 0;
             int max_g = 0;
@@ -135,12 +135,12 @@ namespace WindowsFormsApplication1
                     double tb = ((double)(nB - min_b) / (max_b - min_b));
                     double fb = (1.0 - tb);
 
-                    double itr = Math.Pow(1.0 / tr, magnitude1);
-                    double itg = Math.Pow(1.0 / tg, magnitude2);
-                    double itb = Math.Pow(1.0 / tb, magnitude1);
-                    double ifr = Math.Pow(1.0 / fr, magnitude2);
-                    double ifg = Math.Pow(1.0 / fg, magnitude1);
-                    double ifb = Math.Pow(1.0 / fb, magnitude2);
+                    double itr = Scalar.pow(1.0 / tr, magnitude1);
+                    double itg = Scalar.pow(1.0 / tg, magnitude2);
+                    double itb = Scalar.pow(1.0 / tb, magnitude1);
+                    double ifr = Scalar.pow(1.0 / fr, magnitude2);
+                    double ifg = Scalar.pow(1.0 / fg, magnitude1);
+                    double ifb = Scalar.pow(1.0 / fb, magnitude2);
 
                     int nnR = min_r + (int)((max_r-min_r) * ifr / (itr + ifr));
                     int nnG = min_g + (int)((max_g-min_g) * ifg / (itg + ifg));

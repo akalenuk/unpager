@@ -57,21 +57,21 @@ namespace WindowsFormsApplication1
                     A[i, j] = 0.0;
                     foreach (Point p in carcas)
                     {
-                        A[i, j] += Math.Pow(p.X, i + j);
+                        A[i, j] += Scalar.pow(p.X, i + j);
                     }
                     foreach (Point p in firm_carcas)
                     {
-                        A[i, j] += Math.Pow(p.X, i + j) * FIRM_MULTIPLIER;
+                        A[i, j] += Scalar.pow(p.X, i + j) * FIRM_MULTIPLIER;
                     }
                 }
                 B[i] = 0.0;
                 foreach (Point p in carcas)
                 {
-                    B[i] += p.Y * Math.Pow(p.X, i);
+                    B[i] += p.Y * Scalar.pow(p.X, i);
                 }
                 foreach (Point p in firm_carcas)
                 {
-                    B[i] += p.Y * Math.Pow(p.X, i) * FIRM_MULTIPLIER;
+                    B[i] += p.Y * Scalar.pow(p.X, i) * FIRM_MULTIPLIER;
                 }
             }
             ais = SolveSLAE_Gauss(A, B);

@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+// TODO: FFD on 2-SWINE
+// TODO: approximate 3x2 polynomial model 
+// TODO: 1-SWINE profiles with selectable basis functions
 
 namespace WindowsFormsApplication1
 {
@@ -353,6 +356,7 @@ namespace WindowsFormsApplication1
 
         private void projectToolStripMenuItem_Click(object sender, EventArgs e) // projection
         {
+            Cursor = Cursors.WaitCursor;
             ContinuousBitmap csource = new ContinuousBitmap(source);
             if (smoothTransformToolStripMenuItem.Checked)
             {
@@ -370,10 +374,12 @@ namespace WindowsFormsApplication1
             firm_carcas2 = new List<Point>();
             firm_carcas2.Add(new Point(0, 0));
             Invalidate();
+            Cursor = Cursors.Arrow;
         }
 
         private void flattenToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             ContinuousBitmap csource = new ContinuousBitmap(source);
             if (smoothTransformToolStripMenuItem.Checked)
             {
@@ -385,13 +391,16 @@ namespace WindowsFormsApplication1
             source_point.X = ClientRectangle.Left + ClientSize.Width / 2 - (int)(source.Width * source_scale) / 2;
             source_point.Y = ClientRectangle.Top + ClientSize.Height / 2 - (int)(source.Height * source_scale) / 2;
             Invalidate();
+            Cursor = Cursors.Arrow;
         }
 
         private void lightToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             source = ImageProcessor.FlattenLight(source, light_points);
             cur_tool = Tool.None;
             Invalidate();
+            Cursor = Cursors.Arrow;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -438,29 +447,37 @@ namespace WindowsFormsApplication1
 
         private void sharpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             source = ImageProcessor.Reinterpolate(source, 4, 4);
             Invalidate();
+            Cursor = Cursors.Arrow;
         }
 
         private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             source = ImageProcessor.Grayscale(source);
             Invalidate();
+            Cursor = Cursors.Arrow;
         }
 
         private void normalizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             source = ImageProcessor.Normalize(source);
             Invalidate();
+            Cursor = Cursors.Arrow;
         }
 
         private void findLightingPointsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             cur_tool = Tool.LightingPoints;
             light_points.Clear();
             light_points = Automatic.FindLightingPoints(source, 10, 10);
             SetMenuChecks();
             Invalidate();
+            Cursor = Cursors.Arrow;
         }
 
         private void turnClockwiseToolStripMenuItem_Click(object sender, EventArgs e)

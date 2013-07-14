@@ -22,32 +22,38 @@ using System.Diagnostics;
 // TODO refactor variable names
 
 namespace WindowsFormsApplication1 {
-    class LinearAlgebra {
-        static public double[] v_add(double[] a, double[] b) {
-            double[] res = new double[a.Length];
-            for (int i = 0; i < a.Length; i++) {
+    class Vector {
+        static public double[] add(double[] a, double[] b) {
+            int DIMM = a.Length;
+            Debug.Assert(b.Length == DIMM);
+            double[] res = new double[DIMM];
+            for (int i = 0; i < DIMM; i++) {
                 res[i] = a[i] + b[i];
             }
             return res;
         }
 
-        static public double[] v_sub(double[] a, double[] b) {
-            double[] res = new double[a.Length];
-            for (int i = 0; i < a.Length; i++) {
+        static public double[] sub(double[] a, double[] b) {
+            int DIMM = a.Length;
+            Debug.Assert(b.Length == DIMM);
+            double[] res = new double[DIMM];
+            for (int i = 0; i < DIMM; i++) {
                 res[i] = a[i] - b[i];
             }
             return res;
         }
 
-        static public double v_dot(double[] a, double[] b) {
+        static public double dot(double[] a, double[] b) {
+            int DIMM = a.Length;
+            Debug.Assert(b.Length == DIMM);
             double res = 0.0;
-            for (int i = 0; i < a.Length; i++) {
+            for (int i = 0; i < DIMM; i++) {
                 res += a[i] * b[i];
             }
             return res;
         }
 
-        static public double v_len(double[] a) {
+        static public double len(double[] a) {
             double res = 0.0;
             for (int i = 0; i < a.Length; i++) {
                 res += a[i] * a[i];
@@ -55,7 +61,7 @@ namespace WindowsFormsApplication1 {
             return Math.Sqrt(res);
         }
 
-        static public double[] s_mul(double s, double[] a) {
+        static public double[] mul(double s, double[] a) {
             double[] res = new double[a.Length];
             for (int i = 0; i < a.Length; i++) {
                 res[i] = s*a[i];
@@ -63,37 +69,8 @@ namespace WindowsFormsApplication1 {
             return res;
         }
 
-        static public double[,] m_mul(double[,] A, double[,] B) {
-            int AH = A.GetLength(0);
-            int AW = A.GetLength(1);
-            int BH = B.GetLength(0);
-            int BW = B.GetLength(1);            
-            Debug.Assert(AH == BW && AW == BH);
-            double[,] C = new double[AH, BW];
-            for (int i = 0; i < AH; i++) {
-                for (int j = 0; j < BW; j++) {
-                    for (int k = 0; k < AW; k++) {
-                        C[i, j] += A[i, k] * B[k, j];
-                    }
-                }
-            }
-            return C;
-        }
-
-        static double[,] m_trans(double[,] A) {
-            int AH = A.GetLength(0);
-            int AW = A.GetLength(1);
-            double[,] C = new double[AW, AH];
-            for (int i = 0; i < AW; i++) {
-                for (int j = 0; j < AH; j++) {
-                    C[i, j] = A[j, i];
-                }
-            }
-            return C;
-        }
-
         // Levi-Civita symbol. a is a list of indices
-        static public int _LC(List<int> a) {  
+        static public int LC(List<int> a) {  
             int la = a.Count;
             int n = 0;
             List<int> t = new List<int>(a);
@@ -117,18 +94,8 @@ namespace WindowsFormsApplication1 {
             }
         }
 
-        static public double s_pow(double A, int n) {
-            if (n == 0) return 1;
-            return A * s_pow(A, n-1);
-        }
-
-        static int s_pow(int A, int n) {
-            if (n == 0) return 1;
-            return A * s_pow(A, n-1);
-        }
-
         // this is multidimentional cross product. A is an array of vectors, not a matrix
-        static public double[] v_cross(double[][] A) {
+        static public double[] cross(double[][] A) {
             int DIMM = 0;
             int N = A.Length;
             Debug.Assert( N>=2 );
@@ -136,29 +103,29 @@ namespace WindowsFormsApplication1 {
                 DIMM = a.Length;
                 Debug.Assert(DIMM == N + 1);
             }
-            double[] v_res = new double[DIMM];
+            double[] res = new double[DIMM];
             for (int i = 0; i < DIMM; i++) {
-                for(int jk = 0; jk < s_pow(DIMM, N); jk++){
+                for (int jk = 0; jk < Scalar.pow(DIMM, N); jk++) {
                     List<int> v_ijk = new List<int>();
                     v_ijk.Add(i);
                     for (int j = 0; j < N; j++) {
-                        v_ijk.Add( (jk / ( s_pow(DIMM, (N - j - 1)) )) % DIMM);
+                        v_ijk.Add((jk / (Scalar.pow(DIMM, (N - j - 1)))) % DIMM);
                     }
-                    int t_res = _LC(v_ijk);
-                    if (t_res != 0) {
-                        double s_res = t_res;
+                    int sign = LC(v_ijk);
+                    if (sign != 0) {
+                        double res_add = sign;
                         for (int k = 0; k < N; k++) {
-                            s_res *= A[k][v_ijk[k + 1]];
+                            res_add *= A[k][v_ijk[k + 1]];
                         }
-                        v_res[i] += s_res;
+                        res[i] += res_add;
                     }
                 }
             }
-            return v_res;
+            return res;
         }
 
         // multidimensional triple product. A is an array of vectors
-        static public double v_nple(double[][] A) {
+        static public double nple(double[][] A) {
             int DIMM = 0;
             int N = A.Length;
             Debug.Assert(N >= 3);
@@ -167,30 +134,31 @@ namespace WindowsFormsApplication1 {
                 Debug.Assert(DIMM == N);
             }
 
-            double v_res = 0.0;
-            for (int jk = 0; jk < s_pow(DIMM, N); jk++) {
+            double res = 0.0;
+            for (int jk = 0; jk < Scalar.pow(DIMM, N); jk++) {
                 List<int> v_ijk = new List<int>();
                 for (int j = 0; j < N; j++) {
-                    v_ijk.Add( (jk / s_pow(DIMM, N - j - 1)) % DIMM );
+                    v_ijk.Add( (jk / Scalar.pow(DIMM, N - j - 1)) % DIMM );
                 }
-                int t_res = _LC(v_ijk);
-                if( t_res != 0 ){
-                    double s_res = t_res;
+                int sign = LC(v_ijk);
+                if( sign != 0 ){
+                    double res_add = sign;
                     for(int k = 0; k < N; k++){
-                        s_res *= A[k][v_ijk[k]];
+                        res_add *= A[k][v_ijk[k]];
                     }
-                    v_res += s_res;
+                    res += res_add;
                 }
             }
-            return v_res;
+            return res;
         }
 
-        static public double[] SolveSLAE_Gauss(double[,] A, double[] B) { // it's temporary, I don't like this code
+        const double FUCKING_MAGIC = 0.00000001; // it's temporary, I don't like this code
+        static public double[] Gauss(double[,] A, double[] B) {
             int N = B.Length;
             double[] X = new double[N];
             for (int k = 0; k < N - 1; k++) {
                 for (int j = 0; j < k + 1; j++) {
-                    if (A[j, j] == 0.0) A[j, j] = 0.000000001;  // hack!
+                    if (A[j, j] == 0.0) A[j, j] = FUCKING_MAGIC;  // hack!
                     double r = A[k + 1, j] / A[j, j];
                     A[k + 1, j] = 0.0;
                     for (int bj = j + 1; bj < N; bj++) {
@@ -200,21 +168,21 @@ namespace WindowsFormsApplication1 {
                 }
             }
 
-            if (A[N - 1, N - 1] == 0.0) A[N - 1, N - 1] = 0.000000001;  // hack!
+            if (A[N - 1, N - 1] == 0.0) A[N - 1, N - 1] = FUCKING_MAGIC;  // hack!
             X[N - 1] = B[N - 1] / A[N - 1, N - 1];
             for (int i = N - 2; i >= 0; i--) {
                 double s = 0.0;
                 for (int j = i; j < N; j++) {
                     s = s + A[i, j] * X[j];
                 }
-                if (A[i, i] == 0) A[i, i] = 0.0000001;
+                if (A[i, i] == 0) A[i, i] = FUCKING_MAGIC;  // hack!
                 X[i] = (B[i] - s) / A[i, i];
             }
 
             return X;
         }
 
-        static public bool v_cmp(double[] A, double[] B) {
+        static public bool equal(double[] A, double[] B) {
             int la = A.Length;
             int lb = B.Length;
             if (la != lb) return false;
@@ -226,11 +194,11 @@ namespace WindowsFormsApplication1 {
 
         static public void test() { 
             double[][] A = new double[3][] {new double[] {-2, 3, 1}, new double[] {0, 4, 0}, new double[] {-1, 3, 3}};
-            Debug.Assert(v_nple(A) == -20);
+            Debug.Assert(nple(A) == -20);
             double[][] B = new double[2][] { new double[] { 3, -3, 1 }, new double[] { 4, 9, 2 } };
-            double[] cross_calc = v_cross(B);
+            double[] cross_calc = cross(B);
             double[] cross_test = new double[] { -15, -2, 39 };
-            Debug.Assert(v_cmp(cross_calc, cross_test));
+            Debug.Assert(equal(cross_calc, cross_test));
         }
     }
 }

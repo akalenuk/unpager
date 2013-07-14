@@ -1,9 +1,24 @@
-﻿using System;
+﻿/*
+ Copyright 2013 Alexandr Kalenuk.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+   http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace WindowsFormsApplication1 {
-    class SimplicialGeometry {
+namespace WindowsFormsApplication1 {    // Bits of simplicial geometry
+    class Simplex {
         /*
         Projection on a simplex plane.
 
@@ -22,8 +37,8 @@ namespace WindowsFormsApplication1 {
             if (S.Length == 1) {        // projection on a point considered to be that point
                 return S[0];
             } else if (S.Length == 2) { // projection on an edge
-                double[] a0 = LinearAlgebra.v_sub(a, S[0]);
-                double[] v01 = LinearAlgebra.v_sub(S[1], S[0]);
+                double[] a0 = Vector.sub(a, S[0]);
+                double[] v01 = Vector.sub(S[1], S[0]);
                 double Ei = 0.0;
                 double E = 0.0;
                 for (int i = 0; i < DIMM; i++) {
@@ -38,13 +53,13 @@ namespace WindowsFormsApplication1 {
                     }
                 }
 
-                return LinearAlgebra.v_add(S[0], LinearAlgebra.s_mul(k, v01));
+                return Vector.add(S[0], Vector.mul(k, v01));
             } else { // projection on a plane/hyperplane
                 int N = S.Length - 1;
-                double[] a0 = LinearAlgebra.v_sub(a, S[0]);
+                double[] a0 = Vector.sub(a, S[0]);
                 double[][] v0i = new double[N][];
                 for (int i = 0; i < N; i++) {
-                    v0i[i] = LinearAlgebra.v_sub(S[i + 1], S[0]);
+                    v0i[i] = Vector.sub(S[i + 1], S[0]);
                 }
                 double[,] A = new double[N,N];
                 double[] B = new double[N];
@@ -56,7 +71,7 @@ namespace WindowsFormsApplication1 {
                         B[i] += a0[k] * v0i[i][k];
                     }
                 }
-                double[] I = LinearAlgebra.SolveSLAE_Gauss(A, B);
+                double[] I = Vector.Gauss(A, B);
 
                 if (check_if_in) {  // I are the coordinates in simplicial basis. If any one goes out of [0, 1], the point is not on the simplexs parallelotop
                     double sum_I = 0.0;
@@ -71,9 +86,9 @@ namespace WindowsFormsApplication1 {
                     }
                 }
                 double[] to_ret = new double[DIMM];
-                to_ret = LinearAlgebra.v_add( to_ret, S[0] );
+                to_ret = Vector.add( to_ret, S[0] );
                 for(int i = 0; i < N; i++){
-                    to_ret = LinearAlgebra.v_add(to_ret, LinearAlgebra.s_mul(I[i], v0i[i]));
+                    to_ret = Vector.add(to_ret, Vector.mul(I[i], v0i[i]));
                 }
                 return to_ret;
             }
