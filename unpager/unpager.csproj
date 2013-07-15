@@ -58,6 +58,7 @@
     </Compile>
     <Compile Include="Matrix.cs" />
     <Compile Include="Scalar.cs" />
+    <Compile Include="Undo.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Polynomial.cs" />
     <Compile Include="Program.cs" />

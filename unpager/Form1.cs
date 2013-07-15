@@ -25,14 +25,17 @@ namespace WindowsFormsApplication1
         
         Tool cur_tool = Tool.None;
 
-        Bitmap source = null;
+        Bitmap source = new Bitmap(100, 100);
         Point source_point = new Point(0, 0);
         double source_scale = 1;
 
-        Point P1, P2, P3, P4;        
+        Point P1 = new Point(0, 0);
+        Point P2 = new Point(100, 0);
+        Point P3 = new Point(100, 100);
+        Point P4 = new Point(0, 100);
 
-        int line1;
-        int line2;
+        int line1 = 0;
+        int line2 = 100;
         const int max_points = 128;
         List<Point> carcas1 = new List<Point>();
         List<Point> carcas2 = new List<Point>();
@@ -308,15 +311,31 @@ namespace WindowsFormsApplication1
             if (D1 <= D2 && D1 <= D3 && D1 <= D4) {
                 P1.X = sx;
                 P1.Y = sy;
+                if (recttangularFrameToolStripMenuItem.Checked) {
+                    P2.Y = sy;
+                    P4.X = sx;
+                }
             } else if (D2 <= D3 && D2 <= D4) {
                 P2.X = sx;
                 P2.Y = sy;
+                if (recttangularFrameToolStripMenuItem.Checked) {
+                    P1.Y = sy;
+                    P3.X = sx;
+                }
             } else if (D3 <= D4) {
                 P3.X = sx;
                 P3.Y = sy;
+                if (recttangularFrameToolStripMenuItem.Checked) {
+                    P2.X = sx;
+                    P4.Y = sy;
+                }
             } else {
                 P4.X = sx;
                 P4.Y = sy;
+                if (recttangularFrameToolStripMenuItem.Checked) {
+                    P1.X = sx;
+                    P3.Y = sy;
+                }
             }
             Invalidate();
         }
@@ -357,6 +376,7 @@ namespace WindowsFormsApplication1
         private void projectToolStripMenuItem_Click(object sender, EventArgs e) // projection
         {
             Cursor = Cursors.WaitCursor;
+            Undo.push(source);
             ContinuousBitmap csource = new ContinuousBitmap(source);
             if (smoothTransformToolStripMenuItem.Checked)
             {
@@ -380,6 +400,7 @@ namespace WindowsFormsApplication1
         private void flattenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
+            Undo.push(source);
             ContinuousBitmap csource = new ContinuousBitmap(source);
             if (smoothTransformToolStripMenuItem.Checked)
             {
@@ -397,6 +418,7 @@ namespace WindowsFormsApplication1
         private void lightToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
+            Undo.push(source);
             source = ImageProcessor.FlattenLight(source, light_points);
             cur_tool = Tool.None;
             Invalidate();
@@ -448,6 +470,7 @@ namespace WindowsFormsApplication1
         private void sharpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
+            Undo.push(source);
             source = ImageProcessor.Reinterpolate(source, 4, 4);
             Invalidate();
             Cursor = Cursors.Arrow;
@@ -456,6 +479,7 @@ namespace WindowsFormsApplication1
         private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
+            Undo.push(source);
             source = ImageProcessor.Grayscale(source);
             Invalidate();
             Cursor = Cursors.Arrow;
@@ -464,6 +488,7 @@ namespace WindowsFormsApplication1
         private void normalizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
+            Undo.push(source);
             source = ImageProcessor.Normalize(source);
             Invalidate();
             Cursor = Cursors.Arrow;
@@ -482,18 +507,21 @@ namespace WindowsFormsApplication1
 
         private void turnClockwiseToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Undo.push(source);
             source.RotateFlip(RotateFlipType.Rotate90FlipNone);
             Invalidate();
         }
 
         private void turnContrclockwiseToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Undo.push(source);
             source.RotateFlip(RotateFlipType.Rotate270FlipNone);
             Invalidate();
         }
 
         private void mirrorToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Undo.push(source);
             source.RotateFlip(RotateFlipType.RotateNoneFlipX);
             Invalidate();
         }
@@ -517,6 +545,15 @@ namespace WindowsFormsApplication1
                 case Tool.LightingPoints:
                     lightingPointsToolStripMenuItem.Checked = true;
                     break;
+            }
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e) {
+            try {
+                source = Undo.pop();
+                Invalidate();
+            }catch(UndoPopException ex){
+                MessageBox.Show(ex.Message);
             }
         }
     }
