@@ -43,6 +43,7 @@
             this.polynomialProfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lightingPointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.processToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flattenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,10 +54,10 @@
             this.findLightingPointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.smoothTransformToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.recttangularFrameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.recttangularFrameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.darnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -89,7 +90,7 @@
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -97,7 +98,7 @@
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -105,7 +106,7 @@
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -188,10 +189,19 @@
             this.lightToolStripMenuItem,
             this.sharpenToolStripMenuItem,
             this.grayscaleToolStripMenuItem,
-            this.normalizeToolStripMenuItem});
+            this.normalizeToolStripMenuItem,
+            this.darnToolStripMenuItem});
             this.processToolStripMenuItem.Name = "processToolStripMenuItem";
             this.processToolStripMenuItem.Size = new System.Drawing.Size(34, 20);
             this.processToolStripMenuItem.Text = "Do";
+            // 
+            // undoToolStripMenuItem
+            // 
+            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.undoToolStripMenuItem.Text = "Undo";
+            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
             // projectToolStripMenuItem
             // 
@@ -265,20 +275,8 @@
             this.smoothTransformToolStripMenuItem.CheckOnClick = true;
             this.smoothTransformToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.smoothTransformToolStripMenuItem.Name = "smoothTransformToolStripMenuItem";
-            this.smoothTransformToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.smoothTransformToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.smoothTransformToolStripMenuItem.Text = "Smooth transform";
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // undoToolStripMenuItem
-            // 
-            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.undoToolStripMenuItem.Text = "Undo";
-            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
             // recttangularFrameToolStripMenuItem
             // 
@@ -286,6 +284,17 @@
             this.recttangularFrameToolStripMenuItem.Name = "recttangularFrameToolStripMenuItem";
             this.recttangularFrameToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.recttangularFrameToolStripMenuItem.Text = "Recttangular frame";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // darnToolStripMenuItem
+            // 
+            this.darnToolStripMenuItem.Name = "darnToolStripMenuItem";
+            this.darnToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.darnToolStripMenuItem.Text = "Darn";
+            this.darnToolStripMenuItem.Click += new System.EventHandler(this.darnToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -341,6 +350,7 @@
         private System.Windows.Forms.ToolStripMenuItem mirrorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem recttangularFrameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem darnToolStripMenuItem;
     }
 }
 

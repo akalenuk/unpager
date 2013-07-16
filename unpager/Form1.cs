@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 // TODO: FFD on 2-SWINE
 // TODO: approximate 3x2 polynomial model 
@@ -554,6 +555,40 @@ namespace WindowsFormsApplication1
                 Invalidate();
             }catch(UndoPopException ex){
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void darnToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (cur_tool != Tool.ProjectionFrame || !recttangularFrameToolStripMenuItem.Checked) { 
+                MessageBox.Show("You should use rectangular projection frame for this.");
+            }else{
+                Cursor = Cursors.WaitCursor;
+                Debug.Assert(P1.X < P3.X);
+                Debug.Assert(P1.Y < P3.Y);
+                Undo.push(source);
+                Bitmap darned = new Bitmap(source);
+                for(int i = P1.Y+1; i < P3.Y-1; i++){
+                    for(int j = P1.X+1; j < P3.X-1; j++){
+                        double tj = (double)(j - P1.X)/(P3.X - P1.X);
+                        double fj = 1.0 - tj;
+                        double ti = (double)(i - P1.Y)/(P3.Y - P1.Y);
+                        double fi = 1.0 - ti;
+                        Color col_i0 = source.GetPixel(j, P1.Y);
+                        Color col_i1 = source.GetPixel(j, P3.Y);
+                        Color col_j0 = source.GetPixel(P1.X, i);
+                        Color col_j1 = source.GetPixel(P3.X, i);
+                        int r = (int)( (col_i0.R / ti + col_i1.R / fi) / (1.0/ti + 1.0/fi) +
+                                        (col_j0.R / tj + col_j1.R / fj) / (1.0/tj + 1.0/fj) ) / 2;
+                        int g = (int)( (col_i0.G / ti + col_i1.G / fi) / (1.0/ti + 1.0/fi) +
+                                        (col_j0.G / tj + col_j1.G / fj) / (1.0/tj + 1.0/fj) ) / 2;
+                        int b = (int)( (col_i0.B / ti + col_i1.B / fi) / (1.0/ti + 1.0/fi) +
+                                        (col_j0.B / tj + col_j1.B / fj) / (1.0/tj + 1.0/fj) ) / 2;
+                        darned.SetPixel(j, i, Color.FromArgb(r, g, b));                        
+                    }
+                }
+                source = darned;
+                Invalidate();
+                Cursor = Cursors.Arrow;
             }
         }
     }
