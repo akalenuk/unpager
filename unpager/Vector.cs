@@ -192,6 +192,16 @@ namespace WindowsFormsApplication1 {
             return true;
         }
 
+        static public bool semi_equal(double[] A, double[] B) {
+            int la = A.Length;
+            int lb = B.Length;
+            if (la != lb) return false;
+            for (int i = 0; i < la; i++) {
+                if (! Scalar.semi_equal(A[i], B[i]) ) return false;
+            }
+            return true;
+        }
+
         static public void test() { 
             double[][] A = new double[3][] {new double[] {-2, 3, 1}, new double[] {0, 4, 0}, new double[] {-1, 3, 3}};
             Debug.Assert(nple(A) == -20);

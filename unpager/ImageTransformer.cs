@@ -52,30 +52,16 @@ namespace WindowsFormsApplication1
             y3 -= jitter();
             y4 -= jitter();
 
-            double s1 = y1 * x2 - x1 * y2;
-            double s2 = y1 * x4 - x1 * y4;
-            double s3 = x3 * x2 * x1 + x3 * x4 * x1 - x2 * x4 * x1 - x3 * x2 * x4;
-            double s4 = y3 * y2 * y1 + y3 * y4 * y1 - y2 * y4 * y1 - y3 * y2 * y4;
-            double a3 = x2 * x4 - x3 * x4;
-            double b3 = x2 * x4 - x3 * x2;
-            double d4 = y2 * y4 - y3 * y4;
-            double e4 = y2 * y4 - y3 * y2;
-
-            double dB = ((y2 * b3) * (x4 * d4) - (x2 * a3) * (y4 * e4));
-            double B = (((x4 * d4) * (y2 * s3 - s1 * a3) - (x2 * a3) * (s2 * e4 + s4 * x4))) / dB;
-
-            double dD = ((x2 * a3) * (y4 * e4) - (y2 * b3) * (x4 * d4));
-            double D = (((y4 * e4) * (y2 * s3 - s1 * a3) - (y2 * b3) * (s2 * e4 + s4 * x4))) / dD;
-
-            double A = (s3 - b3 * B) / a3;
-            double E = (s4 - d4 * D) / e4;
-
-            double a = (A + x1 - x2) / x2;
-            double b = (B + x1 - x4) / x4;
-
-            double C = x1;
-            double F = y1;
-            double c = 1.0;
+            double[,] M = Matrix.make_projection(x1, y1, x2, y2, x3, y3, x4, y4);
+            double A = M[0, 0];
+            double B = M[1, 0];
+            double C = M[2, 0];
+            double D = M[0, 1];
+            double E = M[1, 1];
+            double F = M[2, 1];
+            double a = M[0, 2];
+            double b = M[1, 2];
+            double c = M[2, 2];
 
             Bitmap proj = new Bitmap(new_w, new_h);
 
