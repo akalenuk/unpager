@@ -15,6 +15,7 @@
 */
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Diagnostics;
 
 namespace WindowsFormsApplication1 {
@@ -114,6 +115,25 @@ namespace WindowsFormsApplication1 {
             double[,] M = new double[3, 3] {{A, D, a}, {B, E, b}, {C, F, c}};
 
             return M;
+        }
+
+        static public double[] project_point(double[,] M, double [] xy) { 
+            Debug.Assert( xy.Length == 2 );
+            double A = M[0, 0];
+            double B = M[1, 0];
+            double C = M[2, 0];
+            double D = M[0, 1];
+            double E = M[1, 1];
+            double F = M[2, 1];
+            double a = M[0, 2];
+            double b = M[1, 2];
+            double c = M[2, 2];
+
+            double d_ = 1.0 / (a * xy[0] + b * xy[1] + c);
+            double x_ = (A * xy[0] + B * xy[1] + C) * d_;
+            double y_ = (D * xy[0] + E * xy[1] + F) * d_;
+
+            return new double[2] { x_, y_ };
         }
 
         static public double[,] make_inverse_to_projection(double [,] M) { // this is not the same as inverse! This one is faster, but works only with projections.

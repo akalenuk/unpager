@@ -47,15 +47,6 @@ namespace WindowsFormsApplication1
             y4 -= Scalar.jitter();
 
             double[,] M = Matrix.make_projection(x1, y1, x2, y2, x3, y3, x4, y4);
-            double A = M[0, 0];
-            double B = M[1, 0];
-            double C = M[2, 0];
-            double D = M[0, 1];
-            double E = M[1, 1];
-            double F = M[2, 1];
-            double a = M[0, 2];
-            double b = M[1, 2];
-            double c = M[2, 2];
 
             Bitmap proj = new Bitmap(new_w, new_h);
 
@@ -65,11 +56,9 @@ namespace WindowsFormsApplication1
                 for (int j = 0; j < new_w; j++)
                 {
                     double x = j / (double)(new_w);
-                    double d = 1.0 / (a * x + b * y + c);
-                    double xn = (A * x + B * y + C) * d;
-                    double yn = (D * x + E * y + F) * d;
+                    double[] xyn = Matrix.project_point(M, new double[] { x, y });
 
-                    Color col = source.GetPixel(xn, yn);
+                    Color col = source.GetPixel(xyn[0], xyn[1]);
                     proj.SetPixel(j, i, col);
                 }
             }
