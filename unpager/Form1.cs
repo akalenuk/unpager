@@ -559,10 +559,97 @@ namespace WindowsFormsApplication1
         }
 
         private void darnToolStripMenuItem_Click(object sender, EventArgs e) {
-            if (cur_tool != Tool.ProjectionFrame || !recttangularFrameToolStripMenuItem.Checked) { 
-                MessageBox.Show("You should use rectangular projection frame for this.");
-            }else{
-                Cursor = Cursors.WaitCursor;
+            Cursor = Cursors.WaitCursor;
+            if (cur_tool != Tool.ProjectionFrame || !recttangularFrameToolStripMenuItem.Checked) {
+                int new_w = (int)(1.5*Math.Max( Dr(P1.X, P1.Y, P2.X, P2.Y), Dr(P3.X, P3.Y, P4.X, P4.Y) ));  // this 1.5 is magic! have to fix it
+                int new_h = (int)(1.5*Math.Max( Dr(P1.X, P1.Y, P4.X, P4.Y), Dr(P2.X, P2.Y, P3.X, P3.Y) ));
+
+                ContinuousBitmap csource = new ContinuousBitmap(source);
+                if (smoothTransformToolStripMenuItem.Checked) {
+                    csource.ChooseInterpolation(ContinuousBitmap.Interpolation.PiecewiseWeight);
+                }
+
+                double x1 = P1.X;
+                double x2 = P2.X;
+                double x3 = P3.X;
+                double x4 = P4.X;
+
+                double y1 = P1.Y;
+                double y2 = P2.Y;
+                double y3 = P3.Y;
+                double y4 = P4.Y;
+
+                x1 += Scalar.jitter();
+                x2 -= Scalar.jitter();
+                x3 -= Scalar.jitter();
+                x4 += Scalar.jitter();
+
+                y1 += Scalar.jitter();
+                y2 += Scalar.jitter();
+                y3 -= Scalar.jitter();
+                y4 -= Scalar.jitter();
+
+                double[,] M = Matrix.make_projection(x1, y1, x2, y2, x3, y3, x4, y4);
+
+                double A = M[0, 0];
+                double B = M[1, 0];
+                double C = M[2, 0];
+                double D = M[0, 1];
+                double E = M[1, 1];
+                double F = M[2, 1];
+                double a = M[0, 2];
+                double b = M[1, 2];
+                double c = M[2, 2];
+
+                Bitmap darned = new Bitmap(source);
+
+                for (int i = 1; i < new_h-1; i++) {
+                    double y = i / (double)(new_h);
+                    for (int j = 1; j < new_w-1; j++) {
+                        double x = j / (double)(new_w);
+
+                        double d_xy = 1.0 / (a * x + b * y + c);
+                        double x_xy = (A * x + B * y + C) * d_xy;
+                        double y_xy = (D * x + E * y + F) * d_xy;
+
+                        double d_x0 = 1.0 / (a * x + b * 0.0 + c);
+                        double x_x0 = (A * x + B * 0.0 + C) * d_x0;
+                        double y_x0 = (D * x + E * 0.0 + F) * d_x0;
+
+                        double d_x1 = 1.0 / (a * x + b * 1.0 + c);
+                        double x_x1 = (A * x + B * 1.0 + C) * d_x1;
+                        double y_x1 = (D * x + E * 1.0 + F) * d_x1;
+
+                        double d_0y = 1.0 / (a * 0.0 + b * y + c);
+                        double x_0y = (A * 0.0 + B * y + C) * d_0y;
+                        double y_0y = (D * 0.0 + E * y + F) * d_0y;
+
+                        double d_1y = 1.0 / (a * 1.0 + b * y + c);
+                        double x_1y = (A * 1.0 + B * y + C) * d_1y;
+                        double y_1y = (D * 1.0 + E * y + F) * d_1y;
+
+                        double tj = x;
+                        double fj = 1.0 - tj;
+                        double ti = y;
+                        double fi = 1.0 - ti;
+
+                        Color col_i0 = csource.GetPixel(x_0y, y_0y);
+                        Color col_i1 = csource.GetPixel(x_1y, y_1y);
+                        Color col_j0 = csource.GetPixel(x_x0, y_x0);
+                        Color col_j1 = csource.GetPixel(x_x1, y_x1);
+
+                        int r_ = (int)((col_i0.R / ti + col_i1.R / fi) / (1.0 / ti + 1.0 / fi) +
+                                        (col_j0.R / tj + col_j1.R / fj) / (1.0 / tj + 1.0 / fj)) / 2;
+                        int g_ = (int)((col_i0.G / ti + col_i1.G / fi) / (1.0 / ti + 1.0 / fi) +
+                                        (col_j0.G / tj + col_j1.G / fj) / (1.0 / tj + 1.0 / fj)) / 2;
+                        int b_ = (int)((col_i0.B / ti + col_i1.B / fi) / (1.0 / ti + 1.0 / fi) +
+                                        (col_j0.B / tj + col_j1.B / fj) / (1.0 / tj + 1.0 / fj)) / 2;
+
+                        darned.SetPixel((int)x_xy, (int)y_xy, Color.FromArgb(r_, g_, b_));                        
+                    }
+                }
+                source = darned;
+            }else{                
                 Debug.Assert(P1.X < P3.X);
                 Debug.Assert(P1.Y < P3.Y);
                 Undo.push(source);
@@ -587,9 +674,9 @@ namespace WindowsFormsApplication1
                     }
                 }
                 source = darned;
-                Invalidate();
-                Cursor = Cursors.Arrow;
             }
+            Invalidate();
+            Cursor = Cursors.Arrow;
         }
     }
 }

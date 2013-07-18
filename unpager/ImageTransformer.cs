@@ -22,12 +22,6 @@ namespace WindowsFormsApplication1
 {
     class ImageTransformer
     {
-        static Random rand_gen = new Random();
-        private static double jitter()
-        {
-            return rand_gen.NextDouble() / 1000.0;
-        }        
-
         public static Bitmap Projection(ContinuousBitmap source, Point P1, Point P2, Point P3, Point P4){
             int new_w = (int)(Dr(P1.X, P1.Y, P2.X, P2.Y) + Dr(P3.X, P3.Y, P4.X, P4.Y)) / 2;
             int new_h = (int)(Dr(P1.X, P1.Y, P4.X, P4.Y) + Dr(P2.X, P2.Y, P3.X, P3.Y)) / 2;
@@ -42,15 +36,15 @@ namespace WindowsFormsApplication1
             double y3 = P3.Y;
             double y4 = P4.Y;
 
-            x1 += jitter();
-            x2 -= jitter();
-            x3 -= jitter();
-            x4 += jitter();
+            x1 += Scalar.jitter();
+            x2 -= Scalar.jitter();
+            x3 -= Scalar.jitter();
+            x4 += Scalar.jitter();
 
-            y1 += jitter();
-            y2 += jitter();
-            y3 -= jitter();
-            y4 -= jitter();
+            y1 += Scalar.jitter();
+            y2 += Scalar.jitter();
+            y3 -= Scalar.jitter();
+            y4 -= Scalar.jitter();
 
             double[,] M = Matrix.make_projection(x1, y1, x2, y2, x3, y3, x4, y4);
             double A = M[0, 0];
