@@ -53,6 +53,11 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();
             this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseWheel);
+
+            firm_carcas1 = new List<Point>();
+            firm_carcas1.Add(new Point(0, 0));
+            firm_carcas2 = new List<Point>();
+            firm_carcas2.Add(new Point(0, 0));
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -60,7 +65,51 @@ namespace WindowsFormsApplication1
             DoubleBuffered = true;
             openFileDialog1.Filter = "Pictures (*.png, *.jpg, ...)|*.jpg;*.jpeg;*.png;*.bmp|All Files (*.*)|*.*";
             saveFileDialog1.Filter = "PNG (*.png)|*.png|Everything (*.*)|*.*";
+
+            // ad hoc localization
+            // I just have to make presentation in russian really quick
+            if (System.AppDomain.CurrentDomain.FriendlyName == "unpager_ru.exe") {
+
+                fileToolStripMenuItem.Text = "Файлы";
+                openToolStripMenuItem.Text = "Открыть";
+                saveToolStripMenuItem.Text = "Сохранить";
+                exitToolStripMenuItem.Text = "Выход";
+
+                trivialitiesToolStripMenuItem.Text = "Повороты/зеркало";
+                turnClockwiseToolStripMenuItem.Text = "Поворот по часовой";
+                turnContrclockwiseToolStripMenuItem.Text = "Поворот против часовой";
+                mirrorToolStripMenuItem.Text = "Зеркальное отображение";
+
+                toolToolStripMenuItem.Text = "Инструменты";
+                noneToolStripMenuItem.Text = "Просмотрщик";
+                projectionFrameToolStripMenuItem.Text = "Рамка";
+                polynomialProfilesToolStripMenuItem.Text = "Профили";
+                lightingPointsToolStripMenuItem.Text = "Точки";
+
+                processToolStripMenuItem.Text = "Обработка";
+                undoToolStripMenuItem.Text = "Отменить последнее";
+                projectToolStripMenuItem.Text = "Проецировать по рамке";
+                flattenToolStripMenuItem.Text = "Спрямить по профилям";
+                lightToolStripMenuItem.Text = "Пересчитать свет по точкам";
+                sharpenToolStripMenuItem.Text = "Отделить текст от фона";
+                grayscaleToolStripMenuItem.Text = "Обесцветить в Ч/Б";
+                normalizeToolStripMenuItem.Text = "Нормализировать яркость";
+                darnToolStripMenuItem.Text = "Залатать по рамке";
+
+                automaticToolStripMenuItem.Text = "Автоматизация";
+                findLightingPointsToolStripMenuItem.Text = "Найти точки освещения";
+
+                settingsToolStripMenuItem.Text = "Выбираемые настройки";
+                smoothTransformToolStripMenuItem.Text = "Картинка при трансформации сглаживается";
+                rectangularFrameToolStripMenuItem.Text = "Рамка становится прямоугольной";
+            }
+            InvalidateWhole();
+        }
+
+        private void InvalidateWhole() {
+            Invalidate();
             SetMenuChecks();
+            Cursor = Cursors.Arrow;
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -77,7 +126,7 @@ namespace WindowsFormsApplication1
                 source_scale = 0.8F * (double)ClientSize.Height / source.Height;
                 source_point.X = ClientRectangle.Left + ClientSize.Width / 2 - (int)(source.Width * source_scale) / 2;
                 source_point.Y = ClientRectangle.Top + ClientSize.Height / 2 - (int)(source.Height * source_scale) / 2;
-                Invalidate();
+                InvalidateWhole();
             }
         }
 
@@ -228,7 +277,7 @@ namespace WindowsFormsApplication1
                         source_point.X += e.X - capture_point.X;
                         source_point.Y += e.Y - capture_point.Y;
                         capture_point = new Point(e.X, e.Y);
-                        Invalidate();
+                        InvalidateWhole();
                     }
                     break;
                 case Tool.ProjectionFrame:
@@ -236,7 +285,7 @@ namespace WindowsFormsApplication1
                         source_point.X += e.X - capture_point.X;
                         source_point.Y += e.Y - capture_point.Y;
                         capture_point = new Point(e.X, e.Y);
-                        Invalidate();
+                        InvalidateWhole();
                     }
                     if (lpoint_captured) {
                         CheckProjPoint(new Point(e.X, e.Y));
@@ -253,8 +302,8 @@ namespace WindowsFormsApplication1
         private void Form1_MouseWheel(object sender, MouseEventArgs e) {
             if (cur_tool == Tool.ProjectionFrame || cur_tool == Tool.None)
             {
-                source_scale += e.Delta / 5000.0;
-                Invalidate();
+                source_scale += e.Delta / 4500.0;
+                InvalidateWhole();
             }
         }
 
@@ -280,7 +329,7 @@ namespace WindowsFormsApplication1
                 case Tool.LightingPoints:
                     if (e.Button == System.Windows.Forms.MouseButtons.Left) {
                         light_points.Add(new Point(s_to_x(e.X), s_to_y(e.Y)));
-                        Invalidate();
+                        InvalidateWhole();
                     }
                     if (e.Button == System.Windows.Forms.MouseButtons.Right)
                     {
@@ -295,7 +344,7 @@ namespace WindowsFormsApplication1
                                 }
                             }
                             light_points.RemoveAt(min_Di);
-                            Invalidate();
+                            InvalidateWhole();
                         }
                     }
                     break;
@@ -312,33 +361,33 @@ namespace WindowsFormsApplication1
             if (D1 <= D2 && D1 <= D3 && D1 <= D4) {
                 P1.X = sx;
                 P1.Y = sy;
-                if (recttangularFrameToolStripMenuItem.Checked) {
+                if (rectangularFrameToolStripMenuItem.Checked) {
                     P2.Y = sy;
                     P4.X = sx;
                 }
             } else if (D2 <= D3 && D2 <= D4) {
                 P2.X = sx;
                 P2.Y = sy;
-                if (recttangularFrameToolStripMenuItem.Checked) {
+                if (rectangularFrameToolStripMenuItem.Checked) {
                     P1.Y = sy;
                     P3.X = sx;
                 }
             } else if (D3 <= D4) {
                 P3.X = sx;
                 P3.Y = sy;
-                if (recttangularFrameToolStripMenuItem.Checked) {
+                if (rectangularFrameToolStripMenuItem.Checked) {
                     P2.X = sx;
                     P4.Y = sy;
                 }
             } else {
                 P4.X = sx;
                 P4.Y = sy;
-                if (recttangularFrameToolStripMenuItem.Checked) {
+                if (rectangularFrameToolStripMenuItem.Checked) {
                     P1.X = sx;
                     P3.Y = sy;
                 }
             }
-            Invalidate();
+            InvalidateWhole();
         }
 
         private void CheckLine(int sy){
@@ -348,7 +397,7 @@ namespace WindowsFormsApplication1
             } else {
                 line2 = y;
             }
-            Invalidate();
+            InvalidateWhole();
         }
 
         private void CheckCarcas(Point p) {
@@ -361,7 +410,7 @@ namespace WindowsFormsApplication1
                 AddCarcas(carcas2, new Point(x, y - line2));
                 pol2 = new Polynomial(pol_n, carcas2, firm_carcas2);
             }
-            Invalidate();
+            InvalidateWhole();
         }
 
         private void AddCarcas(List<Point> carcas, Point p){
@@ -390,12 +439,7 @@ namespace WindowsFormsApplication1
             source_point.Y = ClientRectangle.Top + ClientSize.Height / 2 - (int)(source.Height * source_scale) / 2;
             line1 = (int)(source.Height * source_scale) / 10;
             line2 = source.Height - line1;
-            firm_carcas1 = new List<Point>();
-            firm_carcas1.Add(new Point(0, 0));
-            firm_carcas2 = new List<Point>();
-            firm_carcas2.Add(new Point(0, 0));
-            Invalidate();
-            Cursor = Cursors.Arrow;
+            InvalidateWhole();
         }
 
         private void flattenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -412,8 +456,7 @@ namespace WindowsFormsApplication1
             source_scale = 0.8F * (double)ClientSize.Height / source.Height;
             source_point.X = ClientRectangle.Left + ClientSize.Width / 2 - (int)(source.Width * source_scale) / 2;
             source_point.Y = ClientRectangle.Top + ClientSize.Height / 2 - (int)(source.Height * source_scale) / 2;
-            Invalidate();
-            Cursor = Cursors.Arrow;
+            InvalidateWhole();
         }
 
         private void lightToolStripMenuItem_Click(object sender, EventArgs e)
@@ -422,8 +465,7 @@ namespace WindowsFormsApplication1
             Undo.push(source);
             source = ImageProcessor.FlattenLight(source, light_points);
             cur_tool = Tool.None;
-            Invalidate();
-            Cursor = Cursors.Arrow;
+            InvalidateWhole();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -443,29 +485,25 @@ namespace WindowsFormsApplication1
         private void projectionFrameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             cur_tool = Tool.ProjectionFrame;
-            SetMenuChecks();
-            Invalidate();
+            InvalidateWhole();
         }
 
         private void polynomialProfilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             cur_tool = Tool.PolynomialProfiles;
-            SetMenuChecks();
-            Invalidate();
+            InvalidateWhole();
         }
 
         private void lightingPointsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             cur_tool = Tool.LightingPoints;
-            SetMenuChecks();
-            Invalidate();
+            InvalidateWhole();
         }
 
         private void noneToolStripMenuItem_Click(object sender, EventArgs e)
         {
             cur_tool = Tool.None;
-            SetMenuChecks();
-            Invalidate();
+            InvalidateWhole();
         }
 
         private void sharpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -473,8 +511,7 @@ namespace WindowsFormsApplication1
             Cursor = Cursors.WaitCursor;
             Undo.push(source);
             source = ImageProcessor.Reinterpolate(source, 4, 4);
-            Invalidate();
-            Cursor = Cursors.Arrow;
+            InvalidateWhole();
         }
 
         private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -482,8 +519,7 @@ namespace WindowsFormsApplication1
             Cursor = Cursors.WaitCursor;
             Undo.push(source);
             source = ImageProcessor.Grayscale(source);
-            Invalidate();
-            Cursor = Cursors.Arrow;
+            InvalidateWhole();
         }
 
         private void normalizeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -491,8 +527,7 @@ namespace WindowsFormsApplication1
             Cursor = Cursors.WaitCursor;
             Undo.push(source);
             source = ImageProcessor.Normalize(source);
-            Invalidate();
-            Cursor = Cursors.Arrow;
+            InvalidateWhole();
         }
 
         private void findLightingPointsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -501,30 +536,28 @@ namespace WindowsFormsApplication1
             cur_tool = Tool.LightingPoints;
             light_points.Clear();
             light_points = Automatic.FindLightingPoints(source, 10, 10);
-            SetMenuChecks();
-            Invalidate();
-            Cursor = Cursors.Arrow;
+            InvalidateWhole();
         }
 
         private void turnClockwiseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Undo.push(source);
             source.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            Invalidate();
+            InvalidateWhole();
         }
 
         private void turnContrclockwiseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Undo.push(source);
             source.RotateFlip(RotateFlipType.Rotate270FlipNone);
-            Invalidate();
+            InvalidateWhole();
         }
 
         private void mirrorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Undo.push(source);
             source.RotateFlip(RotateFlipType.RotateNoneFlipX);
-            Invalidate();
+            InvalidateWhole();
         }
 
         private void SetMenuChecks() {
@@ -552,7 +585,7 @@ namespace WindowsFormsApplication1
         private void undoToolStripMenuItem_Click(object sender, EventArgs e) {
             try {
                 source = Undo.pop();
-                Invalidate();
+                InvalidateWhole();
             }catch(UndoPopException ex){
                 MessageBox.Show(ex.Message);
             }
@@ -561,7 +594,7 @@ namespace WindowsFormsApplication1
         private void darnToolStripMenuItem_Click(object sender, EventArgs e) {
             Cursor = Cursors.WaitCursor;
             Undo.push(source);
-            if (cur_tool != Tool.ProjectionFrame || !recttangularFrameToolStripMenuItem.Checked) {
+            if (cur_tool != Tool.ProjectionFrame || !rectangularFrameToolStripMenuItem.Checked) {
                 int new_w = (int)(1.5*Math.Max( Dr(P1.X, P1.Y, P2.X, P2.Y), Dr(P3.X, P3.Y, P4.X, P4.Y) ));  // this 1.5 is magic! have to fix it
                 int new_h = (int)(1.5*Math.Max( Dr(P1.X, P1.Y, P4.X, P4.Y), Dr(P2.X, P2.Y, P3.X, P3.Y) ));
 
@@ -650,8 +683,7 @@ namespace WindowsFormsApplication1
                 }
                 source = darned;
             }
-            Invalidate();
-            Cursor = Cursors.Arrow;
+            InvalidateWhole();
         }
     }
 }

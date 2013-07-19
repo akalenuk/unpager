@@ -54,7 +54,7 @@
             this.findLightingPointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.smoothTransformToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.recttangularFrameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rectangularFrameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.darnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -264,7 +264,7 @@
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.smoothTransformToolStripMenuItem,
-            this.recttangularFrameToolStripMenuItem});
+            this.rectangularFrameToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
             this.settingsToolStripMenuItem.Text = "Selectables";
@@ -280,10 +280,10 @@
             // 
             // recttangularFrameToolStripMenuItem
             // 
-            this.recttangularFrameToolStripMenuItem.CheckOnClick = true;
-            this.recttangularFrameToolStripMenuItem.Name = "recttangularFrameToolStripMenuItem";
-            this.recttangularFrameToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.recttangularFrameToolStripMenuItem.Text = "Recttangular frame";
+            this.rectangularFrameToolStripMenuItem.CheckOnClick = true;
+            this.rectangularFrameToolStripMenuItem.Name = "recttangularFrameToolStripMenuItem";
+            this.rectangularFrameToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.rectangularFrameToolStripMenuItem.Text = "Recttangular frame";
             // 
             // openFileDialog1
             // 
@@ -349,7 +349,7 @@
         private System.Windows.Forms.ToolStripMenuItem turnContrclockwiseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mirrorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem recttangularFrameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rectangularFrameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem darnToolStripMenuItem;
     }
 }
