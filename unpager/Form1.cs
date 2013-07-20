@@ -23,7 +23,10 @@ namespace WindowsFormsApplication1
             PolynomialProfiles,
             LightingPoints
         };
-        
+
+       const double SCALE_DIVISOR = 1000.0;
+       const int FRAME_DEFAULT = 25;
+
         Tool cur_tool = Tool.None;
 
         Bitmap source = new Bitmap(100, 100);
@@ -46,6 +49,8 @@ namespace WindowsFormsApplication1
         const int pol_n = 4;
         Polynomial pol1 = new Polynomial();
         Polynomial pol2 = new Polynomial();
+
+        Point last_mouse_pos = new Point(0, 0);
 
         List<Point> light_points = new List<Point>();
 
@@ -270,6 +275,7 @@ namespace WindowsFormsApplication1
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
+            last_mouse_pos = new Point(e.X, e.Y);
             switch(cur_tool)
             {
                 case Tool.None:
@@ -302,8 +308,14 @@ namespace WindowsFormsApplication1
         private void Form1_MouseWheel(object sender, MouseEventArgs e) {
             if (cur_tool == Tool.ProjectionFrame || cur_tool == Tool.None)
             {
-                source_scale += e.Delta / 4500.0;
+                int x = s_to_x(e.X);
+                int y = s_to_y(e.Y);
+                source_scale *= (1.0 + e.Delta / SCALE_DIVISOR );
                 InvalidateWhole();
+                int dx = x_to_s(x) - e.X;
+                int dy = y_to_s(y) - e.Y;
+                source_point.X -= dx;
+                source_point.Y -= dy;
             }
         }
 
@@ -684,6 +696,41 @@ namespace WindowsFormsApplication1
                 source = darned;
             }
             InvalidateWhole();
+        }
+
+        private void frameToCursorToolStripMenuItem_Click(object sender, EventArgs e) {
+            MessageBox.Show("This is just a tip, you have to press Alt+A on your keyboard.");
+        }
+
+        private void frameToCursorToolStripMenuItem1_Click(object sender, EventArgs e) {
+            cur_tool = Tool.ProjectionFrame;
+            P1 = new Point(s_to_x(last_mouse_pos.X - FRAME_DEFAULT), s_to_y(last_mouse_pos.Y - FRAME_DEFAULT));
+            P2 = new Point(s_to_x(last_mouse_pos.X + FRAME_DEFAULT), s_to_y(last_mouse_pos.Y - FRAME_DEFAULT));
+            P3 = new Point(s_to_x(last_mouse_pos.X + FRAME_DEFAULT), s_to_y(last_mouse_pos.Y + FRAME_DEFAULT));
+            P4 = new Point(s_to_x(last_mouse_pos.X - FRAME_DEFAULT), s_to_y(last_mouse_pos.Y + FRAME_DEFAULT));
+            InvalidateWhole();
+        }
+
+        private void resetFrameToolStripMenuItem_Click(object sender, EventArgs e) {
+            MessageBox.Show("This is just a tip, you have to press Alt+Z on your keyboard.");            
+        }
+
+        private void selectFrameToolStripMenuItem1_Click(object sender, EventArgs e) {
+            cur_tool = Tool.ProjectionFrame;
+            InvalidateWhole();
+        }
+
+        private void resetFrameToolStripMenuItem1_Click(object sender, EventArgs e) {
+            cur_tool = Tool.ProjectionFrame;
+            P1 = new Point(0, 0);
+            P2 = new Point(source.Width, 0);
+            P3 = new Point(source.Width, source.Height);
+            P4 = new Point(0, source.Height);
+            InvalidateWhole();
+        }
+
+        private void selectFrameToolStripMenuItem_Click(object sender, EventArgs e) {
+            MessageBox.Show("This is just a tip, you have to press Alt+Q on your keyboard."); 
         }
     }
 }
