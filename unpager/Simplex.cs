@@ -93,8 +93,5 @@ namespace WindowsFormsApplication1 {    // Bits of simplicial geometry
                 return to_ret;
             }
         }
-
-
-
     }
 }

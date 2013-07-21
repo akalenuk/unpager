@@ -445,7 +445,7 @@ namespace WindowsFormsApplication1
                 csource.ChooseInterpolation(ContinuousBitmap.Interpolation.PiecewiseWeight);
             }
             source = ImageTransformer.Projection(csource, P1, P2, P3, P4);
-            cur_tool = Tool.PolynomialProfiles;
+
             source_scale = 0.8F * (double)ClientSize.Height / source.Height;
             source_point.X = ClientRectangle.Left + ClientSize.Width / 2 - (int)(source.Width * source_scale) / 2;
             source_point.Y = ClientRectangle.Top + ClientSize.Height / 2 - (int)(source.Height * source_scale) / 2;
@@ -464,7 +464,7 @@ namespace WindowsFormsApplication1
                 csource.ChooseInterpolation(ContinuousBitmap.Interpolation.PiecewiseWeight);
             }
             source = ImageTransformer.ByPolynomialProfiles(csource, pol1, pol2, line1, line2);
-            cur_tool = Tool.LightingPoints;
+            
             source_scale = 0.8F * (double)ClientSize.Height / source.Height;
             source_point.X = ClientRectangle.Left + ClientSize.Width / 2 - (int)(source.Width * source_scale) / 2;
             source_point.Y = ClientRectangle.Top + ClientSize.Height / 2 - (int)(source.Height * source_scale) / 2;
@@ -476,7 +476,7 @@ namespace WindowsFormsApplication1
             Cursor = Cursors.WaitCursor;
             Undo.push(source);
             source = ImageProcessor.FlattenLight(source, light_points);
-            cur_tool = Tool.None;
+
             InvalidateWhole();
         }
 
@@ -606,7 +606,11 @@ namespace WindowsFormsApplication1
         private void darnToolStripMenuItem_Click(object sender, EventArgs e) {
             Cursor = Cursors.WaitCursor;
             Undo.push(source);
-            if (cur_tool != Tool.ProjectionFrame || !rectangularFrameToolStripMenuItem.Checked) {
+            if (cur_tool != Tool.ProjectionFrame) {
+                MessageBox.Show("You have to select projection frame to do darning");
+                return;
+            }
+            if( !rectangularFrameToolStripMenuItem.Checked) {
                 int new_w = (int)(1.5*Math.Max( Dr(P1.X, P1.Y, P2.X, P2.Y), Dr(P3.X, P3.Y, P4.X, P4.Y) ));  // this 1.5 is magic! have to fix it
                 int new_h = (int)(1.5*Math.Max( Dr(P1.X, P1.Y, P4.X, P4.Y), Dr(P2.X, P2.Y, P3.X, P3.Y) ));
 
@@ -698,10 +702,14 @@ namespace WindowsFormsApplication1
             InvalidateWhole();
         }
 
-        private void frameToCursorToolStripMenuItem_Click(object sender, EventArgs e) {
-            MessageBox.Show("This is just a tip, you have to press Alt+A on your keyboard.");
+        private void sWINEProfilesToolStripMenuItem_Click(object sender, EventArgs e) {
+            MessageBox.Show("Not here yet.");
         }
 
+        private void notRealMenuItem_Click(object sender, EventArgs e) {
+            MessageBox.Show("This is just a tip, you have to press " + ((ToolStripMenuItem)sender).ShortcutKeyDisplayString + " on your keyboard.");
+        }
+        
         private void frameToCursorToolStripMenuItem1_Click(object sender, EventArgs e) {
             cur_tool = Tool.ProjectionFrame;
             P1 = new Point(s_to_x(last_mouse_pos.X - FRAME_DEFAULT), s_to_y(last_mouse_pos.Y - FRAME_DEFAULT));
@@ -709,10 +717,6 @@ namespace WindowsFormsApplication1
             P3 = new Point(s_to_x(last_mouse_pos.X + FRAME_DEFAULT), s_to_y(last_mouse_pos.Y + FRAME_DEFAULT));
             P4 = new Point(s_to_x(last_mouse_pos.X - FRAME_DEFAULT), s_to_y(last_mouse_pos.Y + FRAME_DEFAULT));
             InvalidateWhole();
-        }
-
-        private void resetFrameToolStripMenuItem_Click(object sender, EventArgs e) {
-            MessageBox.Show("This is just a tip, you have to press Alt+Z on your keyboard.");            
         }
 
         private void selectFrameToolStripMenuItem1_Click(object sender, EventArgs e) {
@@ -729,8 +733,36 @@ namespace WindowsFormsApplication1
             InvalidateWhole();
         }
 
-        private void selectFrameToolStripMenuItem_Click(object sender, EventArgs e) {
-            MessageBox.Show("This is just a tip, you have to press Alt+Q on your keyboard."); 
+        private void selectPolynomialProfilesToolStripMenuItem1_Click(object sender, EventArgs e) {
+            cur_tool = Tool.PolynomialProfiles;
+            InvalidateWhole();
         }
+
+        private void resetPolynomialProfilesToolStripMenuItem1_Click(object sender, EventArgs e) {
+            cur_tool = Tool.PolynomialProfiles;
+            int y = s_to_y(last_mouse_pos.Y);
+            if (Math.Abs(y - line1) < Math.Abs(y - line2)) {
+                carcas1 = new List<Point>();
+                pol1 = new Polynomial(pol_n, carcas1, firm_carcas1);
+            } else {
+                carcas2 = new List<Point>();
+                pol2 = new Polynomial(pol_n, carcas2, firm_carcas1);
+            }
+            InvalidateWhole();
+        }
+
+        private void selectLightingPointsToolStripMenuItem1_Click(object sender, EventArgs e) {
+            cur_tool = Tool.LightingPoints;
+            InvalidateWhole();
+        }
+
+        private void resetLightingPointsToolStripMenuItem1_Click(object sender, EventArgs e) {
+            cur_tool = Tool.LightingPoints;
+            light_points = new List<Point>();
+            InvalidateWhole();
+        }
+
+
+        
     }
 }

@@ -61,6 +61,10 @@ namespace WindowsFormsApplication1 {
             return Math.Sqrt(res);
         }
 
+        static public double dist(double[] a, double[] b) {
+            return len(add(a, mul(-1.0, b)));
+        }
+
         static public double[] mul(double s, double[] a) {
             double[] res = new double[a.Length];
             for (int i = 0; i < a.Length; i++) {
