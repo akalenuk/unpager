@@ -29,7 +29,7 @@ namespace WindowsFormsApplication1 {    // Bits of simplicial geometry
         Returns:
             Point, which is an 'a' projection on 'S' simplex plane.
         */
-        double[] v_proj(double[] a, double[][] S, bool check_if_in = false, double[] ret_if_not = null) {
+        double[] proj(double[] a, double[][] S, bool check_if_in = false, double[] ret_if_not = null) {
             int DIMM = a.Length;
             foreach (double[] b in S) {
                 Debug.Assert(b.Length == DIMM);
@@ -92,6 +92,116 @@ namespace WindowsFormsApplication1 {    // Bits of simplicial geometry
                 }
                 return to_ret;
             }
+        }
+
+
+
+        /* Determines if a point is in simplex
+
+            Args:
+                dot: point coordinates in an a basis set by simplex 1-edges.
+                sx: index for basic simplex in an array of simplexes 'Sx'.
+                pnt: index of an origin point in simplex.
+                xyz: list of points,
+                Sx: list of point indexes, representing simplicial complex.
+                crd: the return value for calculated coordinates.
+
+            Returns:
+                'True' if point is in a simplex, 'False' otherwise.
+        */
+        bool point_in_simplex(int sx, double[] dot, int pnt, double[][] xyz, int[][] Sx, out double[] crd) {
+            int DIMM = dot.Length;
+            double[,] A = new double[DIMM, DIMM];
+            double[] B = new double[DIMM];
+
+            crd = new double[DIMM];
+
+            int cnt = 0;
+            int p_pnt = Sx[sx][pnt] - 1;
+            for (int i = 0; i < DIMM + 1; i++) {
+                int p_i = Sx[sx][i] - 1;
+                if (p_i != p_pnt) {
+                    for (int j = 0; j < DIMM; j++) {
+                        A[j,cnt] = xyz[p_i][j] - xyz[p_pnt][j];
+                    }
+                    cnt += 1;
+                }
+            }
+            Debug.Assert(cnt == DIMM);
+            for (int j = 0; j < DIMM; j++) {
+                B[j] = dot[j] - xyz[p_pnt][j];
+            }
+            crd = Vector.Gauss(A, B);
+
+            double sum = 0.0;
+            for (int j = 0; j < DIMM; j++) {
+                if (crd[j] < 0.0 || crd[j] > 1.0) {
+                    return false;
+                }
+                sum += crd[j];
+            }
+            if (sum > 1) {
+                return false;
+            }
+            return true;
+        }
+       
+
+        /*
+        Finds a simplex which is the nearest to a 'dot' point.
+        Args:
+            sx: A candiate simplex.
+            xyz: List of all points forming simplicial complex.
+            Sx: List of point indexes, representing simplicial complex.
+            best_pack: Structure for passing found data recoursively.
+
+        Returns:
+            List, first element of which represents nearest simplex index. 
+         */
+        class BestPack {
+            public double len;
+            public double[] vec1;
+            public double[] vec2;
+        };
+
+        BestPack get_nearest_simplex(double[] dot, double[][] xyz, int[][] Sx, int[] sx, BestPack best_pack) {
+            BestPack new_pack = new BestPack();
+            new_pack.len = best_pack.len;
+            new_pack.vec1 = (double[])best_pack.vec1.Clone();
+            new_pack.vec2 = (double[])best_pack.vec2.Clone();
+
+            double[][] new_S = new double[sx.Length][];
+            for (int i = 0; i < sx.Length; i++) {
+                new_S[i] = xyz[sx[i] - 1];
+            }
+
+            double[] bad_proj = new double[dot.Length];
+            for (int i = 0; i < dot.Length; i++) {
+                bad_proj[i] = 1.0e10;
+            }
+            
+            double[] new_prj = proj(dot, new_S, true, bad_proj);
+            double new_l = Vector.len(Vector.sub(new_prj, dot));
+            if (new_l < best_pack.len) {
+                best_pack.len = new_l;
+                best_pack.vec1 = (double[])new_prj.Clone();
+                best_pack.vec1 = (double[])sx.Clone();
+            }
+
+            if ( sx.Length > 1.0) {
+                for (int i = 0; i < sx.Length; i++) {
+                    int[] c_sx = new int[sx.Length-1];
+                    int n = 0;
+                    for(int j = 0; j<sx.Length;j++){
+                        if( j!= i){
+                            c_sx[n] = sx[j];
+                        }
+                        n++;
+                    }
+                    best_pack = get_nearest_simplex(dot, xyz, Sx, c_sx, best_pack);
+                }
+            }
+            return best_pack;
         }
     }
 }
