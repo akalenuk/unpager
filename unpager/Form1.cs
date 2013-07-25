@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 
 // TODO: FFD on 2-SWINE
 // TODO: approximate 3x2 polynomial model 
@@ -762,7 +763,20 @@ namespace WindowsFormsApplication1
             InvalidateWhole();
         }
 
-
+        private void printScreenToolStripMenuItem1_Click(object sender, EventArgs e) {
+            if (menuStrip1.Visible) {
+                menuStrip1.Hide();
+            }else if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                Rectangle bounds = RectangleToScreen(this.ClientRectangle);
+                using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height)) {
+                    using (Graphics g = Graphics.FromImage(bitmap)) {                     
+                        g.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
+                        menuStrip1.Show();
+                    }
+                    bitmap.Save(saveFileDialog1.FileName, ImageFormat.Png);
+                }
+            }
+        }
         
     }
 }

@@ -69,20 +69,24 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.selectLightingPointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetLightingPointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
+            this.printScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.realHotKeysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectFrameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.frameToCursorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.resetFrameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.selectPolynomialProfilesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.selectPolynomialProfilesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.resetPolynomialProfilesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.selectMSWINEProfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.selectLightingPointsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.resetLightingPointsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
+            this.printScreenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -340,7 +344,9 @@
             this.selectSWINEProfilesToolStripMenuItem,
             this.toolStripMenuItem3,
             this.selectLightingPointsToolStripMenuItem,
-            this.resetLightingPointsToolStripMenuItem});
+            this.resetLightingPointsToolStripMenuItem,
+            this.toolStripMenuItem7,
+            this.printScreenToolStripMenuItem});
             this.hotKeysToolStripMenuItem.Name = "hotKeysToolStripMenuItem";
             this.hotKeysToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.hotKeysToolStripMenuItem.Text = "Hot keys";
@@ -349,7 +355,7 @@
             // 
             this.selectFrameToolStripMenuItem.Name = "selectFrameToolStripMenuItem";
             this.selectFrameToolStripMenuItem.ShortcutKeyDisplayString = "Alt + Q";
-            this.selectFrameToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.selectFrameToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
             this.selectFrameToolStripMenuItem.Text = "Select frame";
             this.selectFrameToolStripMenuItem.Click += new System.EventHandler(this.notRealMenuItem_Click);
             // 
@@ -357,7 +363,7 @@
             // 
             this.frameToCursorToolStripMenuItem.Name = "frameToCursorToolStripMenuItem";
             this.frameToCursorToolStripMenuItem.ShortcutKeyDisplayString = "Alt + A";
-            this.frameToCursorToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.frameToCursorToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
             this.frameToCursorToolStripMenuItem.Text = "Frame to cursor";
             this.frameToCursorToolStripMenuItem.Click += new System.EventHandler(this.notRealMenuItem_Click);
             // 
@@ -365,20 +371,20 @@
             // 
             this.resetFrameToolStripMenuItem.Name = "resetFrameToolStripMenuItem";
             this.resetFrameToolStripMenuItem.ShortcutKeyDisplayString = "Alt + Z";
-            this.resetFrameToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.resetFrameToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
             this.resetFrameToolStripMenuItem.Text = "Reset frame";
             this.resetFrameToolStripMenuItem.Click += new System.EventHandler(this.notRealMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(254, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(303, 6);
             // 
             // selectPolynomialProfilesToolStripMenuItem
             // 
             this.selectPolynomialProfilesToolStripMenuItem.Name = "selectPolynomialProfilesToolStripMenuItem";
             this.selectPolynomialProfilesToolStripMenuItem.ShortcutKeyDisplayString = "Alt + W";
-            this.selectPolynomialProfilesToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.selectPolynomialProfilesToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
             this.selectPolynomialProfilesToolStripMenuItem.Text = "Select polynomial profiles";
             this.selectPolynomialProfilesToolStripMenuItem.Click += new System.EventHandler(this.notRealMenuItem_Click);
             // 
@@ -386,33 +392,33 @@
             // 
             this.resetPolynomialProfilesToolStripMenuItem.Name = "resetPolynomialProfilesToolStripMenuItem";
             this.resetPolynomialProfilesToolStripMenuItem.ShortcutKeyDisplayString = "Alt + S";
-            this.resetPolynomialProfilesToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.resetPolynomialProfilesToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
             this.resetPolynomialProfilesToolStripMenuItem.Text = "Reset polynomial profile";
             this.resetPolynomialProfilesToolStripMenuItem.Click += new System.EventHandler(this.notRealMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(254, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(303, 6);
             // 
             // selectSWINEProfilesToolStripMenuItem
             // 
             this.selectSWINEProfilesToolStripMenuItem.Name = "selectSWINEProfilesToolStripMenuItem";
             this.selectSWINEProfilesToolStripMenuItem.ShortcutKeyDisplayString = "Alt + E";
-            this.selectSWINEProfilesToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.selectSWINEProfilesToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
             this.selectSWINEProfilesToolStripMenuItem.Text = "Select SWINE profiles";
             this.selectSWINEProfilesToolStripMenuItem.Click += new System.EventHandler(this.notRealMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(254, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(303, 6);
             // 
             // selectLightingPointsToolStripMenuItem
             // 
             this.selectLightingPointsToolStripMenuItem.Name = "selectLightingPointsToolStripMenuItem";
             this.selectLightingPointsToolStripMenuItem.ShortcutKeyDisplayString = "Alt + R";
-            this.selectLightingPointsToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.selectLightingPointsToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
             this.selectLightingPointsToolStripMenuItem.Text = "Select lighting points";
             this.selectLightingPointsToolStripMenuItem.Click += new System.EventHandler(this.notRealMenuItem_Click);
             // 
@@ -420,9 +426,22 @@
             // 
             this.resetLightingPointsToolStripMenuItem.Name = "resetLightingPointsToolStripMenuItem";
             this.resetLightingPointsToolStripMenuItem.ShortcutKeyDisplayString = "Alt +F";
-            this.resetLightingPointsToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.resetLightingPointsToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
             this.resetLightingPointsToolStripMenuItem.Text = "Reset lighting points";
             this.resetLightingPointsToolStripMenuItem.Click += new System.EventHandler(this.notRealMenuItem_Click);
+            // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(303, 6);
+            // 
+            // printScreenToolStripMenuItem
+            // 
+            this.printScreenToolStripMenuItem.Name = "printScreenToolStripMenuItem";
+            this.printScreenToolStripMenuItem.ShortcutKeyDisplayString = "Alt + P, Alt + P";
+            this.printScreenToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.printScreenToolStripMenuItem.Text = "Hide menu and print screen";
+            this.printScreenToolStripMenuItem.Click += new System.EventHandler(this.notRealMenuItem_Click);
             // 
             // realHotKeysToolStripMenuItem
             // 
@@ -437,7 +456,9 @@
             this.selectMSWINEProfilesToolStripMenuItem,
             this.toolStripMenuItem6,
             this.selectLightingPointsToolStripMenuItem1,
-            this.resetLightingPointsToolStripMenuItem1});
+            this.resetLightingPointsToolStripMenuItem1,
+            this.toolStripMenuItem8,
+            this.printScreenToolStripMenuItem1});
             this.realHotKeysToolStripMenuItem.Name = "realHotKeysToolStripMenuItem";
             this.realHotKeysToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
             this.realHotKeysToolStripMenuItem.Text = "Real hot keys";
@@ -447,7 +468,7 @@
             // 
             this.selectFrameToolStripMenuItem1.Name = "selectFrameToolStripMenuItem1";
             this.selectFrameToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Q)));
-            this.selectFrameToolStripMenuItem1.Size = new System.Drawing.Size(195, 22);
+            this.selectFrameToolStripMenuItem1.Size = new System.Drawing.Size(251, 22);
             this.selectFrameToolStripMenuItem1.Text = "Select frame";
             this.selectFrameToolStripMenuItem1.Click += new System.EventHandler(this.selectFrameToolStripMenuItem1_Click);
             // 
@@ -455,7 +476,7 @@
             // 
             this.frameToCursorToolStripMenuItem1.Name = "frameToCursorToolStripMenuItem1";
             this.frameToCursorToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.A)));
-            this.frameToCursorToolStripMenuItem1.Size = new System.Drawing.Size(195, 22);
+            this.frameToCursorToolStripMenuItem1.Size = new System.Drawing.Size(251, 22);
             this.frameToCursorToolStripMenuItem1.Text = "Frame to cursor";
             this.frameToCursorToolStripMenuItem1.Click += new System.EventHandler(this.frameToCursorToolStripMenuItem1_Click);
             // 
@@ -463,13 +484,14 @@
             // 
             this.resetFrameToolStripMenuItem1.Name = "resetFrameToolStripMenuItem1";
             this.resetFrameToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Z)));
-            this.resetFrameToolStripMenuItem1.Size = new System.Drawing.Size(195, 22);
+            this.resetFrameToolStripMenuItem1.Size = new System.Drawing.Size(251, 22);
             this.resetFrameToolStripMenuItem1.Text = "Reset frame";
             this.resetFrameToolStripMenuItem1.Click += new System.EventHandler(this.resetFrameToolStripMenuItem1_Click);
             // 
-            // openFileDialog1
+            // toolStripMenuItem4
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(248, 6);
             // 
             // selectPolynomialProfilesToolStripMenuItem1
             // 
@@ -478,11 +500,6 @@
             this.selectPolynomialProfilesToolStripMenuItem1.Size = new System.Drawing.Size(251, 22);
             this.selectPolynomialProfilesToolStripMenuItem1.Text = "Select polynomial profiles";
             this.selectPolynomialProfilesToolStripMenuItem1.Click += new System.EventHandler(this.selectPolynomialProfilesToolStripMenuItem1_Click);
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(248, 6);
             // 
             // resetPolynomialProfilesToolStripMenuItem1
             // 
@@ -525,6 +542,23 @@
             this.resetLightingPointsToolStripMenuItem1.Size = new System.Drawing.Size(251, 22);
             this.resetLightingPointsToolStripMenuItem1.Text = "Reset lighting points";
             this.resetLightingPointsToolStripMenuItem1.Click += new System.EventHandler(this.resetLightingPointsToolStripMenuItem1_Click);
+            // 
+            // toolStripMenuItem8
+            // 
+            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(248, 6);
+            // 
+            // printScreenToolStripMenuItem1
+            // 
+            this.printScreenToolStripMenuItem1.Name = "printScreenToolStripMenuItem1";
+            this.printScreenToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.P)));
+            this.printScreenToolStripMenuItem1.Size = new System.Drawing.Size(251, 22);
+            this.printScreenToolStripMenuItem1.Text = "Print screen";
+            this.printScreenToolStripMenuItem1.Click += new System.EventHandler(this.printScreenToolStripMenuItem1_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // Form1
             // 
@@ -606,6 +640,10 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
         private System.Windows.Forms.ToolStripMenuItem selectLightingPointsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem resetLightingPointsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem7;
+        private System.Windows.Forms.ToolStripMenuItem printScreenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem8;
+        private System.Windows.Forms.ToolStripMenuItem printScreenToolStripMenuItem1;
     }
 }
 
