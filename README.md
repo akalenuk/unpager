@@ -10,13 +10,13 @@ The very basics of it, the algorithmical playground, is being written in C# to a
 
 For now I have few features working:
 
-![screenshot](/screenshots/before_proj.phg "Before projection") ![screenshot](/screenshots/after_proj.phg "After projection")
+![screenshot](/screenshots/before_proj.png "Before projection") ![screenshot](/screenshots/after_proj.png "After projection")
 
-![screenshot](/screenshots/before_flat.phg "Before projection") ![screenshot](/screenshots/after_flat.phg "After flattening")
+![screenshot](/screenshots/before_flat.png "Before projection") ![screenshot](/screenshots/after_flat.png "After flattening")
 
-![screenshot](/screenshots/before_light.phg "Before relighting") ![screenshot](/screenshots/after_light.phg "After relighting")
+![screenshot](/screenshots/before_light.png "Before relighting") ![screenshot](/screenshots/after_light.png "After relighting")
 
-![screenshot](/screenshots/before_darn.phg "Before darning") ![screenshot](/screenshots/after_darning.phg "After darning")
+![screenshot](/screenshots/before_darn.png "Before darning") ![screenshot](/screenshots/after_darning.png "After darning")
 
 There will be three scenarios for future unpager development regading user experience.
 
