@@ -16,7 +16,7 @@ For now I have few features working:
 
 ![screenshot](/screenshots/before_light.png "Before relighting") ![screenshot](/screenshots/after_light.png "After relighting")
 
-![screenshot](/screenshots/before_darn.png "Before darning") ![screenshot](/screenshots/after_darning.png "After darning")
+![screenshot](/screenshots/before_darn.png "Before darning") ![screenshot](/screenshots/after_darn.png "After darning")
 
 There will be three scenarios for future unpager development regading user experience.
 
