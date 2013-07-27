@@ -95,7 +95,6 @@ namespace WindowsFormsApplication1 {    // Bits of simplicial geometry
         }
 
 
-
         /* Determines if a point is in simplex
 
             Args:

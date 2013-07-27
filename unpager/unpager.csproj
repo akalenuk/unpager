@@ -91,6 +91,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Matrix.cs" />
+    <Compile Include="Mswine.cs" />
     <Compile Include="Scalar.cs" />
     <Compile Include="Undo.cs" />
     <Compile Include="Vector.cs" />
