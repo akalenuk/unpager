@@ -15,10 +15,41 @@
 */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
 
 namespace WindowsFormsApplication1 {
     class Mswine {
+
+        public delegate double WeightFunction(double x);
+        public delegate double BasisFunction(double[] x);
+
+        /* Inverse linear weight function */
+        double s_l(double x) {
+            return 1.0 / x;
+        }
+
+        /* Inverse quadratic weight function */
+        double s_q(double x) {
+            return 1.0 / (x*x);
+        }
+
+        /* Weight function for 'vx' vector
+            Args:
+                vx: vector to weight.
+                s_k: scalar weight function.
+            Returns:
+                Weight of the vector        */        double v_k(double[] vx, WeightFunction s_x){            int DIMM = vx.Length;            Debug.Assert(DIMM > 0);            double r = s_x(vx[0]);            for(int i = 1; i < DIMM; i++){                r *= s_x(vx[i]);            }            return r;        }
+
+        /*        Determines a list of constant basis functions        Args:            xyz: Point set.            f: Corresponding array of function values.            Sx: List of simplexes         Returns:
+            List of basis functions
+        */
+        BasisFunction[] get_constant_functions(double[][] xyz, double[] f, double[][] Sx) {
+            int f_len = f.Length;
+            BasisFunction[] ret = new BasisFunction[f_len];
+            for (int i = 0; i < f_len; i++) {
+                ret[i] = x => f[i];
+            }
+            return ret;
+        }
     }
 }
