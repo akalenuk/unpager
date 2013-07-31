@@ -29,7 +29,7 @@ namespace WindowsFormsApplication1 {    // Bits of simplicial geometry
         Returns:
             Point, which is an 'a' projection on 'S' simplex plane.
         */
-        double[] proj(double[] a, double[][] S, bool check_if_in = false, double[] ret_if_not = null) {
+        public static double[] proj(double[] a, double[][] S, bool check_if_in = false, double[] ret_if_not = null) {
             int DIMM = a.Length;
             foreach (double[] b in S) {
                 Debug.Assert(b.Length == DIMM);
@@ -108,7 +108,7 @@ namespace WindowsFormsApplication1 {    // Bits of simplicial geometry
             Returns:
                 'True' if point is in a simplex, 'False' otherwise.
         */
-        bool point_in_simplex(int sx, double[] dot, int pnt, double[][] xyz, int[][] Sx, out double[] crd) {
+        public static bool point_in_simplex(int sx, double[] dot, int pnt, double[][] xyz, int[][] Sx, out double[] crd) {
             int DIMM = dot.Length;
             double[,] A = new double[DIMM, DIMM];
             double[] B = new double[DIMM];
@@ -157,17 +157,17 @@ namespace WindowsFormsApplication1 {    // Bits of simplicial geometry
         Returns:
             List, first element of which represents nearest simplex index. 
          */
-        class BestPack {
+        public class BestPack {
             public double len;
             public double[] vec1;
-            public double[] vec2;
+            public int[] vec2;
         };
 
-        BestPack get_nearest_simplex(double[] dot, double[][] xyz, int[][] Sx, int[] sx, BestPack best_pack) {
+        public static BestPack get_nearest_simplex(double[] dot, double[][] xyz, int[][] Sx, int[] sx, BestPack best_pack) {
             BestPack new_pack = new BestPack();
             new_pack.len = best_pack.len;
             new_pack.vec1 = (double[])best_pack.vec1.Clone();
-            new_pack.vec2 = (double[])best_pack.vec2.Clone();
+            new_pack.vec2 = (int[])best_pack.vec2.Clone();
 
             double[][] new_S = new double[sx.Length][];
             for (int i = 0; i < sx.Length; i++) {
