@@ -87,6 +87,10 @@
             this.printScreenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripSeparator();
+            this.deselectToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
+            this.deselectToolToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -346,7 +350,9 @@
             this.selectLightingPointsToolStripMenuItem,
             this.resetLightingPointsToolStripMenuItem,
             this.toolStripMenuItem7,
-            this.printScreenToolStripMenuItem});
+            this.printScreenToolStripMenuItem,
+            this.toolStripMenuItem10,
+            this.deselectToolToolStripMenuItem1});
             this.hotKeysToolStripMenuItem.Name = "hotKeysToolStripMenuItem";
             this.hotKeysToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.hotKeysToolStripMenuItem.Text = "Hot keys";
@@ -458,7 +464,9 @@
             this.selectLightingPointsToolStripMenuItem1,
             this.resetLightingPointsToolStripMenuItem1,
             this.toolStripMenuItem8,
-            this.printScreenToolStripMenuItem1});
+            this.printScreenToolStripMenuItem1,
+            this.toolStripMenuItem9,
+            this.deselectToolToolStripMenuItem});
             this.realHotKeysToolStripMenuItem.Name = "realHotKeysToolStripMenuItem";
             this.realHotKeysToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
             this.realHotKeysToolStripMenuItem.Text = "Real hot keys";
@@ -560,6 +568,31 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // toolStripMenuItem9
+            // 
+            this.toolStripMenuItem9.Name = "toolStripMenuItem9";
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(248, 6);
+            // 
+            // deselectToolToolStripMenuItem
+            // 
+            this.deselectToolToolStripMenuItem.Name = "deselectToolToolStripMenuItem";
+            this.deselectToolToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.O)));
+            this.deselectToolToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
+            this.deselectToolToolStripMenuItem.Text = "Deselect tool";
+            this.deselectToolToolStripMenuItem.Click += new System.EventHandler(this.deselectToolToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem10
+            // 
+            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(303, 6);
+            // 
+            // deselectToolToolStripMenuItem1
+            // 
+            this.deselectToolToolStripMenuItem1.Name = "deselectToolToolStripMenuItem1";
+            this.deselectToolToolStripMenuItem1.ShortcutKeyDisplayString = "Alt + O";
+            this.deselectToolToolStripMenuItem1.Size = new System.Drawing.Size(306, 22);
+            this.deselectToolToolStripMenuItem1.Text = "Deselect tool";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -644,6 +677,10 @@
         private System.Windows.Forms.ToolStripMenuItem printScreenToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem8;
         private System.Windows.Forms.ToolStripMenuItem printScreenToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem9;
+        private System.Windows.Forms.ToolStripMenuItem deselectToolToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem10;
+        private System.Windows.Forms.ToolStripMenuItem deselectToolToolStripMenuItem1;
     }
 }
 

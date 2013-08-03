@@ -159,15 +159,15 @@ namespace WindowsFormsApplication1 {    // Bits of simplicial geometry
          */
         public class BestPack {
             public double len;
-            public double[] vec1;
-            public int[] vec2;
+            public double[] point;
+            public int[] simplex;
         };
 
         public static BestPack get_nearest_simplex(double[] dot, double[][] xyz, int[][] Sx, int[] sx, BestPack best_pack) {
             BestPack new_pack = new BestPack();
             new_pack.len = best_pack.len;
-            new_pack.vec1 = (double[])best_pack.vec1.Clone();
-            new_pack.vec2 = (int[])best_pack.vec2.Clone();
+            new_pack.point = (double[])best_pack.point.Clone();
+            new_pack.simplex = (int[])best_pack.simplex.Clone();
 
             double[][] new_S = new double[sx.Length][];
             for (int i = 0; i < sx.Length; i++) {
@@ -183,8 +183,8 @@ namespace WindowsFormsApplication1 {    // Bits of simplicial geometry
             double new_l = Vector.len(Vector.sub(new_prj, dot));
             if (new_l < best_pack.len) {
                 best_pack.len = new_l;
-                best_pack.vec1 = (double[])new_prj.Clone();
-                best_pack.vec1 = (double[])sx.Clone();
+                best_pack.point = (double[])new_prj.Clone();
+                best_pack.simplex = (int[])sx.Clone();
             }
 
             if ( sx.Length > 1.0) {

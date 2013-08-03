@@ -22,11 +22,12 @@ namespace WindowsFormsApplication1
             None,
             ProjectionFrame,
             PolynomialProfiles,
+            SWINEProfiles,
             LightingPoints
         };
 
-       const double SCALE_DIVISOR = 1000.0;
-       const int FRAME_DEFAULT = 25;
+        const double SCALE_DIVISOR = 1000.0;
+        const int FRAME_DEFAULT = 25;
 
         Tool cur_tool = Tool.None;
 
@@ -50,6 +51,14 @@ namespace WindowsFormsApplication1
         const int pol_n = 4;
         Polynomial pol1 = new Polynomial();
         Polynomial pol2 = new Polynomial();
+
+        double[][] swine_carcas1 = new double[0][];
+        int[][] swine_complex1 = new int[0][];
+        Mswine.BasisFunction[] swine_basis1 = new Mswine.BasisFunction[0];
+
+        double[][] swine_carcas2 = new double[0][];
+        int[][] swine_complex2 = new int[0][];
+        Mswine.BasisFunction[] swine_basis2 = new Mswine.BasisFunction[0];
 
         Point last_mouse_pos = new Point(0, 0);
 
@@ -220,6 +229,38 @@ namespace WindowsFormsApplication1
                         }
                     }
                     break;
+                case Tool.SWINEProfiles:
+                    scaled_w = (int)(source.Width * source_scale);
+                    scaled_h = (int)(source.Height * source_scale);
+                    e.Graphics.DrawImage(source, source_point.X, source_point.Y, scaled_w, scaled_h);
+
+                    e.Graphics.DrawLine(blue_pen, x_to_s(0), y_to_s(line1), x_to_s(source.Width), y_to_s(line1));
+                    e.Graphics.DrawLine(blue_pen, x_to_s(0), y_to_s(line2), x_to_s(source.Width), y_to_s(line2));
+                    e.Graphics.DrawEllipse(blue_pen, x_to_s(0) - 2, y_to_s(line1) - 2, 4, 4);
+                    e.Graphics.DrawEllipse(blue_pen, x_to_s(source.Width) - 2, y_to_s(line1) - 2, 4, 4);
+                    e.Graphics.DrawEllipse(blue_pen, x_to_s(0) - 2, y_to_s(line2) - 2, 4, 4);
+                    e.Graphics.DrawEllipse(blue_pen, x_to_s(source.Width) - 2, y_to_s(line2) - 2, 4, 4);
+
+                    foreach (Point p in carcas1) {
+                        e.Graphics.DrawEllipse(red_pen, x_to_s(p.X) - 2, y_to_s(p.Y + line1) - 2, 4, 4);
+                    }
+                    foreach (Point p in carcas2) {
+                        e.Graphics.DrawEllipse(red_pen, x_to_s(p.X) - 2, y_to_s(p.Y + line2) - 2, 4, 4);
+                    }
+
+                    for (int j = x_to_s(0); j < x_to_s(source.Width); j++) {                        
+                        if(swine_basis1.Length > 0)
+                        {
+                            double x = s_to_x(j) + Scalar.jitter();
+                            double[] dot = new double[1];
+                            dot[0] = x;
+                            double y = Mswine.F_s(dot, swine_carcas1, swine_complex1, swine_basis1, Mswine.s_l);
+                            int i = y_to_s((int)y) + y_to_s(line1) - source_point.Y;
+                            e.Graphics.DrawLine(red_pen, j, i, j + 1, i);
+                        }
+                    }
+
+                    break;
                 case Tool.LightingPoints:
                     scaled_w = (int)(source.Width * source_scale);
                     scaled_h = (int)(source.Height * source_scale);
@@ -299,6 +340,7 @@ namespace WindowsFormsApplication1
                     }
                     break;
                 case Tool.PolynomialProfiles:
+                case Tool.SWINEProfiles:
                     if (e.Button == System.Windows.Forms.MouseButtons.Right) {
                         CheckLine(e.Y);
                     }
@@ -330,6 +372,7 @@ namespace WindowsFormsApplication1
                     }
                     break;
                 case Tool.PolynomialProfiles:
+                case Tool.SWINEProfiles:
                     if (e.Button == System.Windows.Forms.MouseButtons.Right) 
                     {
                         CheckLine(e.Y);
@@ -413,12 +456,42 @@ namespace WindowsFormsApplication1
             InvalidateWhole();
         }
 
+
+        class ByX : IComparer<Point> {
+            int IComparer<Point>.Compare(Point a, Point b) {
+                return a.X - b.X;
+            }
+        }
+        ByX by_x = new ByX();
+
         private void CheckCarcas(Point p) {
             int y = s_to_y(p.Y);
             int x = s_to_x(p.X);
             if (Math.Abs(y - line1) < Math.Abs(y - line2)) {
                 AddCarcas(carcas1, new Point(x, y - line1));
                 pol1 = new Polynomial(pol_n, carcas1, firm_carcas1);
+
+                
+                List<Point> sorted_carcas = new List<Point>();
+                sorted_carcas = carcas1.GetRange(0, carcas1.Count);
+                sorted_carcas.Add(new Point(0, 0));
+                sorted_carcas.Sort(by_x);
+                int n = sorted_carcas.Count;
+                double[] ys = new double[n];
+                swine_carcas1 = new double[n][];
+                swine_complex1 = new int[n-1][];
+                for (int i = 0; i < sorted_carcas.Count; i++) {
+                    ys[i] = (double)sorted_carcas[i].Y;
+                    swine_carcas1[i] = new double[1];
+                    swine_carcas1[i][0] = (double)sorted_carcas[i].X;
+                    if (i != 0) {
+                        swine_complex1[i-1] = new int[2];
+                        swine_complex1[i-1][0] = i;
+                        swine_complex1[i-1][1] = i+1;
+                    }
+                }
+                swine_basis1 = Mswine.get_constant_functions(swine_carcas1, ys, swine_complex1);
+
             } else {
                 AddCarcas(carcas2, new Point(x, y - line2));
                 pol2 = new Polynomial(pol_n, carcas2, firm_carcas2);
@@ -577,6 +650,7 @@ namespace WindowsFormsApplication1
             noneToolStripMenuItem.Checked = false;
             projectionFrameToolStripMenuItem.Checked = false;
             polynomialProfilesToolStripMenuItem.Checked = false;
+            sWINEProfilesToolStripMenuItem.Checked = false;
             lightingPointsToolStripMenuItem.Checked = false;
             switch (cur_tool)
             {
@@ -588,6 +662,9 @@ namespace WindowsFormsApplication1
                     break;
                 case Tool.PolynomialProfiles:
                     polynomialProfilesToolStripMenuItem.Checked = true;
+                    break;
+                case Tool.SWINEProfiles:
+                    sWINEProfilesToolStripMenuItem.Checked = true;
                     break;
                 case Tool.LightingPoints:
                     lightingPointsToolStripMenuItem.Checked = true;
@@ -704,7 +781,8 @@ namespace WindowsFormsApplication1
         }
 
         private void sWINEProfilesToolStripMenuItem_Click(object sender, EventArgs e) {
-            MessageBox.Show("Not here yet.");
+            cur_tool = Tool.SWINEProfiles;
+            InvalidateWhole();
         }
 
         private void notRealMenuItem_Click(object sender, EventArgs e) {
@@ -776,6 +854,11 @@ namespace WindowsFormsApplication1
                     bitmap.Save(saveFileDialog1.FileName, ImageFormat.Png);
                 }
             }
+        }
+
+        private void deselectToolToolStripMenuItem_Click(object sender, EventArgs e) {
+            cur_tool = Tool.None;
+            InvalidateWhole();
         }
         
     }
