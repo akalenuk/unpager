@@ -70,46 +70,69 @@ namespace WindowsFormsApplication1 {
         }
 
         /*
-        Determines a list of linear basis functions        Args:            xyz: Point set.            f: Corresponding array of function values.            Sx: List of simplexes         Returns:            List of basis functions
+        Determines a list of linear basis functions
+        Args:
+            xyz: Point set.
+            f: Corresponding array of function values.
+            Sx: List of simplexes 
+        Returns:
+            List of basis functions
         */
         public static BasisFunction[] get_linear_functions(double[][] xyz, double[] f, int[][] Sx) {
             int f_len = f.Length;
             Debug.Assert(xyz.Length == f_len && f_len > 0);
             BasisFunction[] ret = new BasisFunction[f_len];
-            int dimm = xyz.Length;
-            /*
-    dimm=len(xyz[0])
-    simplex_linears=make_n_vectors(len(Sx),dimm+1)
-    point_linears=make_n_vectors(len(xyz),dimm+1)
-    
-    for i in xrange(0,len(Sx)):
-        A=make_matrix(dimm+1)
-        B=make_vector(dimm+1)
-        for j in xrange(dimm+1):
-            pnt=Sx[i][j]-1;
-            for k in xrange(dimm):
-                A[j][k]=xyz[pnt][k]
-            A[j][dimm]=1.0;
-            B[j]=f[pnt]
-        simplex_linears[i]=Gauss(A,B)
+            int dimm = xyz[0].Length;
+            double[][] simplex_linears = new double[Sx.Length][];            
+            for (int i = 0; i < Sx.Length; i++) {
+                simplex_linears[i] = new double[dimm + 1];
+            }
+            double[][] point_linears = new double[xyz.Length][];
+            for (int i = 0; i < xyz.Length; i++) {
+                point_linears[i] = new double[dimm + 1];
+            }
+            for (int i = 0; i < Sx.Length; i++) {
+                double[,] A = new double[dimm + 1, dimm + 1];
+                double[] B = new double[dimm + 1];
+                for (int j = 0; j < dimm + 1; j++) {
+                    int pnt = Sx[i][j] - 1;
+                    for (int k = 0; k < dimm; k++) {
+                        A[j,k] = xyz[pnt][k];
+                    }
+                    A[j,dimm] = 1.0;
+                    B[j] = f[pnt];
+                }
+                simplex_linears[i] = Vector.Gauss(A, B);
+            }
 
-    for i in xrange(len(xyz)):
-        sx_N=0
-        for j in xrange(0,len(Sx)):
-            for k in xrange(0,dimm+1):
-                if Sx[j][k]==i+1:
-                    sx_N+=1
-                    for l in xrange(0,dimm+1):
-                        point_linears[i][l]+=simplex_linears[j][l]
-                    break;
-        if sx_N==0: print "error: point is not in simplex"
-        point_linears[i]=map(lambda a:a/sx_N, point_linears[i])
-
-    def fi(i):
-        return lambda dot: sum([point_linears[i][j]*dot[j] for j in xrange(dimm)])+point_linears[i][dimm]
-    return [fi(i) for i in xrange(len(xyz))]
-
-            */
+            for (int i = 0; i < xyz.Length; i++) {
+                int sx_N = 0;
+                for (int j = 0; j < Sx.Length; j++) {
+                    for (int k = 0; k < dimm + 1; k++) {
+                        if (Sx[j][k] == i + 1) {
+                            sx_N += 1;
+                            for (int l = 0; l < dimm + 1; l++) {
+                                point_linears[i][l] += simplex_linears[j][l];
+                            }
+                            break;
+                        }
+                    }
+                }
+                Debug.Assert(sx_N != 0);
+                for (int j = 0; j < point_linears[i].Length; j++) {
+                    point_linears[i][j] /= sx_N;
+                }
+            }
+            for (int i = 0; i < f_len; i++) {
+                double[] this_linears = (double[])point_linears[i].Clone();
+                ret[i] = dot => {                    
+                    double t = this_linears[dimm];
+                    for (int j = 0; j < dimm; j++) {
+                        t += this_linears[j] * dot[j];
+                    }
+                    return t;
+                };                    
+            }
             return ret;
         }
 

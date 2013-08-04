@@ -92,5 +92,28 @@ namespace WindowsFormsApplication1
             }
             return flat;
         }
+
+        public static Bitmap BySwineProfiles(ContinuousBitmap source, 
+                                                double[][] carcas1, int[][] complex1, Mswine.BasisFunction[] basis1,
+                                                double[][] carcas2, int[][] complex2, Mswine.BasisFunction[] basis2, 
+                                                int line1, int line2) {
+            int new_w = source.Width;
+            int new_h = line2 - line1;
+            Bitmap flat = new Bitmap(new_w, new_h);
+            double jitter = Scalar.jitter();
+            for (int i = 0; i < new_h; i++) {
+                for (int j = 0; j < new_w; j++) {
+                    double t = (double)i / new_h;
+                    double f = 1.0 - t;
+                    double[] dot = new double[1] { j + jitter };
+                    double y1 = Mswine.F_s(dot, carcas1, complex1, basis1, Mswine.s_l);
+                    double y2 = Mswine.F_s(dot, carcas2, complex2, basis2, Mswine.s_l);
+                    double di = y1 * f + y2 * t;
+                    Color col = source.GetPixel(j, i + di + line1);
+                    flat.SetPixel(j, i, col);
+                }
+            }
+            return flat;
+        }
     }
 }
