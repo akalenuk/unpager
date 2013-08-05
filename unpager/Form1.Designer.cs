@@ -71,6 +71,8 @@
             this.resetLightingPointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
             this.printScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
+            this.deselectToolToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.realHotKeysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectFrameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.frameToCursorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,12 +87,12 @@
             this.resetLightingPointsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
             this.printScreenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripSeparator();
             this.deselectToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
-            this.deselectToolToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.changeSWINEBasisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeSWINEBasisToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -346,6 +348,7 @@
             this.resetPolynomialProfilesToolStripMenuItem,
             this.toolStripMenuItem2,
             this.selectSWINEProfilesToolStripMenuItem,
+            this.changeSWINEBasisToolStripMenuItem,
             this.toolStripMenuItem3,
             this.selectLightingPointsToolStripMenuItem,
             this.resetLightingPointsToolStripMenuItem,
@@ -449,6 +452,18 @@
             this.printScreenToolStripMenuItem.Text = "Hide menu and print screen";
             this.printScreenToolStripMenuItem.Click += new System.EventHandler(this.notRealMenuItem_Click);
             // 
+            // toolStripMenuItem10
+            // 
+            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(303, 6);
+            // 
+            // deselectToolToolStripMenuItem1
+            // 
+            this.deselectToolToolStripMenuItem1.Name = "deselectToolToolStripMenuItem1";
+            this.deselectToolToolStripMenuItem1.ShortcutKeyDisplayString = "Alt + O";
+            this.deselectToolToolStripMenuItem1.Size = new System.Drawing.Size(306, 22);
+            this.deselectToolToolStripMenuItem1.Text = "Deselect tool";
+            // 
             // realHotKeysToolStripMenuItem
             // 
             this.realHotKeysToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -460,6 +475,7 @@
             this.resetPolynomialProfilesToolStripMenuItem1,
             this.toolStripMenuItem5,
             this.selectMSWINEProfilesToolStripMenuItem,
+            this.changeSWINEBasisToolStripMenuItem1,
             this.toolStripMenuItem6,
             this.selectLightingPointsToolStripMenuItem1,
             this.resetLightingPointsToolStripMenuItem1,
@@ -564,10 +580,6 @@
             this.printScreenToolStripMenuItem1.Text = "Print screen";
             this.printScreenToolStripMenuItem1.Click += new System.EventHandler(this.printScreenToolStripMenuItem1_Click);
             // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
             // toolStripMenuItem9
             // 
             this.toolStripMenuItem9.Name = "toolStripMenuItem9";
@@ -581,17 +593,25 @@
             this.deselectToolToolStripMenuItem.Text = "Deselect tool";
             this.deselectToolToolStripMenuItem.Click += new System.EventHandler(this.deselectToolToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem10
+            // openFileDialog1
             // 
-            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
-            this.toolStripMenuItem10.Size = new System.Drawing.Size(303, 6);
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // deselectToolToolStripMenuItem1
+            // changeSWINEBasisToolStripMenuItem
             // 
-            this.deselectToolToolStripMenuItem1.Name = "deselectToolToolStripMenuItem1";
-            this.deselectToolToolStripMenuItem1.ShortcutKeyDisplayString = "Alt + O";
-            this.deselectToolToolStripMenuItem1.Size = new System.Drawing.Size(306, 22);
-            this.deselectToolToolStripMenuItem1.Text = "Deselect tool";
+            this.changeSWINEBasisToolStripMenuItem.Name = "changeSWINEBasisToolStripMenuItem";
+            this.changeSWINEBasisToolStripMenuItem.ShortcutKeyDisplayString = "Alt + D";
+            this.changeSWINEBasisToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.changeSWINEBasisToolStripMenuItem.Text = "Change SWINE basis";
+            this.changeSWINEBasisToolStripMenuItem.Click += new System.EventHandler(this.notRealMenuItem_Click);
+            // 
+            // changeSWINEBasisToolStripMenuItem1
+            // 
+            this.changeSWINEBasisToolStripMenuItem1.Name = "changeSWINEBasisToolStripMenuItem1";
+            this.changeSWINEBasisToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D)));
+            this.changeSWINEBasisToolStripMenuItem1.Size = new System.Drawing.Size(251, 22);
+            this.changeSWINEBasisToolStripMenuItem1.Text = "Change SWINE basis";
+            this.changeSWINEBasisToolStripMenuItem1.Click += new System.EventHandler(this.changeSWINEBasisToolStripMenuItem1_Click);
             // 
             // Form1
             // 
@@ -681,6 +701,8 @@
         private System.Windows.Forms.ToolStripMenuItem deselectToolToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem10;
         private System.Windows.Forms.ToolStripMenuItem deselectToolToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem changeSWINEBasisToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changeSWINEBasisToolStripMenuItem1;
     }
 }
 

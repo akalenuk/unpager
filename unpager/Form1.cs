@@ -55,10 +55,14 @@ namespace WindowsFormsApplication1
         double[][] swine_carcas1 = new double[0][];
         int[][] swine_complex1 = new int[0][];
         Mswine.BasisFunction[] swine_basis1 = new Mswine.BasisFunction[0];
+        Mswine.BasisFunction[] swine_linear_basis1 = new Mswine.BasisFunction[0];
+        Mswine.BasisFunction[] swine_constant_basis1 = new Mswine.BasisFunction[0];
 
         double[][] swine_carcas2 = new double[0][];
         int[][] swine_complex2 = new int[0][];
         Mswine.BasisFunction[] swine_basis2 = new Mswine.BasisFunction[0];
+        Mswine.BasisFunction[] swine_linear_basis2 = new Mswine.BasisFunction[0];
+        Mswine.BasisFunction[] swine_constant_basis2 = new Mswine.BasisFunction[0];
 
         Point last_mouse_pos = new Point(0, 0);
 
@@ -476,7 +480,7 @@ namespace WindowsFormsApplication1
             int y = s_to_y(p.Y);
             int x = s_to_x(p.X);
             if (Math.Abs(y - line1) < Math.Abs(y - line2)) {
-                AddCarcas(carcas1, new Point(x, y - line1));
+                ChangeCarcas(carcas1, new Point(x, y - line1));
                 pol1 = new Polynomial(pol_n, carcas1, firm_carcas1);
                 
                 List<Point> sorted_carcas = new List<Point>();
@@ -497,10 +501,15 @@ namespace WindowsFormsApplication1
                         swine_complex1[i-1][1] = i+1;
                     }
                 }
-                swine_basis1 = Mswine.get_linear_functions(swine_carcas1, ys, swine_complex1);
+                swine_linear_basis1 = Mswine.get_linear_functions(swine_carcas1, ys, swine_complex1);
+                swine_constant_basis1 = Mswine.get_constant_functions(swine_carcas1, ys, swine_complex1);
+                swine_basis1 = new Mswine.BasisFunction[swine_linear_basis1.Length];
+                for (int i = 0; i < swine_basis1.Length; i++) {
+                    swine_basis1[i] = (Mswine.BasisFunction)swine_linear_basis1[i].Clone();
+                }
 
             } else {
-                AddCarcas(carcas2, new Point(x, y - line2));
+                ChangeCarcas(carcas2, new Point(x, y - line2));
                 pol2 = new Polynomial(pol_n, carcas2, firm_carcas2);
 
                 List<Point> sorted_carcas = new List<Point>();
@@ -521,17 +530,35 @@ namespace WindowsFormsApplication1
                         swine_complex2[i - 1][1] = i + 1;
                     }
                 }
-                swine_basis2 = Mswine.get_linear_functions(swine_carcas2, ys, swine_complex2);
+
+                swine_linear_basis2 = Mswine.get_linear_functions(swine_carcas2, ys, swine_complex2);
+                swine_constant_basis2 = Mswine.get_constant_functions(swine_carcas2, ys, swine_complex2);
+                swine_basis2 = new Mswine.BasisFunction[swine_linear_basis2.Length];
+                for (int i = 0; i < swine_basis2.Length; i++) {
+                    swine_basis2[i] = (Mswine.BasisFunction)swine_linear_basis2[i].Clone();
+                }
             }
             InvalidateWhole();
         }
 
-        private void AddCarcas(List<Point> carcas, Point p){
+        private void ChangeCarcas(List<Point> carcas, Point p){
+            int x1 = x_to_s(p.X);
+            int y1 = x_to_s(p.Y);
             if (carcas.Count < max_points) {
-                carcas.Add(p);
-            } else {
-                carcas.RemoveAt(0);
-                carcas.Add(p);
+                int i = -1;
+                for(int j = 0; j < carcas.Count; j++){
+                    int x2 = x_to_s(carcas[j].X);
+                    int y2 = x_to_s(carcas[j].Y);
+                    double d2 = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
+                    if (d2 < 25) {
+                        i = j;
+                    }
+                }
+                if (i >= 0) {
+                    carcas.RemoveAt(i);
+                } else {
+                    carcas.Add(p);
+                }
             }
         }        
         
@@ -571,9 +598,7 @@ namespace WindowsFormsApplication1
                                                             swine_carcas1, swine_complex1, swine_basis1,
                                                             swine_carcas2, swine_complex2, swine_basis2,
                                                             line1, line2);
-            } else {
-                source = source;    // reserved
-            }
+            } 
             
             source_scale = 0.8F * (double)ClientSize.Height / source.Height;
             source_point.X = ClientRectangle.Left + ClientSize.Width / 2 - (int)(source.Width * source_scale) / 2;
@@ -895,6 +920,10 @@ namespace WindowsFormsApplication1
         private void deselectToolToolStripMenuItem_Click(object sender, EventArgs e) {
             cur_tool = Tool.None;
             InvalidateWhole();
+        }
+
+        private void changeSWINEBasisToolStripMenuItem1_Click(object sender, EventArgs e) {
+            //
         }
         
     }
