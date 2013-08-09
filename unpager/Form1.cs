@@ -922,8 +922,38 @@ namespace WindowsFormsApplication1
             InvalidateWhole();
         }
 
+        private void ChangeSWINEBasis(List<Point> carcas, Point p, Mswine.BasisFunction[] asb, Mswine.BasisFunction[] lb, Mswine.BasisFunction[] cb) {
+            int x1 = x_to_s(p.X);
+            int y1 = x_to_s(p.Y);
+            if (carcas.Count < max_points) {
+                int i = -1;
+                for (int j = 0; j < carcas.Count; j++) {
+                    int x2 = x_to_s(carcas[j].X);
+                    int y2 = x_to_s(carcas[j].Y);
+                    double d = Math.Abs(x2 - x1);
+                    if (d < 5) {
+                        i = j;
+                    }
+                }
+                if (i >= 0) {
+                    if (asb[i] == lb[i]) {
+                        asb[i] = cb[i];
+                    } else {
+                        asb[i] = lb[i];
+                    }
+                }
+            }
+        }
+
         private void changeSWINEBasisToolStripMenuItem1_Click(object sender, EventArgs e) {
-            //
+            int y = s_to_y(last_mouse_pos.Y);
+            int x = s_to_x(last_mouse_pos.X);
+            if (Math.Abs(y - line1) < Math.Abs(y - line2)) {
+                ChangeSWINEBasis(carcas1, new Point(x, y - line1), swine_basis1, swine_linear_basis1, swine_constant_basis1);
+            } else {
+                ChangeSWINEBasis(carcas2, new Point(x, y - line2), swine_basis2, swine_linear_basis2, swine_constant_basis2);
+            }
+            InvalidateWhole();
         }
         
     }
