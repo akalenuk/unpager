@@ -579,6 +579,7 @@ namespace WindowsFormsApplication1
             source_point.Y = ClientRectangle.Top + ClientSize.Height / 2 - (int)(source.Height * source_scale) / 2;
             line1 = (int)(source.Height * source_scale) / 10;
             line2 = source.Height - line1;
+            resetFrameToolStripMenuItem1_Click(sender, e);
             InvalidateWhole();
         }
 
@@ -922,14 +923,12 @@ namespace WindowsFormsApplication1
             InvalidateWhole();
         }
 
-        private void ChangeSWINEBasis(List<Point> carcas, Point p, Mswine.BasisFunction[] asb, Mswine.BasisFunction[] lb, Mswine.BasisFunction[] cb) {
+        private void ChangeSWINEBasis(double[][] carcas, Point p, Mswine.BasisFunction[] asb, Mswine.BasisFunction[] lb, Mswine.BasisFunction[] cb) {
             int x1 = x_to_s(p.X);
-            int y1 = x_to_s(p.Y);
-            if (carcas.Count < max_points) {
+            if (carcas.Length < max_points) {
                 int i = -1;
-                for (int j = 0; j < carcas.Count; j++) {
-                    int x2 = x_to_s(carcas[j].X);
-                    int y2 = x_to_s(carcas[j].Y);
+                for (int j = 0; j < carcas.Length; j++) {
+                    int x2 = x_to_s((int)carcas[j][0]);
                     double d = Math.Abs(x2 - x1);
                     if (d < 5) {
                         i = j;
@@ -949,9 +948,9 @@ namespace WindowsFormsApplication1
             int y = s_to_y(last_mouse_pos.Y);
             int x = s_to_x(last_mouse_pos.X);
             if (Math.Abs(y - line1) < Math.Abs(y - line2)) {
-                ChangeSWINEBasis(carcas1, new Point(x, y - line1), swine_basis1, swine_linear_basis1, swine_constant_basis1);
+                ChangeSWINEBasis(swine_carcas1, new Point(x, y - line1), swine_basis1, swine_linear_basis1, swine_constant_basis1);
             } else {
-                ChangeSWINEBasis(carcas2, new Point(x, y - line2), swine_basis2, swine_linear_basis2, swine_constant_basis2);
+                ChangeSWINEBasis(swine_carcas2, new Point(x, y - line2), swine_basis2, swine_linear_basis2, swine_constant_basis2);
             }
             InvalidateWhole();
         }
