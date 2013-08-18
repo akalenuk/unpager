@@ -46,12 +46,16 @@
             this.fFDVectorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.processToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem15 = new System.Windows.Forms.ToolStripSeparator();
             this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flattenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.approximateFFDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripSeparator();
             this.lightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sharpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grayscaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.normalizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem14 = new System.Windows.Forms.ToolStripSeparator();
             this.darnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.automaticToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findLightingPointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,10 +102,6 @@
             this.deselectToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.approximateFFDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem14 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem15 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -269,6 +269,11 @@
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
+            // toolStripMenuItem15
+            // 
+            this.toolStripMenuItem15.Name = "toolStripMenuItem15";
+            this.toolStripMenuItem15.Size = new System.Drawing.Size(162, 6);
+            // 
             // projectToolStripMenuItem
             // 
             this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
@@ -282,6 +287,19 @@
             this.flattenToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.flattenToolStripMenuItem.Text = "Flattenning";
             this.flattenToolStripMenuItem.Click += new System.EventHandler(this.flattenToolStripMenuItem_Click);
+            // 
+            // approximateFFDToolStripMenuItem
+            // 
+            this.approximateFFDToolStripMenuItem.Name = "approximateFFDToolStripMenuItem";
+            this.approximateFFDToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.approximateFFDToolStripMenuItem.Text = "Approximate FFD";
+            this.approximateFFDToolStripMenuItem.Visible = false;
+            this.approximateFFDToolStripMenuItem.Click += new System.EventHandler(this.approximateFFDToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem13
+            // 
+            this.toolStripMenuItem13.Name = "toolStripMenuItem13";
+            this.toolStripMenuItem13.Size = new System.Drawing.Size(162, 6);
             // 
             // lightToolStripMenuItem
             // 
@@ -310,6 +328,11 @@
             this.normalizeToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.normalizeToolStripMenuItem.Text = "Normalize";
             this.normalizeToolStripMenuItem.Click += new System.EventHandler(this.normalizeToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem14
+            // 
+            this.toolStripMenuItem14.Name = "toolStripMenuItem14";
+            this.toolStripMenuItem14.Size = new System.Drawing.Size(162, 6);
             // 
             // darnToolStripMenuItem
             // 
@@ -663,28 +686,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // approximateFFDToolStripMenuItem
-            // 
-            this.approximateFFDToolStripMenuItem.Name = "approximateFFDToolStripMenuItem";
-            this.approximateFFDToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-            this.approximateFFDToolStripMenuItem.Text = "Approximate FFD";
-            this.approximateFFDToolStripMenuItem.Click += new System.EventHandler(this.approximateFFDToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem13
-            // 
-            this.toolStripMenuItem13.Name = "toolStripMenuItem13";
-            this.toolStripMenuItem13.Size = new System.Drawing.Size(162, 6);
-            // 
-            // toolStripMenuItem14
-            // 
-            this.toolStripMenuItem14.Name = "toolStripMenuItem14";
-            this.toolStripMenuItem14.Size = new System.Drawing.Size(162, 6);
-            // 
-            // toolStripMenuItem15
-            // 
-            this.toolStripMenuItem15.Name = "toolStripMenuItem15";
-            this.toolStripMenuItem15.Size = new System.Drawing.Size(162, 6);
             // 
             // Form1
             // 

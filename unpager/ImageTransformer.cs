@@ -117,8 +117,9 @@ namespace WindowsFormsApplication1
         }
 
         public static Bitmap ByPolynomialModel(Bitmap source, List<Point> points){
+            // this thing doesn't work at all
             int N = points.Count / 2;
-            double[,] A = new double[N, 8];
+            double[,] A = new double[N, 4];
             double[] Bx = new double[N];
             double[] By = new double[N];
             for (int i = 0; i < N; i++) {
@@ -126,16 +127,22 @@ namespace WindowsFormsApplication1
                 double y = (double)points[i * 2 + 1].Y / source.Height;
                 double dx = (double)(points[i * 2].X - points[i * 2 + 1].X) / source.Width;
                 double dy = (double)(points[i * 2].Y - points[i * 2 + 1].Y) / source.Width;
-                A[i, 0] = x * x * x;
+                /*A[i, 0] = x * x * x;
                 A[i, 1] = x * x;
                 A[i, 2] = x;
                 A[i, 3] = 1;
                 A[i, 4] = x * y;
                 A[i, 5] = y;
                 A[i, 6] = x * y * y;
-                A[i, 7] = y * y;
+                A[i, 7] = y * y;*/
+
+                A[i, 0] = x * y;
+                A[i, 1] = x;
+                A[i, 2] = y;
+                A[i, 3] = 1.0;
+
                 Bx[i] = dx;
-                By[i] = dy;
+                By[i] = dy;                 
             }
             double[,] Ax = Matrix.mul(A, Matrix.trans(A));
             double[,] Ay = Matrix.mul(A, Matrix.trans(A));
@@ -147,8 +154,11 @@ namespace WindowsFormsApplication1
                 for (int j = 0; j < ret.Width; j++) {
                     double x = (double)j / ret.Width;
                     double y = (double)i / ret.Height;
-                    double dx = Px[0]*x*x*x + Px[1]*x*x + Px[2]*x + Px[3] + Px[4]*x*y + Px[5]*y + Px[6]*x*y*y + Px[7]*x*y;
-                    double dy = Py[0]*x*x*x + Py[1]*x*x + Py[2]*x + Py[3] + Py[4]*x*y + Py[5]*y + Py[6]*x*y*y + Py[7]*x*y;
+                    /*double dx = Px[0]*x*x*x + Px[1]*x*x + Px[2]*x + Px[3] + Px[4]*x*y + Px[5]*y + Px[6]*x*y*y + Px[7]*x*y;
+                    double dy = Py[0]*x*x*x + Py[1]*x*x + Py[2]*x + Py[3] + Py[4]*x*y + Py[5]*y + Py[6]*x*y*y + Py[7]*x*y;*/
+                    double dx = Px[0] * x * y + Px[1] * x + Px[2] * y + Px[3];
+                    double dy = Py[0] * x * y + Py[1] * x + Py[2] * y + Py[3];
+
                     double dj = dx * source.Width;
                     double di = dy * source.Height;
                     ret.SetPixel(j, i, csource.GetPixel(j + dj, i + di));

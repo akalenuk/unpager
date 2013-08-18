@@ -1000,8 +1000,8 @@ namespace WindowsFormsApplication1
         private void approximateFFDToolStripMenuItem_Click(object sender, EventArgs e) {
             Cursor = Cursors.WaitCursor;
             Undo.push(source);
-            if (ffd_points.Count < 8*2) {
-                MessageBox.Show("There should be at least 9 vectors for successful polynomial approximation");
+            if (ffd_points.Count < 4*2) {
+                MessageBox.Show("There should be at least 4 vectors for successful polynomial approximation");
                 return;
             }
             source = ImageTransformer.ByPolynomialModel(source, ffd_points);
