@@ -20,7 +20,7 @@ using System.Diagnostics;
 
 namespace WindowsFormsApplication1 {
     class Matrix {
-        static double[,] mul(double[,] A, double[,] B) {
+        public static double[,] mul(double[,] A, double[,] B) {
             int AH = A.GetLength(0);
             int AW = A.GetLength(1);
             int BH = B.GetLength(0);
@@ -37,7 +37,7 @@ namespace WindowsFormsApplication1 {
             return C;
         }
 
-        static double[] mul(double[] a, double[,] B) {
+        public static double[] mul(double[] a, double[,] B) {
             double[,] A = new double[1, a.Length];
             for (int i = 0; i < a.Length; i++) {
                 A[0, i] = a[i];
@@ -51,11 +51,11 @@ namespace WindowsFormsApplication1 {
             return vres;
         }
 
-        static double[] mul(double[,] A, double[] b) {
+        public static double[] mul(double[,] A, double[] b) {
             return mul(b, trans(A));
         }
 
-        static double[,] trans(double[,] A) {
+        public static double[,] trans(double[,] A) {
             int AH = A.GetLength(0);
             int AW = A.GetLength(1);
             double[,] C = new double[AW, AH];
@@ -67,7 +67,7 @@ namespace WindowsFormsApplication1 {
             return C;
         }
 
-        static bool equals(double[,] A, double[,] B) {
+        public static bool equals(double[,] A, double[,] B) {
             int AH = A.GetLength(0);
             int AW = A.GetLength(1);
             int BH = B.GetLength(0);
@@ -117,7 +117,7 @@ namespace WindowsFormsApplication1 {
             return M;
         }
 
-        static public double[] project_point(double[,] M, double [] xy) { 
+        public static double[] project_point(double[,] M, double [] xy) { 
             Debug.Assert( xy.Length == 2 );
             double A = M[0, 0];
             double B = M[1, 0];
@@ -136,7 +136,7 @@ namespace WindowsFormsApplication1 {
             return new double[2] { x_, y_ };
         }
 
-        static public double[,] make_inverse_to_projection(double [,] M) { // this is not the same as inverse! This one is faster, but works only with projections.
+        public static double[,] make_inverse_to_projection(double [,] M) { // this is not the same as inverse! This one is faster, but works only with projections.
             Debug.Assert(M.GetLength(0) == 3);
             Debug.Assert(M.GetLength(1) == 3);
             double A = M[0, 0];

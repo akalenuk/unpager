@@ -43,6 +43,7 @@
             this.polynomialProfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sWINEProfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lightingPointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fFDVectorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.processToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,9 +67,12 @@
             this.resetPolynomialProfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.selectSWINEProfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeSWINEBasisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.selectLightingPointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetLightingPointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripSeparator();
+            this.freeFormDeformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
             this.printScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
@@ -82,17 +86,22 @@
             this.resetPolynomialProfilesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.selectMSWINEProfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeSWINEBasisToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.selectLightingPointsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.resetLightingPointsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripSeparator();
+            this.freeFormDeformationToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
             this.printScreenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripSeparator();
             this.deselectToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.changeSWINEBasisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.changeSWINEBasisToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.approximateFFDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem14 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem15 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -185,7 +194,8 @@
             this.projectionFrameToolStripMenuItem,
             this.polynomialProfilesToolStripMenuItem,
             this.sWINEProfilesToolStripMenuItem,
-            this.lightingPointsToolStripMenuItem});
+            this.lightingPointsToolStripMenuItem,
+            this.fFDVectorsToolStripMenuItem});
             this.toolToolStripMenuItem.Name = "toolToolStripMenuItem";
             this.toolToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.toolToolStripMenuItem.Text = "Tool";
@@ -225,16 +235,27 @@
             this.lightingPointsToolStripMenuItem.Text = "Lighting points";
             this.lightingPointsToolStripMenuItem.Click += new System.EventHandler(this.lightingPointsToolStripMenuItem_Click);
             // 
+            // fFDVectorsToolStripMenuItem
+            // 
+            this.fFDVectorsToolStripMenuItem.Name = "fFDVectorsToolStripMenuItem";
+            this.fFDVectorsToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.fFDVectorsToolStripMenuItem.Text = "FFD vectors";
+            this.fFDVectorsToolStripMenuItem.Click += new System.EventHandler(this.fFDVectorsToolStripMenuItem_Click);
+            // 
             // processToolStripMenuItem
             // 
             this.processToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.undoToolStripMenuItem,
+            this.toolStripMenuItem15,
             this.projectToolStripMenuItem,
             this.flattenToolStripMenuItem,
+            this.approximateFFDToolStripMenuItem,
+            this.toolStripMenuItem13,
             this.lightToolStripMenuItem,
             this.sharpenToolStripMenuItem,
             this.grayscaleToolStripMenuItem,
             this.normalizeToolStripMenuItem,
+            this.toolStripMenuItem14,
             this.darnToolStripMenuItem});
             this.processToolStripMenuItem.Name = "processToolStripMenuItem";
             this.processToolStripMenuItem.Size = new System.Drawing.Size(34, 20);
@@ -244,56 +265,56 @@
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
             // projectToolStripMenuItem
             // 
             this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
-            this.projectToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.projectToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.projectToolStripMenuItem.Text = "Projection";
             this.projectToolStripMenuItem.Click += new System.EventHandler(this.projectToolStripMenuItem_Click);
             // 
             // flattenToolStripMenuItem
             // 
             this.flattenToolStripMenuItem.Name = "flattenToolStripMenuItem";
-            this.flattenToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.flattenToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.flattenToolStripMenuItem.Text = "Flattenning";
             this.flattenToolStripMenuItem.Click += new System.EventHandler(this.flattenToolStripMenuItem_Click);
             // 
             // lightToolStripMenuItem
             // 
             this.lightToolStripMenuItem.Name = "lightToolStripMenuItem";
-            this.lightToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.lightToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.lightToolStripMenuItem.Text = "Lighting";
             this.lightToolStripMenuItem.Click += new System.EventHandler(this.lightToolStripMenuItem_Click);
             // 
             // sharpenToolStripMenuItem
             // 
             this.sharpenToolStripMenuItem.Name = "sharpenToolStripMenuItem";
-            this.sharpenToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.sharpenToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.sharpenToolStripMenuItem.Text = "Soft clustering";
             this.sharpenToolStripMenuItem.Click += new System.EventHandler(this.sharpenToolStripMenuItem_Click);
             // 
             // grayscaleToolStripMenuItem
             // 
             this.grayscaleToolStripMenuItem.Name = "grayscaleToolStripMenuItem";
-            this.grayscaleToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.grayscaleToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.grayscaleToolStripMenuItem.Text = "Grayscale";
             this.grayscaleToolStripMenuItem.Click += new System.EventHandler(this.grayscaleToolStripMenuItem_Click);
             // 
             // normalizeToolStripMenuItem
             // 
             this.normalizeToolStripMenuItem.Name = "normalizeToolStripMenuItem";
-            this.normalizeToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.normalizeToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.normalizeToolStripMenuItem.Text = "Normalize";
             this.normalizeToolStripMenuItem.Click += new System.EventHandler(this.normalizeToolStripMenuItem_Click);
             // 
             // darnToolStripMenuItem
             // 
             this.darnToolStripMenuItem.Name = "darnToolStripMenuItem";
-            this.darnToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.darnToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.darnToolStripMenuItem.Text = "Darn";
             this.darnToolStripMenuItem.Click += new System.EventHandler(this.darnToolStripMenuItem_Click);
             // 
@@ -352,6 +373,8 @@
             this.toolStripMenuItem3,
             this.selectLightingPointsToolStripMenuItem,
             this.resetLightingPointsToolStripMenuItem,
+            this.toolStripMenuItem11,
+            this.freeFormDeformationToolStripMenuItem,
             this.toolStripMenuItem7,
             this.printScreenToolStripMenuItem,
             this.toolStripMenuItem10,
@@ -418,6 +441,14 @@
             this.selectSWINEProfilesToolStripMenuItem.Text = "Select SWINE profiles";
             this.selectSWINEProfilesToolStripMenuItem.Click += new System.EventHandler(this.notRealMenuItem_Click);
             // 
+            // changeSWINEBasisToolStripMenuItem
+            // 
+            this.changeSWINEBasisToolStripMenuItem.Name = "changeSWINEBasisToolStripMenuItem";
+            this.changeSWINEBasisToolStripMenuItem.ShortcutKeyDisplayString = "Alt + D";
+            this.changeSWINEBasisToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.changeSWINEBasisToolStripMenuItem.Text = "Change SWINE basis";
+            this.changeSWINEBasisToolStripMenuItem.Click += new System.EventHandler(this.notRealMenuItem_Click);
+            // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
@@ -438,6 +469,19 @@
             this.resetLightingPointsToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
             this.resetLightingPointsToolStripMenuItem.Text = "Reset lighting points";
             this.resetLightingPointsToolStripMenuItem.Click += new System.EventHandler(this.notRealMenuItem_Click);
+            // 
+            // toolStripMenuItem11
+            // 
+            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
+            this.toolStripMenuItem11.Size = new System.Drawing.Size(303, 6);
+            // 
+            // freeFormDeformationToolStripMenuItem
+            // 
+            this.freeFormDeformationToolStripMenuItem.Name = "freeFormDeformationToolStripMenuItem";
+            this.freeFormDeformationToolStripMenuItem.ShortcutKeyDisplayString = "Alt + T";
+            this.freeFormDeformationToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.freeFormDeformationToolStripMenuItem.Text = "Free form deformation";
+            this.freeFormDeformationToolStripMenuItem.Click += new System.EventHandler(this.notRealMenuItem_Click);
             // 
             // toolStripMenuItem7
             // 
@@ -479,6 +523,8 @@
             this.toolStripMenuItem6,
             this.selectLightingPointsToolStripMenuItem1,
             this.resetLightingPointsToolStripMenuItem1,
+            this.toolStripMenuItem12,
+            this.freeFormDeformationToolStripMenuItem1,
             this.toolStripMenuItem8,
             this.printScreenToolStripMenuItem1,
             this.toolStripMenuItem9,
@@ -546,6 +592,14 @@
             this.selectMSWINEProfilesToolStripMenuItem.Text = "Select MSWINE profiles";
             this.selectMSWINEProfilesToolStripMenuItem.Click += new System.EventHandler(this.sWINEProfilesToolStripMenuItem_Click);
             // 
+            // changeSWINEBasisToolStripMenuItem1
+            // 
+            this.changeSWINEBasisToolStripMenuItem1.Name = "changeSWINEBasisToolStripMenuItem1";
+            this.changeSWINEBasisToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D)));
+            this.changeSWINEBasisToolStripMenuItem1.Size = new System.Drawing.Size(251, 22);
+            this.changeSWINEBasisToolStripMenuItem1.Text = "Change SWINE basis";
+            this.changeSWINEBasisToolStripMenuItem1.Click += new System.EventHandler(this.changeSWINEBasisToolStripMenuItem1_Click);
+            // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
@@ -566,6 +620,19 @@
             this.resetLightingPointsToolStripMenuItem1.Size = new System.Drawing.Size(251, 22);
             this.resetLightingPointsToolStripMenuItem1.Text = "Reset lighting points";
             this.resetLightingPointsToolStripMenuItem1.Click += new System.EventHandler(this.resetLightingPointsToolStripMenuItem1_Click);
+            // 
+            // toolStripMenuItem12
+            // 
+            this.toolStripMenuItem12.Name = "toolStripMenuItem12";
+            this.toolStripMenuItem12.Size = new System.Drawing.Size(248, 6);
+            // 
+            // freeFormDeformationToolStripMenuItem1
+            // 
+            this.freeFormDeformationToolStripMenuItem1.Name = "freeFormDeformationToolStripMenuItem1";
+            this.freeFormDeformationToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.T)));
+            this.freeFormDeformationToolStripMenuItem1.Size = new System.Drawing.Size(251, 22);
+            this.freeFormDeformationToolStripMenuItem1.Text = "Free form deformation";
+            this.freeFormDeformationToolStripMenuItem1.Click += new System.EventHandler(this.freeFormDeformationToolStripMenuItem1_Click);
             // 
             // toolStripMenuItem8
             // 
@@ -597,21 +664,27 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // changeSWINEBasisToolStripMenuItem
+            // approximateFFDToolStripMenuItem
             // 
-            this.changeSWINEBasisToolStripMenuItem.Name = "changeSWINEBasisToolStripMenuItem";
-            this.changeSWINEBasisToolStripMenuItem.ShortcutKeyDisplayString = "Alt + D";
-            this.changeSWINEBasisToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
-            this.changeSWINEBasisToolStripMenuItem.Text = "Change SWINE basis";
-            this.changeSWINEBasisToolStripMenuItem.Click += new System.EventHandler(this.notRealMenuItem_Click);
+            this.approximateFFDToolStripMenuItem.Name = "approximateFFDToolStripMenuItem";
+            this.approximateFFDToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.approximateFFDToolStripMenuItem.Text = "Approximate FFD";
+            this.approximateFFDToolStripMenuItem.Click += new System.EventHandler(this.approximateFFDToolStripMenuItem_Click);
             // 
-            // changeSWINEBasisToolStripMenuItem1
+            // toolStripMenuItem13
             // 
-            this.changeSWINEBasisToolStripMenuItem1.Name = "changeSWINEBasisToolStripMenuItem1";
-            this.changeSWINEBasisToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D)));
-            this.changeSWINEBasisToolStripMenuItem1.Size = new System.Drawing.Size(251, 22);
-            this.changeSWINEBasisToolStripMenuItem1.Text = "Change SWINE basis";
-            this.changeSWINEBasisToolStripMenuItem1.Click += new System.EventHandler(this.changeSWINEBasisToolStripMenuItem1_Click);
+            this.toolStripMenuItem13.Name = "toolStripMenuItem13";
+            this.toolStripMenuItem13.Size = new System.Drawing.Size(162, 6);
+            // 
+            // toolStripMenuItem14
+            // 
+            this.toolStripMenuItem14.Name = "toolStripMenuItem14";
+            this.toolStripMenuItem14.Size = new System.Drawing.Size(162, 6);
+            // 
+            // toolStripMenuItem15
+            // 
+            this.toolStripMenuItem15.Name = "toolStripMenuItem15";
+            this.toolStripMenuItem15.Size = new System.Drawing.Size(162, 6);
             // 
             // Form1
             // 
@@ -703,6 +776,15 @@
         private System.Windows.Forms.ToolStripMenuItem deselectToolToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem changeSWINEBasisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeSWINEBasisToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem11;
+        private System.Windows.Forms.ToolStripMenuItem freeFormDeformationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem12;
+        private System.Windows.Forms.ToolStripMenuItem freeFormDeformationToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem fFDVectorsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem approximateFFDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem13;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem14;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem15;
     }
 }
 

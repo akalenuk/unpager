@@ -23,7 +23,8 @@ namespace WindowsFormsApplication1
             ProjectionFrame,
             PolynomialProfiles,
             SWINEProfiles,
-            LightingPoints
+            LightingPoints,
+            FreeForm
         };
 
         const double SCALE_DIVISOR = 1000.0;
@@ -67,6 +68,8 @@ namespace WindowsFormsApplication1
         Point last_mouse_pos = new Point(0, 0);
 
         List<Point> light_points = new List<Point>();
+
+        List<Point> ffd_points = new List<Point>();
 
         public Form1()
         {
@@ -282,6 +285,21 @@ namespace WindowsFormsApplication1
                         e.Graphics.DrawEllipse(red_pen, x_to_s(p.X) - 2, y_to_s(p.Y) - 2, 4, 4);
                     }
                     break;
+                case Tool.FreeForm:
+                    scaled_w = (int)(source.Width * source_scale);
+                    scaled_h = (int)(source.Height * source_scale);
+                    e.Graphics.DrawImage(source, source_point.X, source_point.Y, scaled_w, scaled_h);
+                    Pen red_arrow = new Pen(red_pen.Brush);
+                    red_arrow.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+                    red_arrow.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+                    for (int i = 0; i < ffd_points.Count/2; i++ ) {
+                        int x1 = x_to_s(ffd_points[2 * i].X);
+                        int y1 = y_to_s(ffd_points[2 * i].Y);
+                        int x2 = x_to_s(ffd_points[2 * i + 1].X);
+                        int y2 = y_to_s(ffd_points[2 * i + 1].Y);
+                        e.Graphics.DrawLine(red_arrow, x1, y1, x2, y2);
+                    }
+                    break;
                 default:
                     if (source != null)
                     {
@@ -414,6 +432,16 @@ namespace WindowsFormsApplication1
                             light_points.RemoveAt(min_Di);
                             InvalidateWhole();
                         }
+                    }
+                    break;
+                case Tool.FreeForm:
+                    if (e.Button == System.Windows.Forms.MouseButtons.Left) {
+                        ffd_points.Add(new Point(s_to_x(e.X), s_to_y(e.Y)));
+                        InvalidateWhole();
+                    }
+                    if (e.Button == System.Windows.Forms.MouseButtons.Right) {
+                        ffd_points.RemoveAt(ffd_points.Count-1);
+                        InvalidateWhole();
                     }
                     break;
             }
@@ -714,6 +742,7 @@ namespace WindowsFormsApplication1
             polynomialProfilesToolStripMenuItem.Checked = false;
             sWINEProfilesToolStripMenuItem.Checked = false;
             lightingPointsToolStripMenuItem.Checked = false;
+            fFDVectorsToolStripMenuItem.Checked = false;
             switch (cur_tool)
             {
                 case Tool.None:
@@ -730,6 +759,9 @@ namespace WindowsFormsApplication1
                     break;
                 case Tool.LightingPoints:
                     lightingPointsToolStripMenuItem.Checked = true;
+                    break;
+                case Tool.FreeForm:
+                    fFDVectorsToolStripMenuItem.Checked = true;
                     break;
             }
         }
@@ -953,6 +985,28 @@ namespace WindowsFormsApplication1
                 ChangeSWINEBasis(swine_carcas2, new Point(x, y - line2), swine_basis2, swine_linear_basis2, swine_constant_basis2);
             }
             InvalidateWhole();
+        }
+
+        private void freeFormDeformationToolStripMenuItem1_Click(object sender, EventArgs e) {
+            cur_tool = Tool.FreeForm;
+            InvalidateWhole();
+        }
+
+        private void fFDVectorsToolStripMenuItem_Click(object sender, EventArgs e) {
+            cur_tool = Tool.FreeForm;
+            InvalidateWhole();
+        }
+
+        private void approximateFFDToolStripMenuItem_Click(object sender, EventArgs e) {
+            Cursor = Cursors.WaitCursor;
+            Undo.push(source);
+            if (ffd_points.Count < 8*2) {
+                MessageBox.Show("There should be at least 9 vectors for successful polynomial approximation");
+                return;
+            }
+            source = ImageTransformer.ByPolynomialModel(source, ffd_points);
+            InvalidateWhole();
+            Cursor = Cursors.Arrow;
         }
         
     }
