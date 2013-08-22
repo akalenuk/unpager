@@ -93,6 +93,7 @@
     <Compile Include="Matrix.cs" />
     <Compile Include="Mswine.cs" />
     <Compile Include="Scalar.cs" />
+    <Compile Include="Triangulation.cs" />
     <Compile Include="Undo.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Polynomial.cs" />

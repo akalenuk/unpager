@@ -849,6 +849,15 @@ namespace WindowsFormsApplication1
                 Debug.Assert(P1.X < P3.X);
                 Debug.Assert(P1.Y < P3.Y);
 
+                double hfj = 1.0;
+                double hfi = 1.0;
+                double htj = 1.0;
+                double hti = 1.0;
+                if (P1.Y < 0) hti = 0.0;
+                if (P3.Y > source.Height) hfi = 0.0;
+                if (P1.X < 0) htj = 0.0;
+                if (P3.X > source.Width) hfj = 0.0;
+
                 Bitmap darned = new Bitmap(source);
                 for(int i = P1.Y+1; i < P3.Y-1; i++){
                     for(int j = P1.X+1; j < P3.X-1; j++){
@@ -856,17 +865,33 @@ namespace WindowsFormsApplication1
                         double fj = 1.0 - tj;
                         double ti = (double)(i - P1.Y)/(P3.Y - P1.Y);
                         double fi = 1.0 - ti;
-                        Color col_i0 = source.GetPixel(j, P1.Y);
-                        Color col_i1 = source.GetPixel(j, P3.Y);
-                        Color col_j0 = source.GetPixel(P1.X, i);
-                        Color col_j1 = source.GetPixel(P3.X, i);
- 
-                        double gd = 1.0 / (1.0 / ti + 1.0 / fi + 1.0 / tj + 1.0 / fj);
-                        int r = (int)((col_i0.R / ti + col_i1.R / fi + col_j0.R / tj + col_j1.R / fj) * gd);
-                        int g = (int)((col_i0.G / ti + col_i1.G / fi + col_j0.G / tj + col_j1.G / fj) * gd);
-                        int b = (int)((col_i0.B / ti + col_i1.B / fi + col_j0.B / tj + col_j1.B / fj) * gd);
+                        Color col_i0 = Color.Black;
+                        if(j < source.Width && j >=0 && P1.Y >= 0) col_i0 = source.GetPixel(j, P1.Y);
+                        Color col_i1 = Color.Black;
+                        if (j < source.Width && j >= 0 && P3.Y < source.Height) col_i1 = source.GetPixel(j, P3.Y);
+                        Color col_j0 = Color.Black;
+                        if (i < source.Height && i >= 0 && P1.X >= 0) col_j0 = source.GetPixel(P1.X, i);
+                        Color col_j1 = Color.Black;
+                        if (i < source.Height && i >= 0 && P2.X < source.Width) col_j1 = source.GetPixel(P3.X, i);
+                                              
+                        double gd = 1.0 / (hti / ti + hfi / fi + htj / tj + hfj / fj);
 
-                        darned.SetPixel(j, i, Color.FromArgb(r, g, b));                        
+                        int r = (int)(((hti == 0.0 ? 0.0 : col_i0.R) / ti 
+                                    + (hfi == 0.0 ? 0.0 : col_i1.R) / fi
+                                    + (htj == 0.0 ? 0.0 : col_j0.R) / tj
+                                    + (hfj == 0.0 ? 0.0 : col_j1.R) / fj) * gd);
+                        int g = (int)(((hti == 0.0 ? 0.0 : col_i0.G) / ti 
+                                    + (hfi == 0.0 ? 0.0 : col_i1.G) / fi
+                                    + (htj == 0.0 ? 0.0 : col_j0.G) / tj
+                                    + (hfj == 0.0 ? 0.0 : col_j1.G) / fj) * gd);
+                        int b = (int)(((hti == 0.0 ? 0.0 : col_i0.B) / ti 
+                                    + (hfi == 0.0 ? 0.0 : col_i1.B) / fi
+                                    + (htj == 0.0 ? 0.0 : col_j0.B) / tj
+                                    + (hfj == 0.0 ? 0.0 : col_j1.B) / fj) * gd);
+
+                        if (j >= 0 && j < darned.Width && i >= 0 && i < darned.Height) {
+                            darned.SetPixel(j, i, Color.FromArgb(r, g, b));
+                        }
                     }
                 }
                 source = darned;
