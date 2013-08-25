@@ -65,55 +65,69 @@ namespace WindowsFormsApplication1 {
             the_forma += Math.Abs(Math.Min(d(i3, i1, xs), d(i1, i2, xs)) / Math.Max(d(i3, i1, xs), d(i1, i2, xs)));
             return the_forma;
         }
-        /*
-def triangulate(xs):
-    tris=[[0,0,0]]
-    icnt=0
-    found=1
-    xcnt=len(xs)
 
-    while found>0:
-        found=0
-        for m in range(30,-1,-1):
-            for i in range(xcnt-2):
-                for j in range(i+1, xcnt-1) :
-                    for k in range(j+1, xcnt):
-                        tris[icnt][0]=i
-                        tris[icnt][1]=j
-                        tris[icnt][2]=k
+        int[][] triangulate(double[][] xs) {
+            List<int[]> tris = new List<int[]>();
+            tris.Add(new int[3] { 0, 0, 0 });
+            int icnt = 0;
+            int found = 1;
+            int xcnt = xs.Length;
 
-                        is_simple=True
-                        for l in range(0, xcnt):
-                            if l!=i and l!=j and l!=k:
-                                if in_tri(xs[l][0], xs[l][1], icnt,  tris, xs):
-                                    is_simple=False
+            while (found > 0) {
+                for (int m = 30; m >= 0; m--) { // ? WTF magic
+                    for (int i = 0; i < xcnt - 2; i++) {
+                        for (int j = i + 1; i < xcnt - 1; i++) {
+                            for (int k = j + 1; k < xcnt; k++) {
+                                tris[icnt][0] = i;
+                                tris[icnt][1] = j;
+                                tris[icnt][2] = k;
 
-                        in_list=False
-                        for l in range(icnt):
-                            if tris[l][0]==i and tris[l][1]==j and tris[l][2]==k:
-                                in_list=True
+                                bool is_simple = true;
+                                for (int l = 0; l < xcnt; l++) {
+                                    if (l != i && l != j && l != k) {
+                                        if (in_tri(xs[l][0], xs[l][1], icnt, tris.ToArray(), xs)) {
+                                            is_simple = false;
+                                        }
+                                    }
+                                }
 
-                        it_crosses=False
-                        for l in range(icnt):
-                            if(crosses(tris[l][0], tris[l][1],   tris[icnt][0], tris[icnt][1],  xs)): it_crosses=True
-                            if(crosses(tris[l][1], tris[l][2],   tris[icnt][0], tris[icnt][1],  xs)): it_crosses=True
-                            if(crosses(tris[l][2], tris[l][0],   tris[icnt][0], tris[icnt][1],  xs)): it_crosses=True
+                                bool in_list = false;
+                                for (int l = 0; l < icnt; l++) {
+                                    if (tris[l][0] == i && tris[l][1]==j && tris[l][2]==k) {
+                                        in_list = true;
+                                    }
+                                }
 
-                            if(crosses(tris[l][0], tris[l][1],   tris[icnt][1], tris[icnt][2],  xs)): it_crosses=True
-                            if(crosses(tris[l][1], tris[l][2],   tris[icnt][1], tris[icnt][2],  xs)): it_crosses=True
-                            if(crosses(tris[l][2], tris[l][0],   tris[icnt][1], tris[icnt][2],  xs)): it_crosses=True
+                                bool it_crosses = false;
+                                for (int l = 0; l < icnt; l++) {
+                                    if (crosses(tris[l][0], tris[l][1], tris[icnt][0], tris[icnt][1], xs)) it_crosses = true;
+                                    if (crosses(tris[l][1], tris[l][2], tris[icnt][0], tris[icnt][1], xs)) it_crosses = true;
+                                    if (crosses(tris[l][2], tris[l][0], tris[icnt][0], tris[icnt][1], xs)) it_crosses = true;
 
-                            if(crosses(tris[l][0], tris[l][1],   tris[icnt][2], tris[icnt][0],  xs)): it_crosses=True
-                            if(crosses(tris[l][1], tris[l][2],   tris[icnt][2], tris[icnt][0],  xs)): it_crosses=True
-                            if(crosses(tris[l][2], tris[l][0],   tris[icnt][2], tris[icnt][0],  xs)): it_crosses=True
+                                    if (crosses(tris[l][0], tris[l][1], tris[icnt][1], tris[icnt][2], xs)) it_crosses = true;
+                                    if (crosses(tris[l][1], tris[l][2], tris[icnt][1], tris[icnt][2], xs)) it_crosses = true;
+                                    if (crosses(tris[l][2], tris[l][0], tris[icnt][1], tris[icnt][2], xs)) it_crosses = true;
 
-                        if not in_list and is_simple and not it_crosses:
-                            if forma(tris[icnt][0], tris[icnt][1], tris[icnt][2],  xs)>=0.1*m:
-                                icnt+=1
-                                tris+=[[0,0,0]]
-                                found+=1
-    
-    return tris[:-1]
-         */
+                                    if (crosses(tris[l][0], tris[l][1], tris[icnt][2], tris[icnt][0], xs)) it_crosses = true;
+                                    if (crosses(tris[l][1], tris[l][2], tris[icnt][2], tris[icnt][0], xs)) it_crosses = true;
+                                    if (crosses(tris[l][2], tris[l][0], tris[icnt][2], tris[icnt][0], xs)) it_crosses = true;
+                                }
+
+                                if(!in_list && is_simple && !it_crosses){
+                                    if(forma(tris[icnt][0], tris[icnt][1], tris[icnt][2],  xs) >= 0.1*m){
+                                        icnt += 1;
+                                        tris.Add(new int[3] { 0, 0, 0 });
+                                        found += 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            tris.RemoveAt(tris.Count-1);
+            return tris.ToArray();
+        }
+        
     }
 }
