@@ -265,79 +265,78 @@
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
             // toolStripMenuItem15
             // 
             this.toolStripMenuItem15.Name = "toolStripMenuItem15";
-            this.toolStripMenuItem15.Size = new System.Drawing.Size(162, 6);
+            this.toolStripMenuItem15.Size = new System.Drawing.Size(191, 6);
             // 
             // projectToolStripMenuItem
             // 
             this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
-            this.projectToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.projectToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.projectToolStripMenuItem.Text = "Projection";
             this.projectToolStripMenuItem.Click += new System.EventHandler(this.projectToolStripMenuItem_Click);
             // 
             // flattenToolStripMenuItem
             // 
             this.flattenToolStripMenuItem.Name = "flattenToolStripMenuItem";
-            this.flattenToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.flattenToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.flattenToolStripMenuItem.Text = "Flattenning";
             this.flattenToolStripMenuItem.Click += new System.EventHandler(this.flattenToolStripMenuItem_Click);
             // 
             // approximateFFDToolStripMenuItem
             // 
             this.approximateFFDToolStripMenuItem.Name = "approximateFFDToolStripMenuItem";
-            this.approximateFFDToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-            this.approximateFFDToolStripMenuItem.Text = "Approximate FFD";
-            this.approximateFFDToolStripMenuItem.Visible = false;
+            this.approximateFFDToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.approximateFFDToolStripMenuItem.Text = "Free form deformation";
             this.approximateFFDToolStripMenuItem.Click += new System.EventHandler(this.approximateFFDToolStripMenuItem_Click);
             // 
             // toolStripMenuItem13
             // 
             this.toolStripMenuItem13.Name = "toolStripMenuItem13";
-            this.toolStripMenuItem13.Size = new System.Drawing.Size(162, 6);
+            this.toolStripMenuItem13.Size = new System.Drawing.Size(191, 6);
             // 
             // lightToolStripMenuItem
             // 
             this.lightToolStripMenuItem.Name = "lightToolStripMenuItem";
-            this.lightToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.lightToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.lightToolStripMenuItem.Text = "Lighting";
             this.lightToolStripMenuItem.Click += new System.EventHandler(this.lightToolStripMenuItem_Click);
             // 
             // sharpenToolStripMenuItem
             // 
             this.sharpenToolStripMenuItem.Name = "sharpenToolStripMenuItem";
-            this.sharpenToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.sharpenToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.sharpenToolStripMenuItem.Text = "Soft clustering";
             this.sharpenToolStripMenuItem.Click += new System.EventHandler(this.sharpenToolStripMenuItem_Click);
             // 
             // grayscaleToolStripMenuItem
             // 
             this.grayscaleToolStripMenuItem.Name = "grayscaleToolStripMenuItem";
-            this.grayscaleToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.grayscaleToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.grayscaleToolStripMenuItem.Text = "Grayscale";
             this.grayscaleToolStripMenuItem.Click += new System.EventHandler(this.grayscaleToolStripMenuItem_Click);
             // 
             // normalizeToolStripMenuItem
             // 
             this.normalizeToolStripMenuItem.Name = "normalizeToolStripMenuItem";
-            this.normalizeToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.normalizeToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.normalizeToolStripMenuItem.Text = "Normalize";
             this.normalizeToolStripMenuItem.Click += new System.EventHandler(this.normalizeToolStripMenuItem_Click);
             // 
             // toolStripMenuItem14
             // 
             this.toolStripMenuItem14.Name = "toolStripMenuItem14";
-            this.toolStripMenuItem14.Size = new System.Drawing.Size(162, 6);
+            this.toolStripMenuItem14.Size = new System.Drawing.Size(191, 6);
             // 
             // darnToolStripMenuItem
             // 
             this.darnToolStripMenuItem.Name = "darnToolStripMenuItem";
-            this.darnToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.darnToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.darnToolStripMenuItem.Text = "Darn";
             this.darnToolStripMenuItem.Click += new System.EventHandler(this.darnToolStripMenuItem_Click);
             // 

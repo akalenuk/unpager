@@ -166,5 +166,38 @@ namespace WindowsFormsApplication1
             }
             return ret;
         }
+
+        public static Bitmap ByFFD(Bitmap source, List<Point> points) {
+            int N = points.Count / 2;
+            double[][] carcas = new double[N][];
+            double[] dx = new double[N];
+            double[] dy = new double[N];
+            for (int i = 0; i < N; i++) {
+                carcas[i] = new double[2] { points[2 * i + 1].X, points[2 * i + 1].Y};
+                dx[i] = points[2 * i].X - points[2 * i + 1].X;
+                dy[i] = points[2 * i].Y - points[2 * i + 1].Y;
+            }
+            int[][] SC = Triangulation.triangulate(carcas);
+            // this is a little retarded, but triangulation counts points from 0, and swine - from 1
+            foreach (int[] p in SC) {
+                p[0] += 1;
+                p[1] += 1;
+                p[2] += 1;
+            }
+            Mswine.BasisFunction[] swine_basis_x = Mswine.get_constant_functions(carcas, dx, SC);
+            Mswine.BasisFunction[] swine_basis_y = Mswine.get_constant_functions(carcas, dy, SC);
+
+            ContinuousBitmap csource = new ContinuousBitmap(source);
+            Bitmap ret = new Bitmap(source.Width, source.Height);
+            for (int i = 0; i < ret.Height; i++) {
+                for (int j = 0; j < ret.Width; j++) {
+                    double[] xy = new double[2]{j, i};
+                    double dj = Mswine.F_s(xy, carcas, SC, swine_basis_x, Mswine.s_l);
+                    double di = Mswine.F_s(xy, carcas, SC, swine_basis_y, Mswine.s_l);
+                    ret.SetPixel(j, i, csource.GetPixel(j + dj, i + di));
+                }
+            }
+            return ret;
+        }
     }
 }

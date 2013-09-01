@@ -193,8 +193,8 @@ namespace WindowsFormsApplication1 {
                         }else{
                             c_sx[j] = sx[j+1];
                         }
-                        best_pack = Simplex.get_nearest_simplex(dot,xyz,Sx,c_sx, best_pack);
                     }
+                    best_pack = Simplex.get_nearest_simplex(dot, xyz, Sx, c_sx, best_pack);
                 }
             }
             int[] pnt_set = new int[best_pack.simplex.Length];

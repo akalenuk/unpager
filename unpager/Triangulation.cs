@@ -66,7 +66,7 @@ namespace WindowsFormsApplication1 {
             return the_forma;
         }
 
-        int[][] triangulate(double[][] xs) {
+        static public int[][] triangulate(double[][] xs) {
             List<int[]> tris = new List<int[]>();
             tris.Add(new int[3] { 0, 0, 0 });
             int icnt = 0;
@@ -74,7 +74,8 @@ namespace WindowsFormsApplication1 {
             int xcnt = xs.Length;
 
             while (found > 0) {
-                for (int m = 30; m >= 0; m--) { // ? WTF magic
+                found = 0;
+                for (int m = 0; m >= 0; m--) { // ? WTF magic
                     for (int i = 0; i < xcnt - 2; i++) {
                         for (int j = i + 1; i < xcnt - 1; i++) {
                             for (int k = j + 1; k < xcnt; k++) {
@@ -114,11 +115,11 @@ namespace WindowsFormsApplication1 {
                                 }
 
                                 if(!in_list && is_simple && !it_crosses){
-                                    if(forma(tris[icnt][0], tris[icnt][1], tris[icnt][2],  xs) >= 0.1*m){
+                                    //if(forma(tris[icnt][0], tris[icnt][1], tris[icnt][2],  xs) >= 0.1*m){
                                         icnt += 1;
                                         tris.Add(new int[3] { 0, 0, 0 });
                                         found += 1;
-                                    }
+                                    //}
                                 }
                             }
                         }

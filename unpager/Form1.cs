@@ -1025,11 +1025,11 @@ namespace WindowsFormsApplication1
         private void approximateFFDToolStripMenuItem_Click(object sender, EventArgs e) {
             Cursor = Cursors.WaitCursor;
             Undo.push(source);
-            if (ffd_points.Count < 4*2) {
-                MessageBox.Show("There should be at least 4 vectors for successful polynomial approximation");
+            if (ffd_points.Count < 3*2) {
+                MessageBox.Show("There should be at least 3 vectors for FFD");
                 return;
             }
-            source = ImageTransformer.ByPolynomialModel(source, ffd_points);
+            source = ImageTransformer.ByFFD(source, ffd_points);
             InvalidateWhole();
             Cursor = Cursors.Arrow;
         }
