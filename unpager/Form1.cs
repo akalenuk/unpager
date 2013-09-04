@@ -440,7 +440,9 @@ namespace WindowsFormsApplication1
                         InvalidateWhole();
                     }
                     if (e.Button == System.Windows.Forms.MouseButtons.Right) {
-                        ffd_points.RemoveAt(ffd_points.Count-1);
+                        if (ffd_points.Count > 0) {
+                            ffd_points.RemoveAt(ffd_points.Count - 1);
+                        }
                         InvalidateWhole();
                     }
                     break;

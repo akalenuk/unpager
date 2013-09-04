@@ -178,7 +178,7 @@ namespace WindowsFormsApplication1
                 dy[i] = points[2 * i].Y - points[2 * i + 1].Y;
             }
             int[][] SC = Triangulation.triangulate(carcas);
-            // this is a little retarded, but triangulation counts points from 0, and swine - from 1
+            
             foreach (int[] p in SC) {
                 p[0] += 1;
                 p[1] += 1;

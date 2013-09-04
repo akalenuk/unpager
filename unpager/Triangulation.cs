@@ -49,7 +49,7 @@ namespace WindowsFormsApplication1 {
             if (Scalar.semi_equal(ta, 0.0) || Scalar.semi_equal(tb, 0.0)) return false;
             double a = ( (xs[j1][1]-xs[j2][1])*(xs[j1][0]-xs[i1][0]) - (xs[j1][0]-xs[j2][0])*(xs[j1][1]-xs[i1][1]) ) / ta;
             double b = ( (xs[i2][1]-xs[i1][1])*(xs[j1][0]-xs[i1][0]) - (xs[i2][0]-xs[i1][0])*(xs[j1][1]-xs[i1][1]) ) / tb;
-            if (a < 0 || a > 1.0 || b < 0 || b > 1.0) return false;
+            if (a <= 0 || a >= 1.0 || b <= 0 || b >= 1.0) return false;
             return true;
         }
 
@@ -75,9 +75,9 @@ namespace WindowsFormsApplication1 {
 
             while (found > 0) {
                 found = 0;
-                for (int m = 0; m >= 0; m--) { // ? WTF magic
+                for (double m = 3.0; m >= 0.0; m -= 0.3) { 
                     for (int i = 0; i < xcnt - 2; i++) {
-                        for (int j = i + 1; i < xcnt - 1; i++) {
+                        for (int j = i + 1; j < xcnt - 1; j++) {
                             for (int k = j + 1; k < xcnt; k++) {
                                 tris[icnt][0] = i;
                                 tris[icnt][1] = j;
@@ -115,11 +115,11 @@ namespace WindowsFormsApplication1 {
                                 }
 
                                 if(!in_list && is_simple && !it_crosses){
-                                    //if(forma(tris[icnt][0], tris[icnt][1], tris[icnt][2],  xs) >= 0.1*m){
+                                    if(forma(tris[icnt][0], tris[icnt][1], tris[icnt][2],  xs) >= m){
                                         icnt += 1;
                                         tris.Add(new int[3] { 0, 0, 0 });
                                         found += 1;
-                                    //}
+                                    }
                                 }
                             }
                         }
