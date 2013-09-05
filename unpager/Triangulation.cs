@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Diagnostics;
 
+
 namespace WindowsFormsApplication1 {
     class Triangulation {
         static double sq(double x1, double y1, double x2, double y2, double x3, double y3) {
@@ -56,7 +57,6 @@ namespace WindowsFormsApplication1 {
         static double d(int a, int b, double[][] xs){
             return Math.Sqrt(Math.Pow(xs[a][0] - xs[b][0], 2) + Math.Pow(xs[a][1] - xs[b][1], 2));
         }
-    
 
         static double forma(int i1, int i2, int i3, double[][] xs) {
             double the_forma = 0.0;

@@ -184,8 +184,8 @@ namespace WindowsFormsApplication1
                 p[1] += 1;
                 p[2] += 1;
             }
-            Mswine.BasisFunction[] swine_basis_x = Mswine.get_constant_functions(carcas, dx, SC);
-            Mswine.BasisFunction[] swine_basis_y = Mswine.get_constant_functions(carcas, dy, SC);
+            Mswine.BasisFunction[] swine_basis_x = Mswine.get_linear_functions(carcas, dx, SC);
+            Mswine.BasisFunction[] swine_basis_y = Mswine.get_linear_functions(carcas, dy, SC);
 
             ContinuousBitmap csource = new ContinuousBitmap(source);
             Bitmap ret = new Bitmap(source.Width, source.Height);
