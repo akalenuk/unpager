@@ -4,7 +4,7 @@ unpager
 Image processing and transformation tool.
 
 This project now is in its research stage. 
-It has its main goal in enabling printed matherial scanning with portative tools. 
+It is mainly oriented on printed matherial scans and pictures enchancing.
 
 The very basics of it, the algorithmical playground, is being written in C# to allow rapid prototyping along with algorithms being implemented in C-like language. The tool itself would be probably in C++ with Qt to ensure portability and performance.
 
