@@ -13,6 +13,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 */
+
+// I strongly discorge using this class in its current state.
+
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -128,7 +131,6 @@ namespace WindowsFormsApplication1 {
             }
             tris.RemoveAt(tris.Count-1);
             return tris.ToArray();
-        }
-        
+        }        
     }
 }
