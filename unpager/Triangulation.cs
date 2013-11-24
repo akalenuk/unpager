@@ -14,7 +14,7 @@
  limitations under the License.
 */
 
-// I strongly discorge using this class in its current state.
+// I strongly discorage using this class in its current state.
 
 using System;
 using System.Collections.Generic;

@@ -193,8 +193,6 @@ namespace WindowsFormsApplication1 {    // Bits of simplicial geometry
                     int n = 0;
                     for(int j = 0; j<sx.Length;j++){
                         if( j!= i){
-                            /*int tmp = sx[j];
-                            c_sx[n] = tmp;*/
                             c_sx[n] = sx[j];
                             n++;
                         }

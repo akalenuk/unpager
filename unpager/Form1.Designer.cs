@@ -304,7 +304,7 @@
             // 
             this.lightToolStripMenuItem.Name = "lightToolStripMenuItem";
             this.lightToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.lightToolStripMenuItem.Text = "Lighting";
+            this.lightToolStripMenuItem.Text = "Lighting by points";
             this.lightToolStripMenuItem.Click += new System.EventHandler(this.lightToolStripMenuItem_Click);
             // 
             // sharpenToolStripMenuItem
@@ -312,6 +312,7 @@
             this.sharpenToolStripMenuItem.Name = "sharpenToolStripMenuItem";
             this.sharpenToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.sharpenToolStripMenuItem.Text = "Soft clustering";
+            this.sharpenToolStripMenuItem.Visible = false;
             this.sharpenToolStripMenuItem.Click += new System.EventHandler(this.sharpenToolStripMenuItem_Click);
             // 
             // grayscaleToolStripMenuItem
