@@ -88,43 +88,6 @@ namespace WindowsFormsApplication1
             openFileDialog1.Filter = "Pictures (*.png, *.jpg, ...)|*.jpg;*.jpeg;*.png;*.bmp|All Files (*.*)|*.*";
             saveFileDialog1.Filter = "PNG (*.png)|*.png|Everything (*.*)|*.*";
 
-            // ad hoc localization
-            // I just have to make presentation in russian really quick
-            if (System.AppDomain.CurrentDomain.FriendlyName == "unpager_ru.exe") {
-
-                fileToolStripMenuItem.Text = "Файлы";
-                openToolStripMenuItem.Text = "Открыть";
-                saveToolStripMenuItem.Text = "Сохранить";
-                exitToolStripMenuItem.Text = "Выход";
-
-                trivialitiesToolStripMenuItem.Text = "Повороты/зеркало";
-                turnClockwiseToolStripMenuItem.Text = "Поворот по часовой";
-                turnContrclockwiseToolStripMenuItem.Text = "Поворот против часовой";
-                mirrorToolStripMenuItem.Text = "Зеркальное отображение";
-
-                toolToolStripMenuItem.Text = "Инструменты";
-                noneToolStripMenuItem.Text = "Просмотрщик";
-                projectionFrameToolStripMenuItem.Text = "Рамка";
-                polynomialProfilesToolStripMenuItem.Text = "Профили";
-                lightingPointsToolStripMenuItem.Text = "Точки";
-
-                processToolStripMenuItem.Text = "Обработка";
-                undoToolStripMenuItem.Text = "Отменить последнее";
-                projectToolStripMenuItem.Text = "Проецировать по рамке";
-                flattenToolStripMenuItem.Text = "Спрямить по профилям";
-                lightToolStripMenuItem.Text = "Пересчитать свет по точкам";
-                sharpenToolStripMenuItem.Text = "Отделить текст от фона";
-                grayscaleToolStripMenuItem.Text = "Обесцветить в Ч/Б";
-                normalizeToolStripMenuItem.Text = "Нормализировать яркость";
-                darnToolStripMenuItem.Text = "Залатать по рамке";
-
-                automaticToolStripMenuItem.Text = "Автоматизация";
-                findLightingPointsToolStripMenuItem.Text = "Найти точки освещения";
-
-                settingsToolStripMenuItem.Text = "Выбираемые настройки";
-                smoothTransformToolStripMenuItem.Text = "Картинка при трансформации сглаживается";
-                rectangularFrameToolStripMenuItem.Text = "Рамка становится прямоугольной";
-            }
             InvalidateWhole();
         }
 
@@ -743,8 +706,6 @@ namespace WindowsFormsApplication1
             projectionFrameToolStripMenuItem.Checked = false;
             polynomialProfilesToolStripMenuItem.Checked = false;
             sWINEProfilesToolStripMenuItem.Checked = false;
-            lightingPointsToolStripMenuItem.Checked = false;
-            fFDVectorsToolStripMenuItem.Checked = false;
             switch (cur_tool)
             {
                 case Tool.None:
@@ -758,12 +719,6 @@ namespace WindowsFormsApplication1
                     break;
                 case Tool.SWINEProfiles:
                     sWINEProfilesToolStripMenuItem.Checked = true;
-                    break;
-                case Tool.LightingPoints:
-                    lightingPointsToolStripMenuItem.Checked = true;
-                    break;
-                case Tool.FreeForm:
-                    fFDVectorsToolStripMenuItem.Checked = true;
                     break;
             }
         }
