@@ -21,7 +21,8 @@ namespace WindowsFormsApplication1
        enum Tool {
             None,
             ProjectionFrame,
-            PolynomialProfiles,
+            RectangularFrame,
+            PolynomialProfiles,            
             SWINEProfiles,
             LightingPoints,
             FreeForm
@@ -154,6 +155,7 @@ namespace WindowsFormsApplication1
             switch (cur_tool) 
             { 
                 case Tool.ProjectionFrame:
+                case Tool.RectangularFrame:
                     scaled_w = (int)(source.Width * source_scale);
                     scaled_h = (int)(source.Height * source_scale);
                     e.Graphics.DrawImage(source, source_point.X, source_point.Y, scaled_w, scaled_h);
@@ -289,6 +291,7 @@ namespace WindowsFormsApplication1
                     }
                     break;
                 case Tool.ProjectionFrame:
+                case Tool.RectangularFrame:
                     if (e.Button == System.Windows.Forms.MouseButtons.Right)
                     {
                         capture_point = new Point(e.X, e.Y);
@@ -322,6 +325,7 @@ namespace WindowsFormsApplication1
                     }
                     break;
                 case Tool.ProjectionFrame:
+                case Tool.RectangularFrame:
                     if (rpoint_captured) {
                         source_point.X += e.X - capture_point.X;
                         source_point.Y += e.Y - capture_point.Y;
@@ -342,7 +346,7 @@ namespace WindowsFormsApplication1
         }
 
         private void Form1_MouseWheel(object sender, MouseEventArgs e) {
-            if (cur_tool == Tool.ProjectionFrame || cur_tool == Tool.None)
+            if (cur_tool == Tool.ProjectionFrame || cur_tool == Tool.RectangularFrame || cur_tool == Tool.None)
             {
                 int x = s_to_x(e.X);
                 int y = s_to_y(e.Y);
@@ -359,6 +363,7 @@ namespace WindowsFormsApplication1
             switch(cur_tool)
             {
                 case Tool.ProjectionFrame:
+                case Tool.RectangularFrame:
                     if (e.Button == System.Windows.Forms.MouseButtons.Left)
                     {
                         CheckProjPoint(new Point(e.X, e.Y));
@@ -422,28 +427,28 @@ namespace WindowsFormsApplication1
             if (D1 <= D2 && D1 <= D3 && D1 <= D4) {
                 P1.X = sx;
                 P1.Y = sy;
-                if (rectangularFrameToolStripMenuItem.Checked) {
+                if (cur_tool == Tool.RectangularFrame) {
                     P2.Y = sy;
                     P4.X = sx;
                 }
             } else if (D2 <= D3 && D2 <= D4) {
                 P2.X = sx;
                 P2.Y = sy;
-                if (rectangularFrameToolStripMenuItem.Checked) {
+                if (cur_tool == Tool.RectangularFrame) {
                     P1.Y = sy;
                     P3.X = sx;
                 }
             } else if (D3 <= D4) {
                 P3.X = sx;
                 P3.Y = sy;
-                if (rectangularFrameToolStripMenuItem.Checked) {
+                if (cur_tool == Tool.RectangularFrame) {
                     P2.X = sx;
                     P4.Y = sy;
                 }
             } else {
                 P4.X = sx;
                 P4.Y = sy;
-                if (rectangularFrameToolStripMenuItem.Checked) {
+                if (cur_tool == Tool.RectangularFrame) {
                     P1.X = sx;
                     P3.Y = sy;
                 }
@@ -698,8 +703,8 @@ namespace WindowsFormsApplication1
         private void SetMenuChecks() {
             noneToolStripMenuItem.Checked = false;
             projectionFrameToolStripMenuItem.Checked = false;
+            rectangularFrameToolStripMenuItem1.Checked = false;
             polynomialProfilesToolStripMenuItem.Checked = false;
-            sWINEProfilesToolStripMenuItem.Checked = false;
             switch (cur_tool)
             {
                 case Tool.None:
@@ -708,11 +713,11 @@ namespace WindowsFormsApplication1
                 case Tool.ProjectionFrame:
                     projectionFrameToolStripMenuItem.Checked = true;
                     break;
+                case Tool.RectangularFrame:
+                    rectangularFrameToolStripMenuItem1.Checked = true;
+                    break;
                 case Tool.PolynomialProfiles:
                     polynomialProfilesToolStripMenuItem.Checked = true;
-                    break;
-                case Tool.SWINEProfiles:
-                    sWINEProfilesToolStripMenuItem.Checked = true;
                     break;
             }
         }
@@ -729,11 +734,11 @@ namespace WindowsFormsApplication1
         private void darnToolStripMenuItem_Click(object sender, EventArgs e) {
             Cursor = Cursors.WaitCursor;
             Undo.push(source);
-            if (cur_tool != Tool.ProjectionFrame) {
+            if (cur_tool != Tool.ProjectionFrame && cur_tool != Tool.RectangularFrame) {
                 MessageBox.Show("You have to select projection frame to do darning");
                 return;
             }
-            if( !rectangularFrameToolStripMenuItem.Checked) {
+            if (cur_tool == Tool.ProjectionFrame) {
                 int new_w = (int)(1.5*Math.Max( Dr(P1.X, P1.Y, P2.X, P2.Y), Dr(P3.X, P3.Y, P4.X, P4.Y) ));  // this 1.5 is magic! have to fix it
                 int new_h = (int)(1.5*Math.Max( Dr(P1.X, P1.Y, P4.X, P4.Y), Dr(P2.X, P2.Y, P3.X, P3.Y) ));
 
@@ -980,6 +985,11 @@ namespace WindowsFormsApplication1
             source = ImageTransformer.ByFFD(source, ffd_points);
             InvalidateWhole();
             Cursor = Cursors.Arrow;
+        }
+
+        private void rectangularFrameToolStripMenuItem1_Click(object sender, EventArgs e) {
+            cur_tool = Tool.RectangularFrame;
+            InvalidateWhole();
         }
         
     }
