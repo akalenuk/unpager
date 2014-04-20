@@ -16,11 +16,25 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 
 namespace WindowsFormsApplication1
 {
+    struct RGB {
+        public byte R;
+        public byte G;
+        public byte B;
+
+        public RGB(byte r, byte g, byte b) {
+            R = r;
+            B = b;
+            G = g;
+        }
+    };
+
     // TRY: stochastic interpolation
-    class ContinuousBitmap  // Inherite from Bitmap?
+    class ContinuousBitmap
     {
         public enum Interpolation { 
             None,
@@ -30,17 +44,36 @@ namespace WindowsFormsApplication1
         private Interpolation cur_interpolation = Interpolation.None;
         
         private Bitmap bitmap;
-        public int Width    // really calls for inheritance!
-        {
-            get { return bitmap.Width; }
-        }
-        public int Height
-        {
-            get { return bitmap.Height; }
-        }
-
+        private byte[] bitmap_data;
+        private int bytes_per_color;
+        private int bytes_per_stryde;
+        public int Width;
+        public int Height;
+        
+        
         public ContinuousBitmap(Bitmap source) {
             bitmap = new Bitmap( source );
+
+            BitmapData bd = source.LockBits(
+                new Rectangle(0, 0, source.Width, source.Height),
+                ImageLockMode.ReadWrite, source.PixelFormat);
+
+            Width = source.Width;
+            Height = source.Height;
+            bytes_per_color = bd.Stride / Width;    // this is wrong. TODO - replace it with proper measure
+            bytes_per_stryde = bd.Stride;
+
+            bitmap_data = new byte[bd.Stride * bd.Height];
+
+            Marshal.Copy(bd.Scan0, bitmap_data, 0, bitmap_data.Length);
+
+            source.UnlockBits(bd);
+        }
+
+        private RGB GetRGB(int j, int i) {
+            return new RGB(bitmap_data[i * bytes_per_stryde + j * bytes_per_color + 2],
+                bitmap_data[i*bytes_per_stryde + j*bytes_per_color + 1],
+                bitmap_data[i*bytes_per_stryde + j*bytes_per_color + 0]);            
         }
 
         public void ChooseInterpolation(Interpolation method){
