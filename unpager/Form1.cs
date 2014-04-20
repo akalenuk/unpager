@@ -561,10 +561,7 @@ namespace WindowsFormsApplication1
             Cursor = Cursors.WaitCursor;
             Undo.push(source);
             ContinuousBitmap csource = new ContinuousBitmap(source);
-            if (smoothTransformToolStripMenuItem.Checked)
-            {
-                csource.ChooseInterpolation(ContinuousBitmap.Interpolation.PiecewiseWeight);
-            }
+
             source = ImageTransformer.Projection(csource, P1, P2, P3, P4);
 
             source_scale = 0.8F * (double)ClientSize.Height / source.Height;
@@ -581,10 +578,7 @@ namespace WindowsFormsApplication1
             Cursor = Cursors.WaitCursor;
             Undo.push(source);
             ContinuousBitmap csource = new ContinuousBitmap(source);
-            if (smoothTransformToolStripMenuItem.Checked)
-            {
-                csource.ChooseInterpolation(ContinuousBitmap.Interpolation.PiecewiseWeight);
-            }
+
             if (cur_tool == Tool.PolynomialProfiles) {
                 source = ImageTransformer.ByPolynomialProfiles(csource, pol1, pol2, line1, line2);
             } else if (cur_tool == Tool.SWINEProfiles) {
@@ -744,9 +738,6 @@ namespace WindowsFormsApplication1
                 int new_h = (int)(1.5*Math.Max( Dr(P1.X, P1.Y, P4.X, P4.Y), Dr(P2.X, P2.Y, P3.X, P3.Y) ));
 
                 ContinuousBitmap csource = new ContinuousBitmap(source);
-                if (smoothTransformToolStripMenuItem.Checked) {
-                    csource.ChooseInterpolation(ContinuousBitmap.Interpolation.PiecewiseWeight);
-                }
 
                 double x1 = P1.X;
                 double x2 = P2.X;
