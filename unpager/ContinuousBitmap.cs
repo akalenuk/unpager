@@ -36,7 +36,8 @@ namespace WindowsFormsApplication1
     // TRY: stochastic interpolation
     class ContinuousBitmap
     {
-      
+        private const double EPSILON = 1.0e-5;
+  
         private Bitmap bitmap;
         private byte[] bitmap_data;
         private int bytes_per_color;
@@ -73,6 +74,11 @@ namespace WindowsFormsApplication1
         private double Fract(double x)
         {
             return x - Math.Floor(x);
+        }
+
+        private bool CloseToInt(double x) 
+        {
+            return (Math.Min(x - Math.Floor(x), Math.Ceiling(x) - x) < EPSILON);
         }
 
         private RGB GetPixelPWH(double x, int y)
@@ -146,34 +152,50 @@ namespace WindowsFormsApplication1
             {
                 return GetRGB(w, h);
             }
+            // left from bitmap
             if (x < 0)
             {
                 return GetPixelPWV(0, y);
             }
+
+            // right from bitmap
             if (x > w)
             {
                 return GetPixelPWV(w, y);
             }
+
+            // atop of bitmap
             if (y < 0)
             {
                 return GetPixelPWH(x, 0);
             }
+
+            // below bitmap
             if (y > h)
             {
                 return GetPixelPWH(x, h);
             }
-            if (Fract(x) == 0.0 && Fract(y) == 0.0)
+
+            // exactly on the point
+            bool x_close_to_int = CloseToInt(x);
+            bool y_close_to_int = CloseToInt(y);
+
+            if (x_close_to_int && y_close_to_int)
             {
                 return GetRGB((int)x, (int)y);
             }
-            if (Fract(x) == 0.0)
+
+            // exactly on the edge
+            if (x_close_to_int)
             {
                 return GetPixelPWV((int)x, y);
             }
-            if (Fract(y) == 0.0)
+            if (y_close_to_int)
             {
                 return GetPixelPWH(x, (int)y);
             }
+
+            // in bitmap
             return GetPixelPWHV(x, y);
         }
 
