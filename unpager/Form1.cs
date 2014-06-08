@@ -72,6 +72,9 @@ namespace WindowsFormsApplication1
 
         List<Point> ffd_points = new List<Point>();
 
+        private Pen red_pen = new Pen(Color.Red);
+        private Pen blue_pen = new Pen(Color.Blue);
+
         public Form1()
         {
             InitializeComponent();
@@ -150,8 +153,7 @@ namespace WindowsFormsApplication1
         {
             int scaled_w;
             int scaled_h;
-            Pen red_pen = new Pen(Color.Red);
-            Pen blue_pen = new Pen(Color.Blue);
+            
             switch (cur_tool) 
             { 
                 case Tool.ProjectionFrame:

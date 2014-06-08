@@ -38,7 +38,6 @@ namespace WindowsFormsApplication1
     {
         private const double EPSILON = 1.0e-5;
   
-        private Bitmap bitmap;
         private byte[] bitmap_data;
         private int bytes_per_color;
         private int bytes_per_stryde;
@@ -47,8 +46,6 @@ namespace WindowsFormsApplication1
         
         
         public ContinuousBitmap(Bitmap source) {
-            bitmap = new Bitmap( source );
-
             BitmapData bd = source.LockBits(
                 new Rectangle(0, 0, source.Width, source.Height),
                 ImageLockMode.ReadWrite, source.PixelFormat);
@@ -194,20 +191,8 @@ namespace WindowsFormsApplication1
             {
                 return GetPixelPWH(x, (int)y);
             }
-
             // in bitmap
             return GetPixelPWHV(x, y);
-        }
-
-        private Color GetPixelSharp(Bitmap from, double x, double y)
-        {
-            int ixn = (int)x;
-            int iyn = (int)y;
-            if (ixn < 0) ixn = 0;
-            if (iyn < 0) iyn = 0;
-            if (ixn > from.Width - 1) ixn = from.Width - 1;
-            if (iyn > from.Height - 1) iyn = from.Height - 1;
-            return from.GetPixel(ixn, iyn);
         }
 
         public Color GetPixel(double x, double y) {
