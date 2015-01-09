@@ -140,8 +140,7 @@ namespace WindowsFormsApplication1 {
         Simplicial weighted interpolation.
 
         Args:
-        dot: Argument for interpolation function
-        given by a list of variables
+        dot: Argument for interpolation function provided by a list of variables
         xyz: Data points.
         Sx: List of simplexes, represeting simplicial complex
         base_f: Corresponding to 'xyz' list of basic functions.
@@ -169,8 +168,7 @@ namespace WindowsFormsApplication1 {
         Simplex weighted extrapolation
 
         Args:
-        dot: Argument for interpolation function
-        given by a list of variables
+        dot: Argument for interpolation function provided by a list of variables
         xyz: Data points.
         Sx: List of simplexes, represeting simplicial complex
         base_f: Corresponding to 'xyz' list of basic functions.

@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 // TODO assertions for all algebra invariants
-// TODO descent unit testing
+// TODO decent unit testing
 // TODO refactor variable names
 
 namespace WindowsFormsApplication1 {

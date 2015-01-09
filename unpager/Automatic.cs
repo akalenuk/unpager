@@ -20,6 +20,7 @@ using System.Drawing;
 
 namespace WindowsFormsApplication1
 {
+    // TODO: cosider droping this out of code entirely
     class Automatic
     {
         public static List<Point> FindLightingPoints(Bitmap source, int w, int h) {

@@ -33,7 +33,7 @@ namespace WindowsFormsApplication1
         }
     };
 
-    // TRY: stochastic interpolation
+    // TODO: try stochastic interpolation
     class ContinuousBitmap
     {
         private const double EPSILON = 1.0e-5;
