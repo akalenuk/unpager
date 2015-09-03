@@ -49,6 +49,7 @@ namespace linear_equations{
 		const std::array<double, N>& b,
 		std::array<double, N>& x){
 
+		// you have to explicilty set lambda type to use it recursively
 		std::function<double(int, int, int)> fa = [&](int i, int j, int n) -> double {
 			if(n == N) return a[i][j];
 			return fa(i, j, n+1) * fa(n, n, n+1)
