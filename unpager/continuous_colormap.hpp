@@ -6,7 +6,7 @@ namespace continuous_colormap
     constexpr int COLOR_DEPTH = 8;
     constexpr double SMALL_ENOUGH_DXY = 1.0 / std::pow(2, COLOR_DEPTH); 
 
-    template<class Color> using DiscreteColormap = std::function<Color(int, int)>;
+    template<class Color> using DiscreteColormap = std::function<Color(int, int)>;  // lambda decays to function pointer only when not enclosing
     template<class Color> using ContinousColormap = std::function<Color(double, double)>;
 
     static double fractional(double x){
@@ -17,6 +17,7 @@ namespace continuous_colormap
         return std::min(x - std::floor(x), std::ceil(x) - x) < SMALL_ENOUGH_DXY;
     }
 
+    // this doesn't have to be static. It doesn't matter unless this links separately.
     template <class Color>
     static Color color_on_horizontal_edge(double x, int y, DiscreteColormap<Color> get_color){
         double t = fractional(x);
