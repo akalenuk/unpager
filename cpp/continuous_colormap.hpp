@@ -1,18 +1,19 @@
 #include <cmath>
 #include <algorithm>
+#include <functional>
 
 namespace continuous_colormap
 {
     constexpr int COLOR_DEPTH = 8;
-    constexpr double SMALL_ENOUGH_DXY = 1.0 / std::pow(2, COLOR_DEPTH); 
+    constexpr double SMALL_ENOUGH_DXY = 1.0 / std::pow(2, COLOR_DEPTH);
 
     template<class Color> using DiscreteColormap = std::function<Color(int, int)>;  // lambda decays to function pointer only when not enclosing
     template<class Color> using ContinousColormap = std::function<Color(double, double)>;
 
     static double fractional(double x){
-        return std::fmod(x, 1.0);    
+        return std::fmod(x, 1.0);
     }
-    
+
     static bool close_to_grid(double x){
         return std::min(x - std::floor(x), std::ceil(x) - x) < SMALL_ENOUGH_DXY;
     }
@@ -24,9 +25,9 @@ namespace continuous_colormap
         double f = 1.0 - t;
         int int_x = static_cast<int>(x);
         Color left = get_color(int_x, y);
-        if (t == 0.0) return left;
+        if (t <= 0.0) return left;
         Color right = get_color(int_x + 1, y);
-        if (f == 0.0) return right;
+        if (f <= 0.0) return right;
         double t_ = 1.0 / t;
         double f_ = 1.0 / f;
         return (left * t_ + right * f_) / (t_ + f_);
@@ -38,9 +39,9 @@ namespace continuous_colormap
         double f = 1.0 - t;
         int int_y = static_cast<int>(y);
         Color top = get_color(x, int_y);
-        if (t == 0.0) return top;
+        if (t <= 0.0) return top;
         Color bottom = get_color(x, int_y + 1);
-        if (f == 0.0) return bottom;
+        if (f <= 0.0) return bottom;
         double t_ = 1.0 / t;
         double f_ = 1.0 / f;
         return (top * t_ + bottom * f_) / (t_ + f_);
@@ -73,22 +74,22 @@ namespace continuous_colormap
             if (x >= w - 1 && y <= 0) return get_color(w - 1, 0);
             if (x <= 0 && y >= h - 1) return get_color(0, h - 1);
             if (x >= w - 1 && y >= h - 1) return get_color(w - 1, h - 1);
-            
+
             if (x <= 0) return color_on_vertical_edge(0, y, get_color);
             if (x >= w - 1) return color_on_vertical_edge(w - 1, y, get_color);
-            
+
             if (y <= 0) return color_on_horizontal_edge(x, 0, get_color);
             if (y >= h - 1) return color_on_horizontal_edge(x, h - 1, get_color);
-            
+
             bool x_close_to_edge = close_to_grid(x);
             bool y_close_to_edge = close_to_grid(y);
             int int_x = static_cast<int>(x);
             int int_y = static_cast<int>(y);
-            
+
             if (x_close_to_edge && y_close_to_edge) return get_color(int_x, int_y);
             if (x_close_to_edge) return color_on_vertical_edge(int_x, y, get_color);
             if (y_close_to_edge) return color_on_horizontal_edge(x, int_y, get_color);
-            
+
             return color_in_grid_cell(x, y, get_color);
         };
     }
