@@ -3,7 +3,11 @@
 
 namespace projection
 {
-    std::array<std::array<double, 3>, 3> make_projection_matrix(
+    using Projection = std::function<std::array<double, 2>(std::array<double, 2>)>;
+
+    using Matrix = std::array<std::array<double, 3>, 3>;
+
+    Matrix make_projection_matrix(
     double x1, double y1,   double x2, double y2,
     double x3, double y3,   double x4, double y4){
 
@@ -32,10 +36,10 @@ namespace projection
         double F = y1;
         double c = 1.0;
 
-        return std::array<std::array<double, 3>, 3>{{{A, D, a}, {B, E, b}, {C, F, c}}};
+        return Matrix{{{A, D, a}, {B, E, b}, {C, F, c}}};
     }
 
-    std::array<std::array<double, 3>, 3> make_inverse_to_projection(std::array<std::array<double, 3>, 3> m) {
+    Matrix make_inverse_to_projection(Matrix m) {
         double A = m[0][0];     double D = m[0][1];     double a = m[0][2];
         double B = m[1][0];     double E = m[1][1];     double b = m[1][2];
         double C = m[2][0];     double F = m[2][1];     double c = m[2][2];
@@ -44,19 +48,19 @@ namespace projection
         double B_ = b*C - B*c;  double E_ = A*c - a*C;  double b_ = B*a - A*b;
         double C_ = B*F - E*C;  double F_ = C*D - A*F;  double c_ = A*E - B*D;
 
-        return std::array<std::array<double, 3>, 3> {{{ A_, D_, a_ }, { B_, E_, b_ }, { C_, F_, c_ }}};
+        return Matrix{{{ A_, D_, a_ }, { B_, E_, b_ }, { C_, F_, c_ }}};
     }
 
-    std::function<std::pair<double, double>(std::pair<double, double>)> make_into_function(std::array<std::array<double, 3>, 3> m){
-        return [=](std::pair<double, double> xy){
+    Projection make_into_function(Matrix m){
+        return [=](std::array<double, 2> xy){
             double A = m[0][0];     double D = m[0][1];     double a = m[0][2];
             double B = m[1][0];     double E = m[1][1];     double b = m[1][2];
             double C = m[2][0];     double F = m[2][1];     double c = m[2][2];
 
-            double d_ = 1.0 / (a * xy.first + b * xy.second + c);
-            double x_ = (A * xy.first + B * xy.second + C) * d_;
-            double y_ = (D * xy.first + E * xy.second + F) * d_;
-            return std::pair<double, double>{x_, y_};
+            double d_ = 1.0 / (a * xy[0] + b * xy[1] + c);
+            double x_ = (A * xy[0] + B * xy[1] + C) * d_;
+            double y_ = (D * xy[0] + E * xy[1] + F) * d_;
+            return std::array<double, 2>{x_, y_};
         };
     }
 }

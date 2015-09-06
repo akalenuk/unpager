@@ -7,8 +7,11 @@ namespace continuous_colormap
     constexpr int COLOR_DEPTH = 8;
     constexpr double SMALL_ENOUGH_DXY = 1.0 / std::pow(2, COLOR_DEPTH);
 
-    template<class Color> using DiscreteColormap = std::function<Color(int, int)>;  // lambda decays to function pointer only when not enclosing
-    template<class Color> using ContinousColormap = std::function<Color(double, double)>;
+    template<class Color>
+    using DiscreteColormap = std::function<Color(int, int)>;  // lambda decays to function pointer only when not enclosing
+
+    template<class Color>
+    using ContinousColormap = std::function<Color(double, double)>; // better use array 2 here
 
     static double fractional(double x){
         return std::fmod(x, 1.0);
