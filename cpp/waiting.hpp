@@ -3,7 +3,7 @@
 #include <functional>
 #include <array>
 
-namespace linear_equations  // waiting for static if
+namespace linear_equations  // not waiting for static if :-)
 {
     constexpr double SMALL_ENOUGH = std::sqrt(std::numeric_limits<double>::epsilon());
 
@@ -73,3 +73,4 @@ int main()
     cout << "x0 " << x2[0] << "  x1 " << x2[1] << endl;
     return 0;
 }
+// gcc -std=c++11 -O2 -S main.cpp
