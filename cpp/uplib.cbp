@@ -12,7 +12,25 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-Wnon-virtual-dtor" />
+					<Add option="-Wshadow" />
+					<Add option="-Winit-self" />
+					<Add option="-Wredundant-decls" />
+					<Add option="-Wcast-align" />
+					<Add option="-Wundef" />
+					<Add option="-Wfloat-equal" />
+					<Add option="-Winline" />
+					<Add option="-Wunreachable-code" />
+					<Add option="-Wmissing-include-dirs" />
+					<Add option="-Wswitch-enum" />
+					<Add option="-Wswitch-default" />
+					<Add option="-Weffc++" />
+					<Add option="-std=c++11" />
+					<Add option="-Wfatal-errors" />
+					<Add option="-Wextra" />
+					<Add option="-Wall" />
 					<Add option="-g" />
+					<Add option="-Wno-missing-declarations" />
 				</Compiler>
 			</Target>
 		</Build>
@@ -37,7 +55,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="colormap_darning.hpp" />
+		<Unit filename="continuous_colormap.hpp" />
+		<Unit filename="linear_equations.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="polynoms.hpp" />
+		<Unit filename="projection.hpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

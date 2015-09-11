@@ -2,6 +2,7 @@
 #include "linear_equations.hpp"
 #include "polynoms.hpp"
 #include "projection.hpp"
+#include "colormap_darning.hpp"
 
 #include <iostream>
 #include <assert.h>
