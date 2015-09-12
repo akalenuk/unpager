@@ -7,82 +7,52 @@ namespace linear_equations{
 
 	constexpr double SMALL_ENOUGH = std::sqrt(std::numeric_limits<double>::epsilon());
 
-	bool solve(const std::array<std::array<double, 2>, 2>& a,
-		const std::array<double, 2>& b,
-		std::array<double, 2>& x){
+    template <int I, int J, int K, int N>
+    inline static double aij(const std::array<std::array<double, N>, N>& a){
+        //std::array<int, N> unused = {0};
+        if(K == N) return a[I][J];
+        return aij<I, J, K+(K<N), N>(a) * aij<K, K, K+(K<N), N>(a) - aij<I, K, K+(K<N), N>(a) * aij<K, J, K+(K<N), N>(a);
+    }
 
-		double d = a[0][1] * a[1][0] - a[0][0] * a[1][1];
-		if (std::abs(d) < SMALL_ENOUGH) return false;
+    template <int I, int K, int N>
+    inline static double bi(const std::array<std::array<double, N>, N>& a, const std::array<double, N>& b){
+        //std::array<int, N> unused = {0};
+        if(K == N) return b[I];
+        return aij<K, K, K+(K<N), N>(a) * bi<I, K+(K<N), N>(a, b) - aij<I, K, K+(K<N), N>(a) * bi<K, K+(K<N), N>(a, b);
+    }
 
-		x[0] = a[0][1] * b[1] - a[1][1] * b[0] / d;
-		x[1] = a[1][0] * b[0] - a[0][0] * b[1] / d;
-		return true;
-	}
+    template <int J, int I, int N>
+    inline static void d_for(double& d, const std::array<std::array<double, N>, N>& a, std::array<double, N>& x){
+        //std::array<int, N> unused = {0};
+        if(J < I){
+            d -= aij<I, J, I+(J<I), N>(a) * x[J];
+            d_for<J+(J<I), I, N>(d, a, x);
+        }
+    }
 
-	bool solve(const std::array<std::array<double, 3>, 3>& a,
-		const std::array<double, 3>& b,
-		std::array<double, 3>& x){
+    template <int I, int N>
+    inline static double di(const std::array<std::array<double, N>, N>& a, const std::array<double, N>& b, std::array<double, N>& x){
+        //std::array<int, N> unused = {0};
+        double d = bi<I, I+1, N>(a, b);
+        d_for<0, I, N>(d, a, x);
+        return d;
+    }
 
-		double d =
-			  a[0][0] * (a[1][2] * a[2][1] - a[1][1] * a[2][2]) +
-			+ a[0][1] * (a[1][0] * a[2][2] - a[1][2] * a[2][0])
-			+ a[0][2] * (a[1][1] * a[2][0] - a[1][0] * a[2][1]);
-		if (std::abs(d) < SMALL_ENOUGH) return false;
+    template <int I, int N>
+    inline static bool x_for(const std::array<std::array<double, N>, N>& a, const std::array<double, N>& b, std::array<double, N>& x){
+        if(I < N){
+            double d = di<I, N>(a, b, x);
+            if(std::abs(d) < SMALL_ENOUGH) return false;
+            x[I] = d / aij<I, I, I+1, N>(a);
+            return x_for<I+(I<N), N>(a, b, x);
+        }
+        return true;
+    }
 
-		x[0] =
-			 (a[0][1] * (a[2][2] * b[1] - a[1][2] * b[2])
-			+ a[0][2] * (a[1][1] * b[2] - a[2][1] * b[1])
-			+ (a[1][2] * a[2][1] - a[1][1] * a[2][2]) * b[0]) / d;
-
-		x[1] =
-			-(a[0][0] * (a[2][2] * b[1] - a[1][2] * b[2])
-			+ a[0][2] * (a[1][0] * b[2] - a[2][0] * b[1])
-			+ (a[1][2] * a[2][0] - a[1][0] * a[2][2]) * b[0]) / d;
-
-		x[2] =
-			 (a[0][0] * (a[2][1] * b[1] - a[1][1] * b[2])
-			+ a[0][1] * (a[1][0] * b[2] - a[2][0] * b[1])
-			+ (a[1][1] * a[2][0] - a[1][0] * a[2][1]) * b[0]) / d;
-		return true;
-	}
-
-	template <int N>
-	bool solve(const std::array<std::array<double, N>, N>& a,
-		const std::array<double, N>& b,
-		std::array<double, N>& x){
-
-		// you have to explicilty set lambda type to use it recursively
-		std::function<double(int, int, int)> fa = [&](int i, int j, int n) -> double {
-			if(n == N) return a[i][j];
-			return fa(i, j, n+1) * fa(n, n, n+1)
-				- fa(i, n, n+1) * fa(n, j, n+1);
-		};
-
-		std::function<double(int, int)> fb = [&](int i, int n) -> double{
-			if(n == N) return b[i];
-			return fa(n, n, n+1) * fb(i, n+1)
-				- fa(i, n, n+1) * fb(n, n+1);
-		};
-
-		std::function<double(int)> fd = [&](int i) -> double{
-			double d = fb(i, i+1);
-			for(int j = 0; j < i; j++){
-				d -= fa(i, j, i+1) * x[j];
-			}
-			return d;
-		};
-
-		auto fx = [&](int i, double d) -> double{
-			return d / fa(i, i, i+1);
-		};
-
-		for(int i = 0; i < N; i++){
-			double d = fd(i);
-			if(std::abs(d) < SMALL_ENOUGH) return false;
-			x[i] = fx(i, d);
-		}
-		return true;
-	}
+    template <int N>
+    bool solve(const std::array<std::array<double, N>, N>& a, const std::array<double, N>& b, std::array<double, N>& x){
+        return x_for<0, N>(a, b, x);
+    }
 
 	template <int N>
 	bool verify(const std::array<std::array<double, N>, N>& a,
