@@ -32,15 +32,15 @@ namespace polynoms
         };
     }
 
-    static bool good_enough(const Data& input, std::function<double(double)> pol, double u){
-        for(auto xy : input){
-            if(std::abs(pol(xy.first) - xy.second) > u) return false;
-        }
-        return true;
-    }
-
     template <int N>
     bool approximate_and_interpolate(const Data& ap_input, const Data& ip_input, Solver<N> solver, double u, Vector<N>& output){
+        auto good_enough = [&ip_input, &u](std::function<double(double)> pol) -> bool{
+            for(auto xy : ip_input){
+                if(std::abs(pol(xy.first) - xy.second) > u) return false;
+            }
+            return true;
+        };
+
         double multiplier = INITIAL_MULTIPLIER;
         std::function<double(double)> pol;
         while(true){
@@ -64,7 +64,7 @@ namespace polynoms
             }
             if(!solver(a, b, output)) return false;
             pol = make_into_function<N>(output);
-            if(good_enough(ip_input, pol, u)){
+            if(good_enough(pol)){
                 return true;
             }else{
                 multiplier *= MULTIPLIER_MULTIPLIER;
