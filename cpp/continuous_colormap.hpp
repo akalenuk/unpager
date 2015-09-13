@@ -8,10 +8,10 @@ namespace continuous_colormap
     constexpr double SMALL_ENOUGH_DXY = 1.0 / std::pow(2, COLOR_DEPTH);
 
     template<class Color>
-    using DiscreteColormap = std::function<Color(int, int)>;  // lambda decays to function pointer only when not enclosing
+    using DiscreteColormap = std::function<Color(std::array<int, 2>)>;  // lambda decays to function pointer only when not enclosing
 
     template<class Color>
-    using ContinousColormap = std::function<Color(double, double)>; // better use array 2 here
+    using ContinousColormap = std::function<Color(std::array<double, 2>)>;
 
     template<class Color>
     ContinousColormap<Color> make_from_discrete(int w, int h, DiscreteColormap<Color> get_color){
@@ -27,9 +27,9 @@ namespace continuous_colormap
             double t = fractional(x);
             double f = 1.0 - t;
             int int_x = static_cast<int>(x);
-            Color left = get_color(int_x, y);
+            Color left = get_color({int_x, y});
             if (t <= 0.0) return left;
-            Color right = get_color(int_x + 1, y);
+            Color right = get_color({int_x + 1, y});
             if (f <= 0.0) return right;
             double t_ = 1.0 / t;
             double f_ = 1.0 / f;
@@ -40,9 +40,9 @@ namespace continuous_colormap
             double t = fractional(y);
             double f = 1.0 - t;
             int int_y = static_cast<int>(y);
-            Color top = get_color(x, int_y);
+            Color top = get_color({x, int_y});
             if (t <= 0.0) return top;
-            Color bottom = get_color(x, int_y + 1);
+            Color bottom = get_color({x, int_y + 1});
             if (f <= 0.0) return bottom;
             double t_ = 1.0 / t;
             double f_ = 1.0 / f;
@@ -56,10 +56,10 @@ namespace continuous_colormap
             double fy = 1.0 - ty;
             int int_x = static_cast<int>(x);
             int int_y = static_cast<int>(y);
-            Color left_top = get_color(int_x, int_y);
-            Color right_top = get_color(int_x + 1, int_y);
-            Color left_bottom = get_color(int_x, int_y + 1);
-            Color right_bottom = get_color(int_x + 1, int_y + 1);
+            Color left_top = get_color({int_x, int_y});
+            Color right_top = get_color({int_x + 1, int_y});
+            Color left_bottom = get_color({int_x, int_y + 1});
+            Color right_bottom = get_color({int_x + 1, int_y + 1});
             double tt_ = 1.0 / (tx * ty);
             double ft_ = 1.0 / (fx * ty);
             double tf_ = 1.0 / (tx * fy);
@@ -68,11 +68,13 @@ namespace continuous_colormap
                 (tt_ + tf_ + ft_ + ff_);
         };
 
-        return [&](double x, double y) -> Color {
-            if (x <= 0 && y <= 0) return get_color(0, 0);
-            if (x >= w - 1 && y <= 0) return get_color(w - 1, 0);
-            if (x <= 0 && y >= h - 1) return get_color(0, h - 1);
-            if (x >= w - 1 && y >= h - 1) return get_color(w - 1, h - 1);
+        return [&](std::array<double, 2> xy) -> Color {
+            auto x = xy[0];
+            auto y = xy[1];
+            if (x <= 0 && y <= 0) return get_color({0, 0});
+            if (x >= w - 1 && y <= 0) return get_color({w - 1, 0});
+            if (x <= 0 && y >= h - 1) return get_color({0, h - 1});
+            if (x >= w - 1 && y >= h - 1) return get_color({w - 1, h - 1});
 
             if (x <= 0) return color_on_vertical_edge(0, y);
             if (x >= w - 1) return color_on_vertical_edge(w - 1, y);
@@ -85,7 +87,7 @@ namespace continuous_colormap
             int int_x = static_cast<int>(x);
             int int_y = static_cast<int>(y);
 
-            if (x_close_to_edge && y_close_to_edge) return get_color(int_x, int_y);
+            if (x_close_to_edge && y_close_to_edge) return get_color({int_x, int_y});
             if (x_close_to_edge) return color_on_vertical_edge(int_x, y);
             if (y_close_to_edge) return color_on_horizontal_edge(x, int_y);
 
