@@ -13,7 +13,6 @@ int zero(std::array<int, 2> ji){
     return ji[0] != ji[1] ? 0 : 0;
 }
 
-
 int main()
 {
     auto a2 = std::array<std::array<double, 3>, 3>{{{1.0, 0.0, 0.0}, {2.0, 1.0, 0.0}, {3.0, 2.0, 1.0}}};
@@ -34,11 +33,11 @@ int main()
 
     html_plotting::HtmlCanvas<100, 100> canvas;
     canvas[99][99] = "#ff00ff";
-    html_plotting::plot_f_on_canvas<100, 100>(canvas, pol, 0.0, 10.0, 0.0, 10.0, "#00ff00");
-    html_plotting::plot_xy_on_canvas<100, 100>(canvas, v, 0.0, 10.0, 0.0, 10.0, "#ff0000");
+    html_plotting::plot_f_on_canvas(canvas, pol, 0.0, 10.0, 0.0, 10.0, "#00ff00");
+    html_plotting::plot_xy_on_canvas(canvas, v, 0.0, 10.0, 0.0, 10.0, "#ff0000");
     std::fstream fs;
     fs.open("test.html", std::fstream::out);
-    fs << html_plotting::wrap_in_limits(html_plotting::table_from_canvas<100, 100>(canvas), 0, 10, 0, 10);
+    fs << html_plotting::wrap_in_limits(html_plotting::table_from_canvas(canvas), 0, 10, 0, 10);
     fs.close();
 
     std::cout << "Ok" << std::endl;

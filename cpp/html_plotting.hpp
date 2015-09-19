@@ -3,10 +3,10 @@
 
 namespace html_plotting
 {
-    template <int W, int H>
+    template <size_t W, size_t H>
     using HtmlCanvas = std::array<std::array<std::string, W>, H>;
 
-    template <int W, int H>
+    template <size_t W, size_t H>
     std::string table_from_canvas(const HtmlCanvas<W, H>& canvas){
         std::array<std::array<std::tuple<std::string, int, int>, W>, H> opt_canvas;
         for(int i = 0; i < H; i++){
@@ -89,7 +89,7 @@ namespace html_plotting
         return table;
     }
 
-    template <int W, int H>
+    template <size_t W, size_t H>
     void plot_line_on_canvas(HtmlCanvas<W, H>& canvas, std::array<int, 2> xy1, std::array<int, 2> xy2, const std::string& c){
         bool yx;
         int x1, x2, y1, y2;
@@ -125,7 +125,7 @@ namespace html_plotting
         }
     }
 
-    template <int W, int H>
+    template <size_t W, size_t H>
     void plot_f_on_canvas(HtmlCanvas<W, H>& canvas, const std::function<double(double)>& f,
         double x_min, double x_max, double y_min, double y_max, const std::string& c){
         int last_i;
@@ -138,7 +138,7 @@ namespace html_plotting
         }
     }
 
-    template <int W, int H>
+    template <size_t W, size_t H>
     void plot_xy_on_canvas(HtmlCanvas<W, H>& canvas, const std::vector<std::array<double, 2> >& xys,
         double x_min, double x_max, double y_min, double y_max, const std::string& c){
         for(auto xy : xys){
