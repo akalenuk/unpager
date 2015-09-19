@@ -13,6 +13,7 @@ int zero(std::array<int, 2> ji){
     return ji[0] != ji[1] ? 0 : 0;
 }
 
+
 int main()
 {
     auto a2 = std::array<std::array<double, 3>, 3>{{{1.0, 0.0, 0.0}, {2.0, 1.0, 0.0}, {3.0, 2.0, 1.0}}};

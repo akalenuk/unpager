@@ -7,7 +7,7 @@ namespace html_plotting
     using HtmlCanvas = std::array<std::array<std::string, W>, H>;
 
     template <int W, int H>
-    std::string table_from_canvas(HtmlCanvas<W, H>& canvas){
+    std::string table_from_canvas(const HtmlCanvas<W, H>& canvas){
         std::array<std::array<std::tuple<std::string, int, int>, W>, H> opt_canvas;
         for(int i = 0; i < H; i++){
             for(int j = 0; j < W; j++){
@@ -90,19 +90,57 @@ namespace html_plotting
     }
 
     template <int W, int H>
-    void plot_f_on_canvas(HtmlCanvas<W, H>& canvas, const std::function<double(double)>& f,
-        double x_min, double x_max, double y_min, double y_max, std::string c){
-        for(int j = 0; j < W; j++){
-            int i = H - ( (f(x_min + (x_max-x_min) * j / W) - y_min) * H / (y_max-y_min) );
-            if( i>=0 && i<H ){
+    void plot_line_on_canvas(HtmlCanvas<W, H>& canvas, std::array<int, 2> xy1, std::array<int, 2> xy2, const std::string& c){
+        bool yx;
+        int x1, x2, y1, y2;
+        if( std::abs(xy2[1] - xy1[1]) < std::abs(xy2[0] - xy1[0]) ){
+            x1 = xy1[0];    y1 = xy1[1];
+            x2 = xy2[0];    y2 = xy2[1];
+            yx = false;
+        }else {
+            x1 = xy1[1];    y1 = xy1[0];
+            x2 = xy2[1];    y2 = xy2[0];
+            yx = true;
+        }
+        if(x1 > x2){
+            std::swap(x1, x2);
+            std::swap(y1, y2);
+        }
+        int dx = x2-x1;
+        int dy = std::abs(y2-y1);
+        int error = dx / 2;
+        int i = y1;
+        int ystep = y1 < y2 ? 1 : -1;
+        for(int j = x1; j <= x2; j++){
+            if(! yx){
                 canvas[i][j] = c;
+            }else{
+                canvas[j][i] = c;
+            }
+            error -= dy;
+            if(error < 0){
+                error += dx;
+                i += ystep;
             }
         }
     }
 
     template <int W, int H>
+    void plot_f_on_canvas(HtmlCanvas<W, H>& canvas, const std::function<double(double)>& f,
+        double x_min, double x_max, double y_min, double y_max, const std::string& c){
+        int last_i;
+        for(int j = 0; j < W; j++){
+            int i = H - ( (f(x_min + (x_max-x_min) * j / W) - y_min) * H / (y_max-y_min) );
+            if( j>0 && i>=0 && i<H ){
+                plot_line_on_canvas<100, 100>(canvas, {j-1, last_i}, {j, i}, c);
+            }
+            last_i = i;
+        }
+    }
+
+    template <int W, int H>
     void plot_xy_on_canvas(HtmlCanvas<W, H>& canvas, const std::vector<std::array<double, 2> >& xys,
-        double x_min, double x_max, double y_min, double y_max, std::string c){
+        double x_min, double x_max, double y_min, double y_max, const std::string& c){
         for(auto xy : xys){
             double x = xy[0];
             double y = xy[1];
