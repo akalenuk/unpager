@@ -1,4 +1,5 @@
 #include <array>
+#include <functional>
 
 namespace html_plotting
 {
@@ -86,5 +87,38 @@ namespace html_plotting
         table += "</table>";
 
         return table;
+    }
+
+    template <int W, int H>
+    void plot_f_on_canvas(HtmlCanvas<W, H>& canvas, const std::function<double(double)>& f,
+        double x_min, double x_max, double y_min, double y_max, std::string c){
+        for(int j = 0; j < W; j++){
+            int i = H - ( (f(x_min + (x_max-x_min) * j / W) - y_min) * H / (y_max-y_min) );
+            if( i>=0 && i<H ){
+                canvas[i][j] = c;
+            }
+        }
+    }
+
+    template <int W, int H>
+    void plot_xy_on_canvas(HtmlCanvas<W, H>& canvas, const std::vector<std::array<double, 2> >& xys,
+        double x_min, double x_max, double y_min, double y_max, std::string c){
+        for(auto xy : xys){
+            double x = xy[0];
+            double y = xy[1];
+            int j = (x - x_min) * W / (x_max - x_min);
+            int i = H - (y - y_min) * H / (y_max - y_min);
+            if( i>=0 && i<H && j>=0 && j<W ){
+                canvas[i][j] = c;
+            }
+        }
+    }
+
+    std::string wrap_in_limits(std::string table, int x_min, int x_max, int y_min, int y_max){
+        return "<table><tr><td valign=top>" + std::to_string(y_max) + "</td>"
+            + "<td colspan=2 rowspan=2>" + table + "</td></tr>"
+            + "<tr><td valign=bottom>" + std::to_string(y_min) + "</td></tr>"
+            + "<tr><td></td><td align=left>" + std::to_string(x_min) + "</td>"
+            + "<td align=right>" + std::to_string(x_max) + "</td></tr></table>";
     }
 }

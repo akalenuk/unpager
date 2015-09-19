@@ -19,7 +19,7 @@ namespace polynoms
     template <int N>
     using Solver = std::function<bool(const Matrix<N>&, const Vector<N>&, Vector<N>&)>;
 
-    using Data = std::vector<std::pair<double, double> >;
+    using Data = std::vector<std::array<double, 2> >;
 
     template <int N>
     std::function<double(double)> make_into_function(std::array<double, N> coefficients){
@@ -36,7 +36,7 @@ namespace polynoms
     bool approximate_and_interpolate(const Data& ap_input, const Data& ip_input, Solver<N> solver, double u, Vector<N>& output){
         auto good_enough = [&ip_input, &u](std::function<double(double)> pol) -> bool{
             for(auto xy : ip_input){
-                if(std::abs(pol(xy.first) - xy.second) > u) return false;
+                if(std::abs(pol(xy[0]) - xy[1]) > u) return false;
             }
             return true;
         };
@@ -49,17 +49,17 @@ namespace polynoms
             for (int i = 0; i < N; i++){
                 for (int j = 0; j < N; j++){
                     for(auto xy : ap_input){
-                        a[i][j] += std::pow(xy.first, i + j);
+                        a[i][j] += std::pow(xy[0], i + j);
                     }
                     for(auto xy : ip_input){
-                        a[i][j] += std::pow(xy.first, i + j) * multiplier;
+                        a[i][j] += std::pow(xy[0], i + j) * multiplier;
                     }
                 }
                 for(auto xy : ap_input){
-                    b[i] += xy.second * std::pow(xy.first, i);
+                    b[i] += xy[1] * std::pow(xy[0], i);
                 }
                 for(auto xy : ip_input){
-                    b[i] += xy.second * std::pow(xy.first, i) * multiplier;
+                    b[i] += xy[1] * std::pow(xy[0], i) * multiplier;
                 }
             }
             if(!solver(a, b, output)) return false;

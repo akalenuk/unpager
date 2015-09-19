@@ -36,7 +36,7 @@ namespace continuous_colormap
             return (left * t_ + right * f_) / (t_ + f_);
         };
 
-        auto color_on_vertical_edge = [&](double x, int y) -> Color {
+        auto color_on_vertical_edge = [&](int x, double y) -> Color {
             double t = fractional(y);
             double f = 1.0 - t;
             int int_y = static_cast<int>(y);
