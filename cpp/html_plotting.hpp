@@ -6,7 +6,7 @@ namespace html_plotting
     template <size_t W, size_t H>
     using HtmlCanvas = std::array<std::array<std::string, W>, H>;
 
-    template <size_t W, size_t H>
+    template <size_t W, size_t H>   // c++ would not deduct W and H from array size if their type is not size_t
     std::string table_from_canvas(const HtmlCanvas<W, H>& canvas){
         std::array<std::array<std::tuple<std::string, int, int>, W>, H> opt_canvas;
         for(int i = 0; i < H; i++){
