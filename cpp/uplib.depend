@@ -1,25 +1,27 @@
 # depslib dependency file v1.0
-1442065434 source:/home/littlewhite/unpager/cpp/main.cpp
+1442677204 source:/home/littlewhite/unpager/cpp/main.cpp
 	"continuous_colormap.hpp"
 	"linear_equations.hpp"
 	"polynoms.hpp"
 	"projection.hpp"
 	"colormap_darning.hpp"
+	"html_plotting.hpp"
 	<iostream>
 	<assert.h>
+	<fstream>
 
-1441531253 /home/littlewhite/unpager/cpp/continuous_colormap.hpp
+1442667945 /home/littlewhite/unpager/cpp/continuous_colormap.hpp
 	<cmath>
 	<algorithm>
 	<functional>
 
-1442065455 /home/littlewhite/unpager/cpp/linear_equations.hpp
+1442596190 /home/littlewhite/unpager/cpp/linear_equations.hpp
 	<cmath>
 	<limits>
 	<functional>
 	<array>
 
-1441479959 /home/littlewhite/unpager/cpp/polynoms.hpp
+1442667721 /home/littlewhite/unpager/cpp/polynoms.hpp
 	<array>
 	<cmath>
 	<vector>
@@ -31,5 +33,9 @@
 	<array>
 	<functional>
 
-1441532264 /home/littlewhite/unpager/cpp/colormap_darning.hpp
+1442138220 /home/littlewhite/unpager/cpp/colormap_darning.hpp
+
+1442727061 /home/littlewhite/unpager/cpp/html_plotting.hpp
+	<array>
+	<functional>
 

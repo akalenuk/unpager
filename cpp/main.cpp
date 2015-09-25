@@ -5,6 +5,8 @@
 #include "colormap_darning.hpp"
 #include "html_plotting.hpp"
 
+#include "pm5544.hpp"
+
 #include <iostream>
 #include <assert.h>
 #include <fstream>

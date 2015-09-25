@@ -57,6 +57,9 @@
 		</Compiler>
 		<Unit filename="colormap_darning.hpp" />
 		<Unit filename="continuous_colormap.hpp" />
+		<Unit filename="html_plotting.hpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="linear_equations.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="polynoms.hpp" />
