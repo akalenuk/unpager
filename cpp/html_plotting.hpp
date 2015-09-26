@@ -1,5 +1,6 @@
 #include <array>
 #include <functional>
+#include <memory>
 
 namespace html_plotting
 {
@@ -8,7 +9,8 @@ namespace html_plotting
 
     template <size_t W, size_t H>   // c++ would not deduct W and H from array size if their type is not size_t
     std::string table_from_canvas(const HtmlCanvas<W, H>& canvas){
-        std::array<std::array<std::tuple<std::string, int, int>, W>, H> opt_canvas;
+        auto opt_canvas_in_heap = std::make_shared< std::array<std::array<std::tuple<std::string, int, int>, W>, H> >();
+        auto& opt_canvas = *opt_canvas_in_heap;
         for(int i = 0; i < H; i++){
             for(int j = 0; j < W; j++){
                 opt_canvas[i][j] = std::make_tuple(canvas[i][j], 1, 1);

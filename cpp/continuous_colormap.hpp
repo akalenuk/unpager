@@ -23,7 +23,7 @@ namespace continuous_colormap
             return std::min(x - std::floor(x), std::ceil(x) - x) < SMALL_ENOUGH_DXY;
         };
 
-        auto color_on_horizontal_edge = [&](double x, int y) -> Color {
+        auto color_on_horizontal_edge = [=](double x, int y) -> Color {
             double t = fractional(x);
             double f = 1.0 - t;
             int int_x = static_cast<int>(x);
@@ -33,10 +33,10 @@ namespace continuous_colormap
             if (f <= 0.0) return right;
             double t_ = 1.0 / t;
             double f_ = 1.0 / f;
-            return (left * t_ + right * f_) / (t_ + f_);
+            return (left * t_ + right * f_) * (1.0 / (t_ + f_));
         };
 
-        auto color_on_vertical_edge = [&](int x, double y) -> Color {
+        auto color_on_vertical_edge = [=](int x, double y) -> Color {
             double t = fractional(y);
             double f = 1.0 - t;
             int int_y = static_cast<int>(y);
@@ -46,10 +46,10 @@ namespace continuous_colormap
             if (f <= 0.0) return bottom;
             double t_ = 1.0 / t;
             double f_ = 1.0 / f;
-            return (top * t_ + bottom * f_) / (t_ + f_);
+            return (top * t_ + bottom * f_) * (1.0 / (t_ + f_));
         };
 
-        auto color_in_grid_cell = [&](double x, double y) -> Color {
+        auto color_in_grid_cell = [=](double x, double y) -> Color {
             double tx = fractional(x);
             double fx = 1.0 - tx;
             double ty = fractional(y);
@@ -64,11 +64,11 @@ namespace continuous_colormap
             double ft_ = 1.0 / (fx * ty);
             double tf_ = 1.0 / (tx * fy);
             double ff_ = 1.0 / (fx * fy);
-            return (left_top * ff_ + right_top * ft_ + left_bottom * tf_ + right_bottom * ff_) /
-                (tt_ + tf_ + ft_ + ff_);
+            return (left_top * tt_ + right_top * ft_ + left_bottom * tf_ + right_bottom * ff_) *
+                (1.0 / (tt_ + tf_ + ft_ + ff_));
         };
 
-        return [&](std::array<double, 2> xy) -> Color {
+        return [=](std::array<double, 2> xy) -> Color {
             auto x = xy[0];
             auto y = xy[1];
             if (x <= 0 && y <= 0) return get_color({0, 0});
