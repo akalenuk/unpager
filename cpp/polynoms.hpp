@@ -78,14 +78,15 @@ namespace polynoms
         return approximate_and_interpolate<N>(input, no_data, solver, 0.0, output);
     }
 
-    namespace constructor{
-
+    namespace construction
+    {
         template <int N>
         std::array<double, N> p(double x){
             std::array<double, N> ret;
             for(int i = 0; i < N; i++){
                 ret[i] = std::pow(x, i);
             }
+            return ret;
         }
 
         template <int N>
@@ -101,6 +102,7 @@ namespace polynoms
                     }
                 }
             }
+            return ret;
         }
 
         template <int N>
@@ -109,9 +111,10 @@ namespace polynoms
             for(int i = 0; i < N; i++){
                 ret[i] = pow(x2, i + d) - pow(x1, i + d);
                 for(int j = i; j < i+d; j++){
-                    ret[i] /= j;
+                    ret[i] /= j+1;
                 }
             }
+            return ret;
         }
     }
 }

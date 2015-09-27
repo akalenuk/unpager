@@ -50,36 +50,55 @@ int main()
     auto colormap = continuous_colormap::make_from_discrete<int>(0,0,zero);
     std::cout << colormap({0.0, 0.0}) << std::endl;
 
-    // polynome
+    // polynomial approximation
     auto v = std::vector< std::array<double, 2> > {{2.0, 4.0}, {6.0, 4.0}, {4.0, 2.0}};
     auto x3 = std::array<double, 3>{0};
     polynoms::approximate<3>(v, linear_equations::solve<3>, x3);
     auto pol = polynoms::make_into_function<3>(x3);
     std::cout << pol(0.0) << std::endl;
 
+    // polynomial construction
+    auto pa = std::array<std::array<double, 6>, 6> {};
+    auto pb = std::array<double, 6> {};
+    auto px = std::array<double, 6> {};
+    pa[0] = polynoms::construction::p<6>(-1.0);            pb[0] = 0.0;
+    pa[1] = polynoms::construction::dp<6>(-1.0, 1);        pb[1] = 0.0;
+    pa[2] = polynoms::construction::p<6>(1.0);             pb[2] = 0.0;
+    pa[3] = polynoms::construction::dp<6>(1.0, 1);         pb[3] = 0.0;
+    pa[4] = polynoms::construction::p<6>(0.0);             pb[4] = 1.0;
+    pa[5] = polynoms::construction::ip<6>(0.0, -1.0, 1.0); pb[5] = 1.0;
+    bool le3_ok = linear_equations::solve<6>(pa, pb, px);
+    auto pol2 = polynoms::make_into_function<6>(px);
+
     // plot
-    html_plotting::HtmlCanvas<100, 100> canvas;
+    html_plotting::HtmlCanvas<256, 256> canvas;
     canvas[99][99] = "#ff00ff";
     html_plotting::plot_f_on_canvas(canvas, pol, 0.0, 10.0, 0.0, 10.0, "#00ff00");
     html_plotting::plot_xy_on_canvas(canvas, v, 0.0, 10.0, 0.0, 10.0, "#ff0000");
+
+    html_plotting::HtmlCanvas<256, 256> canvas2;
+    html_plotting::plot_f_on_canvas(canvas2, pol2, 0.0, 10.0, 0.0, 10.0, "#00ff00");
+
     std::fstream fs;
     fs.open("test.html", std::fstream::out);
     fs << html_plotting::wrap_in_limits(html_plotting::table_from_canvas(canvas), 0, 10, 0, 10);
+    fs << "<br />\n<br /n>\n";
+    fs << html_plotting::wrap_in_limits(html_plotting::table_from_canvas(canvas2), -1.0, 1.0, -1.0, 1.0);
     fs.close();
 
     // pm5544
     constexpr double SCALE = 0.3;
     constexpr size_t new_w = static_cast<size_t>(PM5544.width*SCALE);
     constexpr size_t new_h = static_cast<size_t>(PM5544.height*SCALE);
-    html_plotting::HtmlCanvas<new_w, new_h> canvas2;
+    html_plotting::HtmlCanvas<new_w, new_h> canvas3;
     auto testcard_colormap = continuous_colormap::make_from_discrete<Double_3>(PM5544.width, PM5544.height, pm5544);
     for(size_t y = 0; y < new_h; y++){
         for(size_t x = 0; x < new_w; x++){
-            canvas2[y][x] = html(testcard_colormap({x / SCALE, y / SCALE}));
+            canvas3[y][x] = html(testcard_colormap({x / SCALE, y / SCALE}));
         }
     }
     fs.open("pm5544.html", std::fstream::out);
-    fs << html_plotting::table_from_canvas(canvas2);
+    fs << html_plotting::table_from_canvas(canvas3);
     fs.close();
 
     std::cout << "Ok" << std::endl;

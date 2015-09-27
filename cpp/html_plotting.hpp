@@ -134,7 +134,7 @@ namespace html_plotting
         for(int j = 0; j < W; j++){
             int i = H - ( (f(x_min + (x_max-x_min) * j / W) - y_min) * H / (y_max-y_min) );
             if( j>0 && i>=0 && i<H ){
-                plot_line_on_canvas<100, 100>(canvas, {j-1, last_i}, {j, i}, c);
+                plot_line_on_canvas(canvas, {j-1, last_i}, {j, i}, c);
             }
             last_i = i;
         }
