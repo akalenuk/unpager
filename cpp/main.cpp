@@ -58,15 +58,17 @@ int main()
     std::cout << pol(0.0) << std::endl;
 
     // polynomial construction
-    auto pa = std::array<std::array<double, 6>, 6> {};
-    auto pb = std::array<double, 6> {};
-    auto px = std::array<double, 6> {};
-    pa[0] = polynoms::construction::p<6>(-1.0);            pb[0] = 0.0;
-    pa[1] = polynoms::construction::dp<6>(-1.0, 1);        pb[1] = 0.0;
-    pa[2] = polynoms::construction::p<6>(1.0);             pb[2] = 0.0;
-    pa[3] = polynoms::construction::dp<6>(1.0, 1);         pb[3] = 0.0;
-    pa[4] = polynoms::construction::p<6>(0.0);             pb[4] = 1.0;
-    pa[5] = polynoms::construction::ip<6>(0.0, -1.0, 1.0); pb[5] = 1.0;
+    auto pa = std::array<std::array<double, 6>, 6> {{0}};
+    auto pb = std::array<double, 6> {0};
+    auto px = std::array<double, 6> {0};
+
+    pa[0] = polynoms::construction::p<6>(0.0);             pb[0] = 1.0;
+    pa[1] = polynoms::construction::ip<6>(-1.0, 1.0, 1);   pb[1] = 1.0;
+    pa[2] = polynoms::construction::p<6>(-1.0);            pb[2] = 0.0;
+    pa[3] = polynoms::construction::dp<6>(-1.0, 1);        pb[3] = 0.0;
+    pa[4] = polynoms::construction::p<6>(1.0);             pb[4] = 0.0;
+    pa[5] = polynoms::construction::dp<6>(1.0, 1);         pb[5] = 0.0;
+
     bool le3_ok = linear_equations::solve<6>(pa, pb, px);
     auto pol2 = polynoms::make_into_function<6>(px);
 
@@ -77,7 +79,7 @@ int main()
     html_plotting::plot_xy_on_canvas(canvas, v, 0.0, 10.0, 0.0, 10.0, "#ff0000");
 
     html_plotting::HtmlCanvas<256, 256> canvas2;
-    html_plotting::plot_f_on_canvas(canvas2, pol2, 0.0, 10.0, 0.0, 10.0, "#00ff00");
+    html_plotting::plot_f_on_canvas(canvas2, pol2, -1.0, 1.0, -1.0, 1.0, "#00ff00");
 
     std::fstream fs;
     fs.open("test.html", std::fstream::out);
