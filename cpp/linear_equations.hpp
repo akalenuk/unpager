@@ -5,7 +5,7 @@
 
 namespace linear_equations{
 
-	constexpr double SMALL_ENOUGH = std::sqrt(std::numeric_limits<double>::epsilon());
+    constexpr double SMALL_ENOUGH = std::sqrt(std::numeric_limits<double>::epsilon());
 
     template <int I, int J, int K, int N>
     inline static double aij(const std::array<std::array<double, N>, N>& a){
@@ -29,7 +29,7 @@ namespace linear_equations{
 
     template <int I, int N>
     inline static double di(const std::array<std::array<double, N>, N>& a, const std::array<double, N>& b, std::array<double, N>& x){
-        //std::array<int, N> unused = {0};
+        //std::array<int, N> unused = {0}; // tracing statically
         double d = bi<I, I+1, N>(a, b);
         d_for<0, I, N>(d, a, x);
         return d;
@@ -56,18 +56,18 @@ namespace linear_equations{
         return x_for<0, N>(a, b, x);
     }
 
-	template <int N>
-	bool verify(const std::array<std::array<double, N>, N>& a,
-		const std::array<double, N>& b,
-		const std::array<double, N>& x){
+    template <int N>
+    bool verify(const std::array<std::array<double, N>, N>& a,
+        const std::array<double, N>& b,
+        const std::array<double, N>& x){
 
-		std::array<double, N> b_for_x{0};
-		for(int i = 0; i < N; i++){
-			for(int j = 0; j < N; j++){
-				b_for_x[i] += a[i][j] * x[j];
-			}
-			if(std::abs(b[i] - b_for_x[i]) > SMALL_ENOUGH) return false;
-		}
-		return true;
-	}
+        std::array<double, N> b_for_x{0};
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < N; j++){
+                b_for_x[i] += a[i][j] * x[j];
+            }
+            if(std::abs(b[i] - b_for_x[i]) > SMALL_ENOUGH) return false;
+        }
+        return true;
+    }
 }
