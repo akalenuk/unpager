@@ -77,14 +77,11 @@ def Solve3(A, B, d=0.00001, i_max=100000):
 			return X
 	return X
 
-def Inverse(A):
-	n = len(A)
-	Ai = []
-	for i in range(n):
-		B = [0.0]*n		
-		B[i] = 1.0
-		Ai += [Solve(A, B)]
-	return Ai
+def ident(n):
+	return [[1.0 if i==j else 0.0 for j in range(n)] for i in range(n)]
+
+def inverse(A):
+	return [Solve(A, ort) for ort in ident(len(A))]
 
 def transpose(A):
 	return [list(aj) for aj in zip(*A)]
@@ -92,7 +89,11 @@ def transpose(A):
 def mul(A, X):
 	return [dot(aj, X) for aj in transpose(A)]
 
+def error(A, B, X):
+	return sum(add(mul(A, X), scale(B, -1.0)))
 
+def solve(A, B, X):
+	return X if error(A, B, X) < 0.00001 else solve(A[1:] + A[0], B[1:] + B[0], project(X, A[0], B[0]))
 
 for n in range(0, 1):
 	A = [[], [], []]
@@ -105,10 +106,11 @@ for n in range(0, 1):
 	
 	try:
 		X3 = Solve3(A, B)
-		Ai = Inverse(A)
-		I = Inverse(Ai)
+		Ai = inverse(A)
+		I = inverse(Ai)
 		print A, '\n', Ai, '\n', I, '\n\n'
 		print transpose(A)
 		print B, X3, mul(Ai, B)
 	except ZeroDivisionError:
 		print 'No'
+
