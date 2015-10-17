@@ -74,13 +74,27 @@ def Solve3(A, B, d=0.00001, i_max=100000):
 			X = project(X, A[j], B[j])
 		error = sum([abs(ei) for ei in Validate(A, B, X)])
 		if error < d:
-			print i,
 			return X
-	print i,
 	return X
 
+def Inverse(A):
+	n = len(A)
+	Ai = []
+	for i in range(n):
+		B = [0.0]*n		
+		B[i] = 1.0
+		Ai += [Solve(A, B)]
+	return Ai
 
-for n in range(0, 1000):
+def transpose(A):
+	return [list(aj) for aj in zip(*A)]
+
+def mul(A, X):
+	return [dot(aj, X) for aj in transpose(A)]
+
+
+
+for n in range(0, 1):
 	A = [[], [], []]
 	B = []
 	for i in range(0, 3):
@@ -89,4 +103,12 @@ for n in range(0, 1000):
 			A[i] += [randint(-100, 100) / 100.0]
 		B += [randint(-100, 100) / 100.0]
 	
-	X3 = Solve3(A, B)
+	try:
+		X3 = Solve3(A, B)
+		Ai = Inverse(A)
+		I = Inverse(Ai)
+		print A, '\n', Ai, '\n', I, '\n\n'
+		print transpose(A)
+		print B, X3, mul(Ai, B)
+	except ZeroDivisionError:
+		print 'No'
