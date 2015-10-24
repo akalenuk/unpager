@@ -1,7 +1,12 @@
 all:
-	g++ -O3 -std=c++11 test_linear_equations.cpp -o test_linear_equations
-	./test_linear_equations 
-	g++ -O3 -std=c++11 test_polynomials.cpp -o test_polynomials
-	./test_polynomials 
-	g++ -O3 -std=c++11 test_continuous_colormap.cpp -o test_continuous_colormap
-	./test_continuous_colormap
+	g++ -O3 -std=c++11 tests/test_linear_equations.cpp -o tests/test_linear_equations
+	g++ -O3 -std=c++11 tests/test_polynomials.cpp -o tests/test_polynomials
+	g++ -O3 -std=c++11 tests/test_continuous_colormap.cpp -o tests/test_continuous_colormap
+	./tests/test_continuous_colormap
+	./tests/test_linear_equations 
+	./tests/test_polynomials 
+clean:
+	rm ./tests/test_continuous_colormap
+	rm ./tests/test_linear_equations 
+	rm ./tests/test_polynomials 
+	rm ./tests/*.html
