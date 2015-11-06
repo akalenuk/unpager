@@ -16,16 +16,20 @@ int main(){
     assert(pol(0.0) == 10.0);
 
     // polynomial construction
-    auto pa = std::array<std::array<double, 3>, 3> {{0}};
-    auto pb = std::array<double, 3> {0};
-    auto px = std::array<double, 3> {0};
+    auto pa = std::array<std::array<double, 7>, 7> {{0}};
+    auto pb = std::array<double, 7> {0};
+    auto px = std::array<double, 7> {0};
 
-    pa[0] = polynoms::construction::p<3>(-1.0);            pb[0] = 1.0;
-    pa[1] = polynoms::construction::dp<3>(0.0, 1);         pb[1] = 0.0;
-    pa[2] = polynoms::construction::ip<3>(-1.0, 1.0, 1);   pb[2] = 1.0;
+    pa[0] = polynoms::construction::p<7>(-1.0);            pb[0] = 0.0;
+    pa[1] = polynoms::construction::p<7>(0.0);             pb[1] = 1.0;
+    pa[2] = polynoms::construction::p<7>(1.0);             pb[2] = 0.0;
+    pa[3] = polynoms::construction::dp<7>(-1.0, 1);        pb[3] = 0.0;
+    pa[4] = polynoms::construction::dp<7>(0.0, 1);         pb[4] = 0.0;
+    pa[5] = polynoms::construction::dp<7>(1.0, 1);         pb[5] = 0.0;
+    pa[6] = polynoms::construction::ip<7>(-1.0, 1.0, 1);   pb[6] = 1.0;
 
-    bool le3_ok = linear_equations::iterative_projections::solve<3>(pa, pb, px);
-    auto pol2 = polynoms::make_into_function<3>(px);
+    bool le_ok = linear_equations::iterative_projections::solve<7>(pa, pb, px);
+    auto pol2 = polynoms::make_into_function<7>(px);
 
     // plot
     html_plotting::HtmlCanvas<256, 256> canvas;
