@@ -19,3 +19,5 @@ For now I have few features working:
 Here's `exe` though: https://dl.dropboxusercontent.com/u/25247809/exe/unpager.exe
 
 I also have a GIMP script for darning: https://github.com/akalenuk/darning
+
+And also Android application for projections: https://github.com/akalenuk/Docam
