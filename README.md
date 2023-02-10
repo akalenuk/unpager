@@ -1,7 +1,7 @@
 unpager
 =======
 
-A desktop app that undoes unwanted perspective, unbends pages, and cleans ups pictures.
+A desktop app that undoes unwanted perspective, unbends pages, and cleans up stains.
 
 The maths behind all the transformations is explained in my book [Geometry for Programmers](https://www.manning.com/books/geometry-for-programmers).
 
@@ -15,7 +15,7 @@ Unbending a page
 
 Cleaning up
 -----------
-![screenshot](/screenshots/before_darn.png "Before darning") → ![screenshot](/screenshots/after_darn.png "After darning")
+![screenshot](https://github.com/akalenuk/darning/blob/master/screenshots/E_before.png?raw=true "Before darning") → ![screenshot](https://github.com/akalenuk/darning/blob/master/screenshots/E_after.png?raw=true "After darning")
 
 What now?
 ---------
