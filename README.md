@@ -19,7 +19,7 @@ Cleaning up
 
 What now?
 ---------
-**As for July 2016**, the project is abandoned. I tried to extract any useful math from it to reimplement in c++, and some code was reused in python programs. But as a desktop application it is done. 
+**As for July 2016**, the project is abandoned. I tried to extract any useful math from it to [reimplement in C++](https://github.com/akalenuk/unpager/tree/master/cpp), and some code was reused in python programs. But as a desktop application it is done. 
 
 The code is unlicensed though, so you can pick it up and reuse in your own work.
 
