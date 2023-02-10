@@ -3,7 +3,7 @@ unpager
 
 Image processing and transformation that undoes unwanted perspective, unbends pages, and cleans ups the stains.
 
-The maths behind all the functionality is explained in my book [Geometry for Programmers](https://www.manning.com/books/geometry-for-programmers).
+The maths behind all the transformations is explained in my book [Geometry for Programmers](https://www.manning.com/books/geometry-for-programmers).
 
 Undoing the perspective
 -----------------------
