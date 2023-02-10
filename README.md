@@ -1,7 +1,7 @@
 unpager
 =======
 
-Image processing and transformation that undoes unwanted perspective, unbends pages, and cleans ups the stains.
+A desktop app that undoes unwanted perspective, unbends pages, and cleans ups pictures.
 
 The maths behind all the transformations is explained in my book [Geometry for Programmers](https://www.manning.com/books/geometry-for-programmers).
 
