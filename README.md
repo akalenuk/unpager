@@ -31,6 +31,6 @@ The code is unlicensed though, so you can pick it up and reuse in your own work.
 
 If you want to try the app, here's the release: https://github.com/akalenuk/unpager/releases/tag/0.1
 
-I also have a GIMP script for darning (that's how the cleaning up method is called): https://github.com/akalenuk/darning
+I also have a GIMP script for darning (that's what the cleaning method is called): https://github.com/akalenuk/darning
 
 And also an Android application for undoing perspective: https://github.com/akalenuk/Docam
