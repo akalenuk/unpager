@@ -5,6 +5,12 @@ A desktop app that undoes unwanted perspective, unbends pages, and cleans up sta
 
 The maths behind all the transformations is explained in my book [Geometry for Programmers](https://www.manning.com/books/geometry-for-programmers).
 
+And also partially on [Words and Buttons Online](https://wordsandbuttons.online/):
+- [Interactive guide to homogeneous coordinates](https://wordsandbuttons.online/interactive_guide_to_homogeneous_coordinates.html)
+- [Bi-watever transformations](https://wordsandbuttons.online/biwhatever_transformations.html)
+- [Image darning](https://wordsandbuttons.online/image_darning.html)
+
+
 Undoing the perspective
 -----------------------
 ![screenshot](/screenshots/before_proj.png "Before projection") → ![screenshot](/screenshots/after_proj.png "After projection")
@@ -25,6 +31,6 @@ The code is unlicensed though, so you can pick it up and reuse in your own work.
 
 If you want to try the app, here's the release: https://github.com/akalenuk/unpager/releases/tag/0.1
 
-I also have a GIMP script for darning: https://github.com/akalenuk/darning
+I also have a GIMP script for darning (that's how the cleaning up method is called): https://github.com/akalenuk/darning
 
-And also Android application for projections: https://github.com/akalenuk/Docam
+And also an Android application for undoing perspective: https://github.com/akalenuk/Docam
