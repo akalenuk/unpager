@@ -3,7 +3,7 @@ unpager
 
 A desktop app that undoes unwanted perspective, unbends pages, and cleans up stains.
 
-The maths behind all the transformations is explained in my book [Geometry for Programmers](https://www.manning.com/books/geometry-for-programmers).
+The maths behind all the transformations are explained in my book [Geometry for Programmers](https://www.manning.com/books/geometry-for-programmers).
 
 And also partially on [Words and Buttons Online](https://wordsandbuttons.online/):
 - [Interactive guide to homogeneous coordinates](https://wordsandbuttons.online/interactive_guide_to_homogeneous_coordinates.html)
