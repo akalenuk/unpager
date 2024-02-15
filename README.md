@@ -25,7 +25,7 @@ Cleaning up
 
 What now?
 ---------
-The project is abandoned. I tried to extract any useful math from it to [reimplement it in C++](https://github.com/akalenuk/unpager/tree/master/cpp), and some code was later reused in other programs. But as a desktop application, it is done. 
+The project is abandoned. I tried to extract any useful math from it to [reimplement it in C++](https://github.com/akalenuk/unpager_cpp_libs), and some code was later reused in other programs. But as a desktop application, it is done. 
 
 The code is unlicensed though, so you can pick it up and reuse in your own work.
 
